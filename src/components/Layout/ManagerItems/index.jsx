@@ -15,6 +15,7 @@ export const routeKey = {
 	employeesAll: '/employees/all',
 	employeesContracts: '/employees/contracts',
 	employeesSalaries: '/employees/salaries',
+	employeesSalariesDetail: '/employees/salaries/:id',
 	applications: '/application',
 	applicationSalaryIncreasing: '/application/salary-increasing',
 	applicationDayLeave: '/application/day-leave',

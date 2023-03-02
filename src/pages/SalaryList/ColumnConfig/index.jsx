@@ -43,3 +43,73 @@ export const SalaryListColumnConfig = [
 		},
 	},
 ];
+
+export const SalaryDetailForm = [
+	{
+		title: 'Name',
+		dataIndex: 'name',
+		key: 'name',
+		span: 24,
+	},
+	{
+		title: 'Department',
+		dataIndex: 'department',
+		key: 'department',
+		span: 10,
+	},
+	{
+		title: 'Role',
+		dataIndex: 'role',
+		key: 'role',
+		span: 10,
+	},
+	{
+		title: 'Receive Date',
+		dataIndex: 'receiveDate',
+		key: 'receiveDate',
+		type: 'date',
+		span: 18,
+	},
+	{
+		title: 'Base Salary',
+		dataIndex: 'baseSalary',
+		key: 'baseSalary',
+		type: 'number',
+		span: 24,
+	},
+	{
+		title: 'Assurance',
+		dataIndex: 'assurance',
+		key: 'assurance',
+		type: 'number',
+		span: 24,
+	},
+	{
+		title: 'Tax',
+		dataIndex: 'tax',
+		key: 'tax',
+		type: 'number',
+		span: 24,
+	},
+	{
+		title: 'Bonus',
+		dataIndex: 'bonus',
+		key: 'bonus',
+		type: 'number',
+		span: 24,
+	},
+	{
+		title: 'Penalty',
+		dataIndex: 'penalty',
+		key: 'penalty',
+		type: 'number',
+		span: 24,
+	},
+	{
+		title: 'Total receive',
+		dataIndex: 'total',
+		key: 'total',
+		type: 'number',
+		span: 24,
+	},
+];

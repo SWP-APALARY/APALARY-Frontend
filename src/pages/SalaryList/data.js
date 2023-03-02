@@ -21,3 +21,17 @@ export const initData = [
 		bonus: '1.000.000',
 	},
 ];
+
+export const salaryDetail = {
+	id: 1,
+	name: 'John Doe 1',
+	department: 'Department',
+	receive: '10.000.000',
+	assurance: '10.000.000',
+	tax: '10.000.000',
+	receiveDate: '21/01/2023',
+	bonus: '1.000.000',
+	penalty: '1.000.000',
+	total: '10.000.000',
+	note: 'Note',
+};

@@ -40,7 +40,7 @@ const Applicants = () => {
 		const fetch = async () => {
 			const res = await apiHandler(applicantAPI, 'get' + activeKey, '', setLoading, token);
 			if (res instanceof Error) {
-				navigate('/login');
+				return navigate('/login');
 			}
 			setData(res || fakeData);
 			setFilteredData(res || fakeData);
