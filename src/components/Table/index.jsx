@@ -1,12 +1,19 @@
-import { Table, Row, Col, Button, Tabs, Space } from 'antd';
+import { Table, Row, Col, Button, Tabs, Space, DatePicker } from 'antd';
+import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
+import monthFormat from '../../config/DateFormater';
 import { tabStatusConfig } from '../../config/TabsConfig';
 import Box from '../Box';
 import { routeKey } from '../Layout/ManagerItems';
 import SearchBar from '../SearchBar';
 
 import { PlusOutlined } from '@ant-design/icons';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
+
+const { RangePicker } = DatePicker;
 
 export const CustomTable = ({
 	addNewButton,
@@ -14,7 +21,9 @@ export const CustomTable = ({
 	onSearch,
 	activeKey,
 	onTabChange,
+	onTimeChange,
 	children,
+	startDate,
 	...rest
 }) => {
 	return (
@@ -23,6 +32,15 @@ export const CustomTable = ({
 				<Col>
 					<Row justify={'center'} align='middle'>
 						<Col>
+							{onTimeChange && (
+								<DatePicker
+									defaultValue={dayjs('01/2023', monthFormat)}
+									value={startDate}
+									onChange={onTimeChange}
+									format={monthFormat}
+									picker={'month'}
+								/>
+							)}
 							{onTabChange && (
 								<Tabs
 									defaultActiveKey='PROCESSING'

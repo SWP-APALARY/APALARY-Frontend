@@ -15,6 +15,7 @@ import JobOffering from '../pages/JobOffering';
 import PostCreation from '../pages/JobOffering/CreatePages';
 import PostDetail from '../pages/JobOffering/Detail';
 import FormDisabledDemo from '../pages/Profile/Profile';
+import SalaryList from '../pages/SalaryList';
 import Login from '../pages/login';
 
 export const roles = {
@@ -55,6 +56,10 @@ export const managerRoutes = [
 	{
 		path: routeKey.dashBoard,
 		Element: <EmDashboard />,
+	},
+	{
+		path: routeKey.employeesSalaries,
+		Element: <SalaryList />,
 	},
 	{
 		path: routeKey.postsCreate,
