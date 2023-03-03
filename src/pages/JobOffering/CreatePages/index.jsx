@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, Form, Input, InputNumber, Skeleton, Typography } from 'antd';
+import { Button, Form, Input, InputNumber, Select, Skeleton, Typography } from 'antd';
 import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
 import CustomEditor from '../../../components/Editor';
 import toast from '../../../components/Toast';
+import { departmentAPI } from '../../../utils/Apis/departmentAPI';
 import apiHandler from '../../../utils/Apis/handler';
 import jobOfferingApi from '../../../utils/Apis/jobOffering';
 import { convertToEditor } from '../../../utils/DraftjsHelper';
@@ -27,6 +28,7 @@ const PostCreation = () => {
 	const [data, setData] = useState(initData);
 	const [token] = usePersistedState('token');
 	const [loading, setLoading] = useState(false);
+	const [departmentOption, setDepartmentOption] = useState([]);
 	const navigate = useNavigate();
 	const [form] = Form.useForm();
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -38,8 +40,6 @@ const PostCreation = () => {
 			...formData,
 			createdTime: data.createdTime,
 			description: JSON.stringify(raw),
-			// TODO: change to user id when login is done
-			employeeId: 1,
 		};
 		console.log(completedForm);
 		if (params.id) {
@@ -53,6 +53,8 @@ const PostCreation = () => {
 	// TODO: fix that the input fields don't receive data from fetch
 	useEffect(() => {
 		const fetch = async () => {
+			const departments = await apiHandler(departmentAPI, 'getAll', '', null, token);
+			setDepartmentOption(departments);
 			if (params.id) {
 				if (params.id) {
 					const res = await apiHandler(
@@ -106,7 +108,18 @@ const PostCreation = () => {
 												<Input style={{ width: '100%' }} />
 											) : item.type === 'textarea' ? (
 												<TextArea style={{ width: '100%' }} />
-											) : null
+											) : (
+												<Select placeholder='Select a option and change input text above'>
+													{departmentOption?.map((item) => (
+														<Select.Option
+															key={item.id + 'select-post-department'}
+															value={item.id}
+														>
+															{item.name}
+														</Select.Option>
+													))}
+												</Select>
+											)
 											// <Input />
 										}
 									</Form.Item>
