@@ -10,6 +10,7 @@ export const salaryColumnConfig = [
 		dataIndex: 'description',
 		key: 'description',
 		ellipse: true,
+		// TODO: using draftjs
 	},
 	{
 		title: 'Department',
@@ -39,6 +40,7 @@ export const dayLeaveColumnConfig = [
 		dataIndex: 'description',
 		key: 'description',
 		ellipse: true,
+		// TODO: using draftjs
 	},
 	{
 		title: 'Department',
