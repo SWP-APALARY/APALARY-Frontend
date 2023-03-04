@@ -8,6 +8,9 @@ import CustomCard from '../../../components/Card';
 import CustomTable from '../../../components/Table';
 import { paginationConfig } from '../../../config/ColumnConfig';
 import { tabStatusConfig } from '../../../config/TabsConfig';
+import applicationAPI from '../../../utils/Apis/applicationAPI';
+import apiHandler from '../../../utils/Apis/handler';
+import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../../utils/hooks/useSearch';
 import ApplicationModal from '../Modal';
 import { salaryColumnConfig } from '../columnConfig';
@@ -23,16 +26,26 @@ const initData = [
 	},
 ];
 const ApplicationSalary = () => {
+	const [token, setToken] = usePersistedState('token');
 	const [data, setData] = useState(initData);
 	const [filteredData, setFilteredData] = useState(initData);
+
 	const [activeKey, setActiveKey] = useState(tabStatusConfig[0].key);
+	const [loading, setLoading] = useState(tabStatusConfig);
 	const [search, searchRef, setSearchChange] = useSearch();
 	const [openModal, setOpenModal] = useState(false);
 	const onTabChange = async (value) => {
 		// TODO: call api to get data
-
 		setActiveKey(value);
 	};
+	useEffect(() => {
+		const fetch = async () => {
+			const res = await apiHandler(applicationAPI, 'getAll', '', setLoading, token);
+			console.log(res);
+			setData(res.data);
+		};
+		fetch();
+	}, []);
 	useEffect(() => {
 		const tmp = data.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
 		setFilteredData(tmp);
