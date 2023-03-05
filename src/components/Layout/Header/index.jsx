@@ -27,7 +27,15 @@ const StyledHeader = (props) => {
 
 	return (
 		<Header style={style}>
-			<CustomBreadcrumb />
+			<div>
+				{isDashBoard ? (
+					<Link to='/'>
+						<img src={Logo} style={menuLogo} />
+					</Link>
+				) : (
+					<CustomBreadcrumb />
+				)}
+			</div>
 			<div>
 				{token && token !== '' ? (
 					<Dropdown

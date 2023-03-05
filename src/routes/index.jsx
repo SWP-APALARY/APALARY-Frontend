@@ -2,12 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import LayoutEveryone from '../components/Layout/LayoutEveryone';
-import LayoutManager from '../components/Layout/LayoutManager';
-import { routeKey } from '../components/Layout/ManagerItems';
-import Contract from '../pages/Contract/Contract';
-import EmDashboard from '../pages/EmDashboard';
-import EmSalary from '../pages/EmSalary/Salary';
 import ErrorPage from '../pages/Errors';
 import usePersistedState from '../utils/LocalStorage/usePersistedState';
 import PrivateRoute from './PrivateRoute';
