@@ -8,4 +8,7 @@ export const StyledBox = styled(Space)`
 	height: ${(props) => props.height || 'fit-content'}
 	height: 'fit-content';
 	border: ${(props) => (props.bordered ? `1px solid ${themeConfig.customColor.LayerCorlo}` : 'none')};
+	:hover {
+		cursor: ${(props) => (props.onClick ? 'pointer' : 'default')};
+	}
 `;

@@ -27,10 +27,9 @@ export const formConfig = [
 		],
 	},
 	{
-		label: 'Department ID',
+		label: 'Department',
 		name: 'departmentId',
-		type: 'number',
-
-		rules: [{ required: true, message: 'Please input title' }],
+		type: 'select',
+		rules: [{ required: true, message: 'Please choose Department' }],
 	},
 ];
