@@ -21,12 +21,21 @@ const StyledHeader = (props) => {
 	const logout = () => {
 		setToken('');
 		setRole('');
+		navigate('/');
 		navigate(0);
 	};
 
 	return (
 		<Header style={style}>
-			<div>{isDashBoard ? <img src={Logo} style={menuLogo} /> : <CustomBreadcrumb />}</div>
+			<div>
+				{isDashBoard ? (
+					<Link to='/'>
+						<img src={Logo} style={menuLogo} />
+					</Link>
+				) : (
+					<CustomBreadcrumb />
+				)}
+			</div>
 			<div>
 				{token && token !== '' ? (
 					<Dropdown
