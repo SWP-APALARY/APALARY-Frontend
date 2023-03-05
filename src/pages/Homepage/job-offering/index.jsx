@@ -10,8 +10,6 @@ import jobOfferingApi from '../../../utils/Apis/jobOffering';
 import { convertToEditor } from '../../../utils/DraftjsHelper';
 import ApplyJob from '../../ApplyJob/index';
 
-import { StepBackwardOutlined } from '@ant-design/icons';
-
 const { Title, Text } = Typography;
 const JobOfferingDetail = () => {
 	const params = useParams();
@@ -54,11 +52,10 @@ const JobOfferingDetail = () => {
 		>
 			<CustomCard bordered>
 				<Button onClick={() => navigate(-1)} style={{ position: 'absolute' }}>
-					<StepBackwardOutlined />
-					Back
+					Home
 				</Button>
 				{data && (
-					<Box direction='vertical'>
+					<Box direction='vertical' style={{ minWidth: '50rem' }}>
 						<Box direction='vertical' align='center' style={{ width: '100%' }}>
 							<Title>{data.title}</Title>
 						</Box>
