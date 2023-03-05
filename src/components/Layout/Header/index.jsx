@@ -1,16 +1,20 @@
-import { Avatar, Button, Dropdown, Image, Layout, Popover, Space } from 'antd';
+import { useEffect, useState } from 'react';
+
+import { Avatar, Breadcrumb, Button, Dropdown, Image, Layout, Popover, Space } from 'antd';
 import { Content, Header } from 'antd/es/layout/layout';
-import { useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from '../../../assets';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import { menuLogo } from '../style';
+import CustomBreadcrumb from './CustomBreadcrumb';
 import dropDownItem from './DropdownItem';
 
-import { StepBackwardOutlined } from '@ant-design/icons';
+import { HomeOutlined, StepBackwardOutlined } from '@ant-design/icons';
 
 const StyledHeader = (props) => {
 	const navigate = useNavigate();
+
 	const [token, setToken] = usePersistedState('token');
 	const [role, setRole] = usePersistedState('role');
 	const { style, isDashBoard } = props;
@@ -19,18 +23,10 @@ const StyledHeader = (props) => {
 		setRole('');
 		navigate(0);
 	};
+
 	return (
 		<Header style={style}>
-			<div>
-				{isDashBoard ? (
-					<img src={Logo} style={menuLogo} />
-				) : (
-					<Button onClick={() => navigate(-1)}>
-						<StepBackwardOutlined />
-						Back
-					</Button>
-				)}
-			</div>
+			<CustomBreadcrumb />
 			<div>
 				{token && token !== '' ? (
 					<Dropdown

@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import { Card, Carousel, Layout, Menu } from 'antd';
+import { Button, Card, Carousel, Layout, Menu } from 'antd';
 import { Content, Header } from 'antd/es/layout/layout';
 import { useNavigate } from 'react-router-dom';
 
 import Logo from '../../../assets';
+import Box from '../../Box';
 import StyledHeader from '../Header';
 import { managerItems } from '../ManagerItems';
 import { layoutContent, layoutHeader, menuLogo } from '../style';
@@ -21,9 +22,9 @@ const LayoutManager = (props) => {
 	return (
 		<Layout>
 			<Sider>
-				<div style={menuLogo}>
+				<Box style={menuLogo} onClick={() => navigate('/')}>
 					<img src={Logo} alt='logo' />
-				</div>
+				</Box>
 				<Menu
 					theme='dark'
 					defaultSelectedKeys={['/dashboard']}
