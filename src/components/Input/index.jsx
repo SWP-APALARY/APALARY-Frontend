@@ -5,6 +5,7 @@ import { Input, InputNumber, Select } from 'antd';
 const { TextArea } = Input;
 const CustomInput = (props) => {
 	const { key, type, option, ...rest } = props;
+
 	return (
 		<>
 			{type === 'text' && <Input {...rest} />}

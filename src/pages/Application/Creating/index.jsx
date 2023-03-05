@@ -20,10 +20,7 @@ const CreateApplication = () => {
 	const [type, setType] = useState();
 	const [form] = Form.useForm();
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
-	const [currentType, setCurrentType] = useState({
-		id: 4,
-		type: 'Report',
-	});
+	const [currentType, setCurrentType] = useState();
 	const [token, setToken] = usePersistedState('token');
 	const onSubmit = () => {
 		// Get content from editor then convert to raw
@@ -51,11 +48,15 @@ const CreateApplication = () => {
 						name={item.name}
 						rules={item.rules}
 					>
-						<CustomInput type={item.type} option={type} />
+						<CustomInput
+							type={item.type}
+							option={type}
+							key={'option-application-type'}
+						/>
 					</Form.Item>
 				))}
 				<Row gutter={4}>
-					{currentType.type === 'Report' &&
+					{form.getFieldValue('type') === 4 &&
 						applicationConfigTypeReport.map((item) => (
 							<Col key={item.label + 'create-application'} span={item.col}>
 								<Form.Item label={item.label} name={item.name} rules={item.rules}>
@@ -70,7 +71,7 @@ const CreateApplication = () => {
 							required
 							validateStatus={'error'}
 						>
-							<Box bordered>
+							<Box bordered={true}>
 								<CustomEditor
 									height='200px'
 									required
