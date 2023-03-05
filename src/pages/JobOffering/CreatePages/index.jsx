@@ -36,7 +36,6 @@ const PostCreation = () => {
 		const completedForm = {
 			id: params.id,
 			...formData,
-			createdTime: data.createdTime,
 			description: JSON.stringify(raw),
 		};
 		if (params.id) {

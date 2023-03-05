@@ -13,8 +13,8 @@ const CustomInput = (props) => {
 			{type === 'textarea' && <TextArea {...rest} />}
 			{type === 'select' && (
 				<Select {...rest}>
-					{option?.map((item) => (
-						<Select.Option key={item.id + key} value={item.id}>
+					{option?.map((item, index) => (
+						<Select.Option key={`${item.id} - ${key}`} value={item.id}>
 							{item.type}
 						</Select.Option>
 					))}

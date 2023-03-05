@@ -7,16 +7,16 @@ export const applicationConfigForm = [
 	},
 	{
 		label: 'Type of application',
-		name: 'type',
+		name: 'applicationTypeId',
 		type: 'select',
-		// rules: [{ required: true, message: 'Please choose a type!' }],
+		rules: [{ required: true, message: 'Please choose a type!' }],
 	},
 ];
 export const applicationConfigTypeReport = [
 	{
 		label: 'Report for',
-		name: 'toEmployeeId',
-		type: 'number',
+		name: 'destinationEmployeeId',
+		type: 'select',
 		col: 12,
 	},
 	{

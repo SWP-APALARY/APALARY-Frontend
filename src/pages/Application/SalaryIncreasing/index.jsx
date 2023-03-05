@@ -40,9 +40,11 @@ const ApplicationSalary = () => {
 	};
 	useEffect(() => {
 		const fetch = async () => {
+			// TODO: get data by type
 			const res = await apiHandler(applicationAPI, 'getAll', '', setLoading, token);
 			console.log(res);
-			setData(res.data);
+			setData(res.data || []);
+			setFilteredData(res.data || []);
 		};
 		fetch();
 	}, []);
@@ -51,7 +53,7 @@ const ApplicationSalary = () => {
 		setFilteredData(tmp);
 	}, [search]);
 	useEffect(() => {
-		const tmp = data.filter((item) => item.status === activeKey);
+		const tmp = data.filter((item) => item.status.toLowerCase() === activeKey.toLowerCase());
 		setFilteredData(tmp);
 	}, [activeKey]);
 
@@ -61,13 +63,13 @@ const ApplicationSalary = () => {
 				dataSource={filteredData}
 				onSearch={setSearchChange}
 				activeKey={activeKey}
-				rowKey={(record) => record.id + 'application-salary'}
+				rowKey={(record) => record.id + '-application-salary'}
 				onTabChange={onTabChange}
 				pagination={{ ...paginationConfig }}
 			>
 				{salaryColumnConfig.map((column, index) => (
 					<Column
-						key={index + 'application-salary'}
+						key={index + '-application-salary'}
 						title={column.title}
 						dataIndex={column.dataIndex}
 						width={column.width}

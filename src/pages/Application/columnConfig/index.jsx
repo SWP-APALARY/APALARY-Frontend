@@ -1,7 +1,7 @@
 export const salaryColumnConfig = [
 	{
-		title: 'Full name',
-		dataIndex: 'name',
+		title: 'Title',
+		dataIndex: 'title',
 		key: 'name',
 		width: 200,
 	},
@@ -13,18 +13,8 @@ export const salaryColumnConfig = [
 		// TODO: using draftjs
 	},
 	{
-		title: 'Department',
-		dataIndex: 'department',
-		key: 'department',
-	},
-	{
-		title: 'Increasing Salary',
-		dataIndex: 'baseSalary',
-		key: 'baseSalary',
-	},
-	{
 		title: 'Created at',
-		dataIndex: 'createdAt',
+		dataIndex: 'createdTime',
 	},
 ];
 

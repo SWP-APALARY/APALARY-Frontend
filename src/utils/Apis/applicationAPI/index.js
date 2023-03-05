@@ -1,4 +1,4 @@
-import { get } from '../caller';
+import { get, post } from '../caller';
 
 const applicationAPI = {
 	getAll: async (token) => {
@@ -30,6 +30,12 @@ const applicationAPI = {
 				Authorization: 'Bearer ' + token,
 			}
 		);
+	},
+	post: async (data, token) => {
+		const endpoint = '/application';
+		return await post(endpoint, data, {
+			Authorization: 'Bearer ' + token,
+		});
 	},
 };
 

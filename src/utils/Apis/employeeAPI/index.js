@@ -7,6 +7,10 @@ const employeeAPI = {
 		const endpoint = '/employee';
 		return await get(endpoint, {}, { Authorization: token }, {});
 	},
+	getAll: async () => {
+		const endpoint = '/employee/all';
+		return await get(endpoint, {}, { Authorization: token }, {});
+	},
 };
 
 export default employeeAPI;
