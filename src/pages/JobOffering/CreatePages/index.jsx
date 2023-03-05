@@ -41,7 +41,6 @@ const PostCreation = () => {
 			createdTime: data.createdTime,
 			description: JSON.stringify(raw),
 		};
-		console.log(completedForm);
 		if (params.id) {
 			await apiHandler(jobOfferingApi, 'put', 'success', setLoading, completedForm, token);
 			navigate(-1);
