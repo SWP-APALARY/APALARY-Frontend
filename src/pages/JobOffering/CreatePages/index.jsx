@@ -38,10 +38,7 @@ const PostCreation = () => {
 			...formData,
 			createdTime: data.createdTime,
 			description: JSON.stringify(raw),
-			// TODO: change to user id when login is done
-			employeeId: 1,
 		};
-		console.log(completedForm);
 		if (params.id) {
 			await apiHandler(jobOfferingApi, 'put', 'success', setLoading, completedForm, token);
 			navigate(-1);

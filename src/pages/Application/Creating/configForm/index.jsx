@@ -6,16 +6,10 @@ export const applicationConfigForm = [
 		rules: [{ required: true, message: 'Please input your title!' }],
 	},
 	{
-		label: 'Description',
-		name: 'description',
-		type: 'textarea',
-		rules: [{ required: true, message: 'Please input your description!' }],
-	},
-	{
 		label: 'Type of application',
 		name: 'type',
 		type: 'select',
-		rules: [{ required: true, message: 'Please choose a type!' }],
+		// rules: [{ required: true, message: 'Please choose a type!' }],
 	},
 ];
 export const applicationConfigTypeReport = [
