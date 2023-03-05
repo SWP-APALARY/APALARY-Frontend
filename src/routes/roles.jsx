@@ -2,6 +2,7 @@ import { routeKey } from '../components/Layout/ManagerItems';
 import Applicants from '../pages/Applicant';
 import ApplicantDetails from '../pages/Applicant/Detail';
 import ApplyJob from '../pages/ApplyJob';
+import CEODashboard from '../pages/CEODashboard';
 import Contract from '../pages/Contract/Contract';
 import Contracts from '../pages/Contracts';
 import EmDashboard from '../pages/EmDashboard';
@@ -19,6 +20,7 @@ import Login from '../pages/login';
 
 export const roles = {
 	HR_MANAGER: 'HR_MANAGER',
+	CEO: 'CEO',
 	HR_EMPLOYEE: 'HR_EMPLOYEE',
 	EMPLOYEE: 'EMPLOYEE',
 	MANAGER: 'MANAGER',
@@ -106,5 +108,12 @@ export const employeeRoutes = [
 	{
 		path: routeKey.dashBoard,
 		Element: <EmDashboard />,
+	},
+];
+
+export const ceoRoutes = [
+	{
+		path: routeKey.dashBoard,
+		Element: <CEODashboard />,
 	},
 ];

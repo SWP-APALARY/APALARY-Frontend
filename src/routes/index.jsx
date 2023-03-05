@@ -16,6 +16,15 @@ import { employeeRoutes, managerRoutes, publicRoutes, roles } from './roles';
 const AppRoutes = () => {
 	return (
 		<Routes>
+			<Route path={''} element={<PrivateRoute role={roles.CEO} />}>
+				{managerRoutes.map((route, index) => (
+					<Route
+						key={index + route.path + 'ceo'}
+						element={route.Element}
+						path={route.path}
+					/>
+				))}
+			</Route>
 			<Route path={''} element={<PrivateRoute role={roles.HR_MANAGER} />}>
 				{managerRoutes.map((route, index) => (
 					<Route
