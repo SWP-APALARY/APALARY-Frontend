@@ -7,7 +7,7 @@ import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
 import CustomTable from '../../../components/Table';
 import { paginationConfig } from '../../../config/ColumnConfig';
-import { tabStatusConfig } from '../../../config/TabsConfig';
+import { tabConfigWithAPIStatus, tabStatusConfig } from '../../../config/TabsConfig';
 import applicationAPI from '../../../utils/Apis/applicationAPI';
 import apiHandler from '../../../utils/Apis/handler';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
@@ -27,10 +27,10 @@ const initData = [
 ];
 const ApplicationSalary = () => {
 	const [token, setToken] = usePersistedState('token');
-	const [data, setData] = useState(initData);
-	const [filteredData, setFilteredData] = useState(initData);
-
-	const [activeKey, setActiveKey] = useState(tabStatusConfig[0].key);
+	const [data, setData] = useState([]);
+	const [filteredData, setFilteredData] = useState([]);
+	const [id, setId] = useState(1);
+	const [activeKey, setActiveKey] = useState(tabConfigWithAPIStatus[0].key);
 	const [loading, setLoading] = useState(tabStatusConfig);
 	const [search, searchRef, setSearchChange] = useSearch();
 	const [openModal, setOpenModal] = useState(false);
@@ -38,31 +38,39 @@ const ApplicationSalary = () => {
 		// TODO: call api to get data
 		setActiveKey(value);
 	};
+	const onView = (id) => {
+		setOpenModal(true);
+		setId(id);
+	};
 	useEffect(() => {
 		const fetch = async () => {
 			// TODO: get data by type
-			const res = await apiHandler(applicationAPI, 'getAll', '', setLoading, token);
+			const res = await apiHandler(
+				applicationAPI,
+				'getSalaryIncreasing',
+				'',
+				setLoading,
+				activeKey,
+				token
+			);
 			console.log(res);
-			setData(res.data || []);
-			setFilteredData(res.data || []);
+			setData(res || []);
+			setFilteredData(res || []);
 		};
 		fetch();
-	}, []);
+	}, [activeKey]);
 	useEffect(() => {
 		const tmp = data.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
 		setFilteredData(tmp);
 	}, [search]);
-	useEffect(() => {
-		const tmp = data.filter((item) => item.status.toLowerCase() === activeKey.toLowerCase());
-		setFilteredData(tmp);
-	}, [activeKey]);
 
 	return (
 		<CustomCard>
 			<CustomTable
-				dataSource={filteredData}
+				dataSource={data}
 				onSearch={setSearchChange}
 				activeKey={activeKey}
+				tabConfig={tabConfigWithAPIStatus}
 				rowKey={(record) => record.id + '-application-salary'}
 				onTabChange={onTabChange}
 				pagination={{ ...paginationConfig }}
@@ -73,6 +81,7 @@ const ApplicationSalary = () => {
 						title={column.title}
 						dataIndex={column.dataIndex}
 						width={column.width}
+						ellipsis={column.ellipsis}
 						render={column.render}
 					/>
 				))}
@@ -81,12 +90,12 @@ const ApplicationSalary = () => {
 					key='action'
 					render={(text, record) => (
 						<Box display='flex' key={'action-application-salary'}>
-							<Link onClick={() => setOpenModal(true)}>View</Link>
+							<Link onClick={() => onView(record.id)}>View</Link>
 						</Box>
 					)}
 				/>
 			</CustomTable>
-			<ApplicationModal open={openModal} setOpen={setOpenModal} />
+			<ApplicationModal id={id} open={openModal} setOpen={setOpenModal} />
 		</CustomCard>
 	);
 };

@@ -50,6 +50,10 @@ export const managerRoutes = [
 		Element: <ApplicantDetails />,
 	},
 	{
+		path: routeKey.applications,
+		Element: <ApplicationSalary />,
+	},
+	{
 		path: routeKey.applicationSalaryIncreasing,
 		Element: <ApplicationSalary />,
 	},

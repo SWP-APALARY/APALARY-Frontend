@@ -1,4 +1,4 @@
-import { get, post } from '../caller';
+import { get, post, put } from '../caller';
 
 const applicationAPI = {
 	getAll: async (token) => {
@@ -36,6 +36,46 @@ const applicationAPI = {
 		return await post(endpoint, data, {
 			Authorization: 'Bearer ' + token,
 		});
+	},
+	getSalaryIncreasing: async (status, token) => {
+		const endpoint = '/application/salary-increase/' + status;
+		return await get(
+			endpoint,
+			{},
+			{
+				Authorization: 'Bearer ' + token,
+			}
+		);
+	},
+	getDayLeaves: async (status, token) => {
+		const endpoint = '/application/day-leave/' + status;
+		return await get(
+			endpoint,
+			{},
+			{
+				Authorization: 'Bearer ' + token,
+			}
+		);
+	},
+	approveOne: async (id, token) => {
+		const endpoint = `/application/approve/${id}`;
+		return await put(
+			endpoint,
+			{},
+			{
+				Authorization: 'Bearer ' + token,
+			}
+		);
+	},
+	disapproveOne: async (id, token) => {
+		const endpoint = `/application/disapprove/${id}`;
+		return await put(
+			endpoint,
+			{},
+			{
+				Authorization: 'Bearer ' + token,
+			}
+		);
 	},
 };
 

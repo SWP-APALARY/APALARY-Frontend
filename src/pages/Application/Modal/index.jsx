@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Button, Col, Modal, Row, Typography } from 'antd';
 
 import Box from '../../../components/Box';
 import toast from '../../../components/Toast';
+import applicationAPI from '../../../utils/Apis/applicationAPI';
+import apiHandler from '../../../utils/Apis/handler';
+import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 
 const { Title, Text } = Typography;
 
 const ApplicationModal = (props) => {
-	const { application, open, setOpen } = props;
+	const { id, open, setOpen } = props;
+	const [token, setToken] = usePersistedState('token');
 	const [approveLoading, setApproveLoading] = useState(false);
 	const [rejectLoading, setRejectLoading] = useState(false);
+	const [data, setData] = useState({});
+	const [loading, setLoading] = useState(false);
 	const handleOk = () => {
 		// TODO: call approve here
 		setApproveLoading(true);
@@ -30,6 +36,13 @@ const ApplicationModal = (props) => {
 		}, 2000);
 	};
 
+	useEffect(() => {
+		const fetch = async () => {
+			const res = await apiHandler(applicationAPI, 'getOne', '', setLoading, id, token);
+			setData(res);
+		};
+		fetch();
+	}, []);
 	// TODO: Change data when api done
 	return (
 		<Modal
@@ -70,7 +83,7 @@ const ApplicationModal = (props) => {
 				<Text>
 					Created by:{' '}
 					<Text type='span' strong>
-						Hello
+						{data.name}
 					</Text>
 				</Text>
 				<Text>Date: 22/12/2022</Text>

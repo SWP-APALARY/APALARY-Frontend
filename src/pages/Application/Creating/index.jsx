@@ -34,13 +34,10 @@ const CreateApplication = () => {
 		// set the content to form
 		form.setFieldValue('description', JSON.stringify(raw));
 		const formData = form.getFieldsValue();
-
-		console.log(formData);
 		await apiHandler(applicationAPI, 'post', 'success', setLoading, formData, token).then(
-			(response) => {
-				if (response.status === 200) {
-					navigate(-1);
-				}
+			() => {
+				form.resetFields();
+				setEditorState(EditorState.createEmpty());
 			}
 		);
 	};
