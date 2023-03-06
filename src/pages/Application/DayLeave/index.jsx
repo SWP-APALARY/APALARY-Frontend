@@ -7,7 +7,10 @@ import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
 import CustomTable from '../../../components/Table';
 import { paginationConfig } from '../../../config/ColumnConfig';
-import { tabStatusConfig } from '../../../config/TabsConfig';
+import { tabConfigWithAPIStatus, tabStatusConfig } from '../../../config/TabsConfig';
+import applicationAPI from '../../../utils/Apis/applicationAPI';
+import apiHandler from '../../../utils/Apis/handler';
+import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../../utils/hooks/useSearch';
 import ApplicationModal from '../Modal';
 import { dayLeaveColumnConfig, salaryColumnConfig } from '../columnConfig';
@@ -23,14 +26,15 @@ const initData = [
 	},
 ];
 const ApplicationDayLeave = () => {
-	const [data, setData] = useState(initData);
-	const [filteredData, setFilteredData] = useState(initData);
-	const [activeKey, setActiveKey] = useState(tabStatusConfig[0].key);
+	const [data, setData] = useState([]);
+	const [filteredData, setFilteredData] = useState([]);
+	const [activeKey, setActiveKey] = useState(tabConfigWithAPIStatus[0].key);
+	const [id, setId] = useState(2);
+	const [token, setToken] = usePersistedState('token');
+	const [loading, setLoading] = useState(false);
 	const [search, searchRef, setSearchChange] = useSearch();
 	const [openModal, setOpenModal] = useState(false);
 	const onTabChange = async (value) => {
-		// TODO: call api to get data
-
 		setActiveKey(value);
 	};
 	useEffect(() => {
@@ -38,8 +42,19 @@ const ApplicationDayLeave = () => {
 		setFilteredData(tmp);
 	}, [search]);
 	useEffect(() => {
-		const tmp = data.filter((item) => item.status === activeKey);
-		setFilteredData(tmp);
+		const fetch = async () => {
+			const res = await apiHandler(
+				applicationAPI,
+				'getDayLeaves',
+				'',
+				setLoading,
+				activeKey,
+				token
+			);
+			setData(res || []);
+			setFilteredData(res || []);
+		};
+		fetch();
 	}, [activeKey]);
 
 	return (
@@ -48,6 +63,7 @@ const ApplicationDayLeave = () => {
 				dataSource={filteredData}
 				onSearch={setSearchChange}
 				activeKey={activeKey}
+				tabConfig={tabConfigWithAPIStatus}
 				rowKey={(record) => record.id + 'application-day-leave'}
 				onTabChange={onTabChange}
 				pagination={{ ...paginationConfig }}
@@ -58,6 +74,7 @@ const ApplicationDayLeave = () => {
 						title={column.title}
 						dataIndex={column.dataIndex}
 						width={column.width}
+						ellipsis={column.ellipsis}
 						render={column.render}
 					/>
 				))}
@@ -71,7 +88,7 @@ const ApplicationDayLeave = () => {
 					)}
 				/>
 			</CustomTable>
-			<ApplicationModal open={openModal} setOpen={setOpenModal} />
+			<ApplicationModal id={id} open={openModal} setOpen={setOpenModal} />
 		</CustomCard>
 	);
 };

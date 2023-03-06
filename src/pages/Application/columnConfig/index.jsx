@@ -41,8 +41,8 @@ export const dayLeaveColumnConfig = [
 		title: 'Description',
 		dataIndex: 'description',
 		key: 'description',
-		ellipse: true,
-		// TODO: using draftjs
+		ellipsis: true,
+		render: (text) => <Text>{getValueFromBlock(JSON.parse(text))}</Text>,
 	},
 	{
 		title: 'Department',

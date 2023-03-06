@@ -35,7 +35,6 @@ const ApplicationSalary = () => {
 	const [search, searchRef, setSearchChange] = useSearch();
 	const [openModal, setOpenModal] = useState(false);
 	const onTabChange = async (value) => {
-		// TODO: call api to get data
 		setActiveKey(value);
 	};
 	const onView = (id) => {
@@ -44,7 +43,6 @@ const ApplicationSalary = () => {
 	};
 	useEffect(() => {
 		const fetch = async () => {
-			// TODO: get data by type
 			const res = await apiHandler(
 				applicationAPI,
 				'getSalaryIncreasing',
