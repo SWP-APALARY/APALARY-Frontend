@@ -57,6 +57,16 @@ const applicationAPI = {
 			}
 		);
 	},
+	getRecruitment: async (status, token) => {
+		const endpoint = '/application/recruitment/' + status;
+		return await get(
+			endpoint,
+			{},
+			{
+				Authorization: 'Bearer ' + token,
+			}
+		);
+	},
 	approveOne: async (id, token) => {
 		const endpoint = `/application/approve/${id}`;
 		return await put(

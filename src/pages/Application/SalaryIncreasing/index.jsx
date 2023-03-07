@@ -16,15 +16,6 @@ import ApplicationModal from '../Modal';
 import { salaryColumnConfig } from '../columnConfig';
 
 const { Column } = Table;
-const initData = [
-	{
-		name: 'Salary',
-		description: 'Salary',
-		department: 'Salary',
-		baseSalary: 'Salary',
-		status: 'Processing',
-	},
-];
 const ApplicationSalary = () => {
 	const [token, setToken] = usePersistedState('token');
 	const [data, setData] = useState([]);
@@ -51,21 +42,22 @@ const ApplicationSalary = () => {
 				activeKey,
 				token
 			);
-			console.log(res);
 			setData(res || []);
 			setFilteredData(res || []);
 		};
 		fetch();
-	}, [activeKey]);
+	}, [activeKey, openModal]);
 	useEffect(() => {
-		const tmp = data.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
+		const tmp = data.filter((item) =>
+			item.employeeName.toLowerCase().includes(search.toLowerCase())
+		);
 		setFilteredData(tmp);
 	}, [search]);
 
 	return (
 		<CustomCard>
 			<CustomTable
-				dataSource={data}
+				dataSource={filteredData}
 				onSearch={setSearchChange}
 				activeKey={activeKey}
 				tabConfig={tabConfigWithAPIStatus}
@@ -93,7 +85,7 @@ const ApplicationSalary = () => {
 					)}
 				/>
 			</CustomTable>
-			<ApplicationModal id={id} open={openModal} setOpen={setOpenModal} />
+			<ApplicationModal id={id} open={openModal} setOpen={setOpenModal} status={activeKey} />
 		</CustomCard>
 	);
 };

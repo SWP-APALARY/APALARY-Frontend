@@ -13,7 +13,6 @@ export const salaryColumnConfig = [
 		title: 'Title',
 		dataIndex: 'title',
 		key: 'name',
-		width: 200,
 	},
 	{
 		title: 'Description',
@@ -32,10 +31,14 @@ export const salaryColumnConfig = [
 
 export const dayLeaveColumnConfig = [
 	{
-		title: 'Full name',
-		dataIndex: 'name',
+		title: 'Name',
+		dataIndex: 'employeeName',
+		key: 'employeeName',
+	},
+	{
+		title: 'Title',
+		dataIndex: 'title',
 		key: 'name',
-		width: 200,
 	},
 	{
 		title: 'Description',
@@ -45,17 +48,9 @@ export const dayLeaveColumnConfig = [
 		render: (text) => <Text>{getValueFromBlock(JSON.parse(text))}</Text>,
 	},
 	{
-		title: 'Department',
-		dataIndex: 'department',
-		key: 'department',
-	},
-	{
-		title: 'Leave on day',
-		dataIndex: 'absentDay',
-		key: 'absentDay',
-	},
-	{
 		title: 'Created at',
-		dataIndex: 'createdAt',
+		dataIndex: 'createdTime',
+		key: 'createdTime',
+		render: (text) => <Text>{new Date(text).toLocaleDateString()}</Text>,
 	},
 ];
