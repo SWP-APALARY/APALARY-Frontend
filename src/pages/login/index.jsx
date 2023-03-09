@@ -41,7 +41,6 @@ export default function Login() {
 				LocalStorageUtils.setItem('role', response.data.role);
 				// to reload page, using navigate(0)
 				navigate(0);
-				setTimeout(() => navigate('/dashboard'), 500);
 			})
 			.catch(() => setLoginError(true));
 		await setIsSpin(false);

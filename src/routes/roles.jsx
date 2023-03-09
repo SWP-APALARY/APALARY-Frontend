@@ -15,12 +15,14 @@ import JobOfferingDetail from '../pages/Homepage/job-offering';
 import JobOffering from '../pages/JobOffering';
 import PostCreation from '../pages/JobOffering/CreatePages';
 import PostDetail from '../pages/JobOffering/Detail';
+import ListEmployee from '../pages/ListEmployee';
+import EmployeeDetail from '../pages/ListEmployee/Detail';
 import FormDisabledDemo from '../pages/Profile/Profile';
 import Login from '../pages/login';
 
 export const roles = {
 	HR_MANAGER: 'HR_MANAGER',
-	CEO: 'CEO',
+	CEO: 'HEAD_MANAGER',
 	HR_EMPLOYEE: 'HR_EMPLOYEE',
 	EMPLOYEE: 'EMPLOYEE',
 	MANAGER: 'MANAGER',
@@ -31,7 +33,7 @@ export const roles = {
 // public routes here
 export const publicRoutes = [
 	{
-		path: routeKey.homepage,
+		path: routeKey.dashBoard,
 		Element: <Homepage />,
 	},
 	{
@@ -115,5 +117,29 @@ export const ceoRoutes = [
 	{
 		path: routeKey.dashBoard,
 		Element: <CEODashboard />,
+	},
+	{
+		path: routeKey.posts,
+		Element: <JobOffering />,
+	},
+	{
+		path: routeKey.employeesAll,
+		Element: <ListEmployee />,
+	},
+	{
+		path: routeKey.employeesSpecific,
+		Element: <EmployeeDetail />,
+	},
+	{
+		path: routeKey.postsSpecific,
+		Element: <PostDetail />,
+	},
+	{
+		path: routeKey.applicantsSpecific,
+		Element: <ApplicantDetails />,
+	},
+	{
+		path: routeKey.applicants,
+		Element: <Applicants />,
 	},
 ];
