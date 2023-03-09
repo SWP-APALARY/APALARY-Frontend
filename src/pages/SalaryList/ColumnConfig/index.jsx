@@ -97,6 +97,8 @@ export const SalaryDetailForm = [
 		key: 'bonus',
 		type: 'number',
 		span: 24,
+		wrapperCol: 20,
+		detail: true,
 	},
 	{
 		title: 'Penalty',
@@ -104,6 +106,8 @@ export const SalaryDetailForm = [
 		key: 'penalty',
 		type: 'number',
 		span: 24,
+		wrapperCol: 20,
+		detail: true,
 	},
 	{
 		title: 'Total receive',

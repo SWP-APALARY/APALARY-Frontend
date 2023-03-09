@@ -38,6 +38,7 @@ const SalaryList = () => {
 		setFilteredData(tmp);
 	}, [search]);
 	useEffect(() => {
+		onTimeChange(dayjs(new Date()));
 		const fetch = async () => {
 			const res = await apiHandler(
 				salaryAPI,
@@ -52,7 +53,7 @@ const SalaryList = () => {
 			setLoading(false);
 		};
 		fetch();
-	});
+	}, []);
 	return (
 		<CustomCard>
 			<CustomTable
