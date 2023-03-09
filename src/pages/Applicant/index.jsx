@@ -58,6 +58,7 @@ const Applicants = () => {
 					style={{ minWidth: '700px' }}
 					onTabChange={onTabChange}
 					activeKey={activeKey}
+					tabConfig={tabStatusConfig}
 					rowKey={(record) => record.id + 'applicants'}
 					onSearch={onSearchChange}
 					loading={loading}
