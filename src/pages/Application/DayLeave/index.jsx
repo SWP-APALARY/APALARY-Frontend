@@ -53,7 +53,7 @@ const ApplicationDayLeave = () => {
 	}, [activeKey]);
 
 	return (
-		<CustomCard>
+		<CustomCard width='800px'>
 			<CustomTable
 				dataSource={filteredData}
 				onSearch={setSearchChange}

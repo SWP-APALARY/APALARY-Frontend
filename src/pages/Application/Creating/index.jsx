@@ -22,7 +22,6 @@ const CreateApplication = () => {
 	const [type, setType] = useState();
 	const [form] = Form.useForm();
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
-	const [currentType, setCurrentType] = useState();
 	const [destinationEmployees, setDestinationEmployees] = useState([]);
 	const [token, setToken] = usePersistedState('token');
 	const [loading, setLoading] = usePersistedState(false);

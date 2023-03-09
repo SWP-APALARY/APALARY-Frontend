@@ -55,7 +55,7 @@ const ApplicationSalary = () => {
 	}, [search]);
 
 	return (
-		<CustomCard>
+		<CustomCard width='800px'>
 			<CustomTable
 				dataSource={filteredData}
 				onSearch={setSearchChange}

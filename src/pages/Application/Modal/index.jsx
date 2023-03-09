@@ -12,7 +12,16 @@ import { convertToEditor } from '../../../utils/DraftjsHelper';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 
 const { Title, Text } = Typography;
-
+const initData = {
+	employeeName: null,
+	employeeId: '',
+	department: '',
+	role: '',
+	createdDate: '',
+	updatedDate: '',
+	status: null,
+	description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
+};
 const ApplicationModal = (props) => {
 	const { id, open, setOpen, activeKey } = props;
 	const [token, setToken] = usePersistedState('token');
@@ -20,10 +29,10 @@ const ApplicationModal = (props) => {
 	const [rejectLoading, setRejectLoading] = useState(false);
 	const [data, setData] = useState({
 		description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
+		status: null,
 	});
 	const [loading, setLoading] = useState(false);
 	const handleOk = async () => {
-		// TODO: call approve here
 		setApproveLoading(true);
 		await apiHandler(
 			applicationAPI,
@@ -37,7 +46,6 @@ const ApplicationModal = (props) => {
 		});
 	};
 	const handleReject = async () => {
-		// TODO: call reject here
 		setRejectLoading(true);
 		await apiHandler(
 			applicationAPI,
@@ -54,11 +62,10 @@ const ApplicationModal = (props) => {
 	useEffect(() => {
 		const fetch = async () => {
 			const res = await apiHandler(applicationAPI, 'getOne', '', setLoading, id, token);
-			setData(res);
+			setData(res || initData);
 		};
 		fetch();
 	}, [open]);
-	// TODO: Change data when api done
 	return (
 		<Modal
 			open={open}
