@@ -59,6 +59,33 @@ export const postColumns = [
 		dataIndex: 'status',
 	},
 ];
+export const contractColumns = [
+	{
+		title: 'Name',
+		dataIndex: 'employeeName',
+		sorter: true,
+		width: '20%',
+	},
+	{
+		title: 'SignedDate',
+		dataIndex: 'signedDate',
+		sorter: true,
+		width: '20%',
+	},
+	{
+		title: 'StartDate',
+		dataIndex: 'startDate',
+		sorter: true,
+		width: '20%',
+	},
+	{
+		title: 'EndDate',
+		dataIndex: 'endDate',
+		sorter: true,
+		width: '20%',
+	},
+];
+
 export const paginationConfig = {
 	showSizeChanger: true,
 	showQuickJumper: true,

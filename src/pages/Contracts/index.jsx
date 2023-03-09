@@ -1,286 +1,106 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 
-import { Card, Tabs, Table } from 'antd';
+import { Space, Table } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
 
-const onChange = (key) => {
-	console.log(key);
-};
-const data = [
-	{
-		key: '1',
-		name: 'John Brown',
-		age: 32,
-		address: 'New York No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 0,
-	},
-	{
-		key: '2',
-		name: 'Jim Green',
-		age: 42,
-		address: 'London No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 0,
-	},
-	{
-		key: '3',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sydney No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 1,
-	},
-	{
-		key: '4',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sydney No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 1,
-	},
-	{
-		key: '5',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sydney No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 1,
-	},
-	{
-		key: '6',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sydney No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 1,
-	},
-	{
-		key: '7',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sydney No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 1,
-	},
-	{
-		key: '8',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sydney No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 1,
-	},
-	{
-		key: '9',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sydney No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 1,
-	},
-	{
-		key: '11',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sydney No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 1,
-	},
-	{
-		key: '12',
-		name: 'Joe Black',
-		age: 32,
-		address: 'Sydney No. 1 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 1,
-	},
-	{
-		key: '10',
-		name: 'Jim Red',
-		age: 32,
-		address: 'London No. 2 Lake Park',
-		startDate: '2002-10-10',
-		endDate: '2007-10-10',
-		description: '',
-		status: 2,
-	},
-];
-const WStatus = data.filter((todo) => todo.status === 0);
-const AStatus = data.filter((todo) => todo.status === 1);
-const DStatus = data.filter((todo) => todo.status === 2);
-const WColumns = [
-	{
-		title: 'Name',
-		dataIndex: 'name',
-		filters: WStatus.map((todo) => ({ text: todo.name, value: todo.name })),
-		filterMode: 'tree',
-		filterSearch: true,
-		onFilter: (value, record) => record.name.startsWith(value),
-		width: '25%',
-	},
+import Box from '../../components/Box';
+import CustomCard from '../../components/Card';
+import { paginationConfig, contractColumns } from '../../config/ColumnConfig';
+import { tabContractStatusConfig } from '../../config/TabsConfig';
+import contractsAPI from '../../utils/Apis/contractsAPI';
+import employeeAPI from '../../utils/Apis/employeeAPI';
+import apiHandler from '../../utils/Apis/handler';
+import usePersistedState from '../../utils/LocalStorage/usePersistedState';
+import useSearch from '../../utils/hooks/useSearch';
+import CustomCTable from './Table';
 
-	{
-		title: 'StartDate',
-		dataIndex: 'startDate',
-		width: '30%',
-	},
-	{
-		title: 'EndDate',
-		dataIndex: 'endDate',
-		width: '30%',
-	},
-	{
-		title: 'Description',
-		dataIndex: 'description',
-		filters: WStatus.map((todo) => ({ text: todo.description, value: todo.description })),
-		filterMode: 'tree',
-		filterSearch: true,
-		onFilter: (value, record) => record.description.startsWith(value),
-		width: '20%',
-	},
-];
-const AColumns = [
-	{
-		title: 'Name',
-		dataIndex: 'name',
-		filters: AStatus.map((todo) => ({ text: todo.name, value: todo.name })),
-		filterMode: 'tree',
-		filterSearch: true,
-		onFilter: (value, record) => record.name.startsWith(value),
-		width: '25%',
-	},
+const { Column } = Table;
+const Contracts = () => {
+	const [loading, setLoading] = useState(false);
+	const [filteredData, setFilteredData] = useState();
+	const navigate = useNavigate();
+	const [data, setData] = useState();
+	const [search, searchRef, onSearchChange] = useSearch();
+	const [activeKey, setActiveKey] = useState(tabContractStatusConfig[0].key);
+	const [token] = usePersistedState('token');
+	const onTabChange = async (key) => {
+		setActiveKey(key);
+		const res = await apiHandler(contractsAPI, 'get' + key, '', setLoading, token);
+		setFilteredData(res || []);
+	};
+	const handleDelete = async (id) => {
+		const tmpData = data.filter((item) => item.id !== id);
+		await apiHandler(
+			contractsAPI,
+			'delete',
+			'Success Deleted Post',
+			setLoading,
+			id,
+			token
+		).then(() => {
+			setData(tmpData);
+			setFilteredData(tmpData);
+		});
+	};
 
-	{
-		title: 'StartDate',
-		dataIndex: 'startDate',
-		width: '30%',
-	},
-	{
-		title: 'EndDate',
-		dataIndex: 'endDate',
-		width: '30%',
-	},
-	{
-		title: 'Description',
-		dataIndex: 'description',
-		filters: AStatus.map((todo) => ({ text: todo.description, value: todo.description })),
-		filterMode: 'tree',
-		filterSearch: true,
-		onFilter: (value, record) => record.description.startsWith(value),
-		width: '20%',
-	},
-];
-const DColumns = [
-	{
-		title: 'Name',
-		dataIndex: 'name',
-		filters: DStatus.map((todo) => ({ text: todo.name, value: todo.name })),
-		filterMode: 'tree',
-		filterSearch: true,
-		onFilter: (value, record) => record.name.startsWith(value),
-		width: '25%',
-	},
-
-	{
-		title: 'StartDate',
-		dataIndex: 'startDate',
-		width: '30%',
-	},
-	{
-		title: 'EndDate',
-		dataIndex: 'endDate',
-		width: '30%',
-	},
-	{
-		title: 'Description',
-		dataIndex: 'description',
-		filters: DStatus.map((todo) => ({ text: todo.description, value: todo.description })),
-		filterMode: 'tree',
-		filterSearch: true,
-		onFilter: (value, record) => record.description.startsWith(value),
-		width: '20%',
-	},
-];
-
-const onChange1 = (pagination, filters, sorter, extra) => {
-	console.log('params', pagination, filters, sorter, extra);
-};
-const WTable = () => (
-	<Table
-		columns={WColumns}
-		dataSource={WStatus}
-		onChange={onChange1}
-		pagination={{
-			pageSize: 7,
-		}}
-	/>
-);
-const ATable = () => (
-	<Table
-		columns={AColumns}
-		dataSource={AStatus}
-		onChange={onChange1}
-		pagination={{
-			pageSize: 7,
-		}}
-	/>
-);
-const DTable = () => (
-	<Table
-		columns={DColumns}
-		dataSource={DStatus}
-		onChange={onChange1}
-		pagination={{
-			pageSize: 7,
-		}}
-	/>
-);
-
-const items = [
-	{
-		key: '1',
-		label: `Waiting`,
-		children: <WTable />,
-	},
-	{
-		key: '2',
-		label: `Approved`,
-		children: <ATable />,
-	},
-	{
-		key: '3',
-		label: `Denied`,
-		children: <DTable />,
-	},
-];
-const Tab = () => <Tabs defaultActiveKey='1' items={items} onChange={onChange} />;
-
-export default function Contracts() {
+	useEffect(() => {
+		const fetch = async () => {
+			const res = await apiHandler(contractsAPI, 'get' + activeKey, '', setLoading, token);
+			if (res instanceof Error) {
+				navigate('/');
+			}
+			setData(res);
+			setFilteredData(res);
+		};
+		fetch();
+	}, []);
+	// useEffect(() => {
+	// 	const tmp = data.filter((item) =>
+	// 		item.employeeName.toLowerCase().includes(search.toLowerCase())
+	// 	);
+	// 	setFilteredData(tmp);
+	// }, [search]);
 	return (
-		<Card style={{ width: 1000 }}>
-			<Tab />
-		</Card>
+		<CustomCard>
+			<Box direction='vertical'>
+				<CustomCTable
+					style={{ minWidth: '700px' }}
+					onTabChange={onTabChange}
+					activeKey={activeKey}
+					rowKey={(record) => record.id + 'contracts'}
+					onSearch={onSearchChange}
+					addNewButton={true}
+					loading={loading}
+					pagination={{
+						...paginationConfig,
+					}}
+					dataSource={filteredData}
+				>
+					{contractColumns.map((item) => {
+						return (
+							<Column
+								title={item.title}
+								dataIndex={item.dataIndex}
+								key={item.key + '-contractColumn'}
+								render={item.render}
+							/>
+						);
+					})}
+					<Column
+						title='Action'
+						dataIndex='action'
+						key='action-contractColumn'
+						render={(text, record) => (
+							<Space size='middle'>
+								<Link to={`/contract/${record.id}`}>View</Link>
+								<Link onClick={() => handleDelete(record.id)}>Delete</Link>
+							</Space>
+						)}
+					/>
+				</CustomCTable>
+			</Box>
+		</CustomCard>
 	);
-}
+};
+
+export default Contracts;
