@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 
 import { Table } from 'antd';
 import dayjs from 'dayjs';
@@ -21,22 +21,31 @@ const SalaryList = () => {
 	const [data, setData] = useState(initData);
 	const [loading, setLoading] = useState(true);
 	const [search, searchRef, onSearch] = useSearch();
-	const [filteredData, setFilteredData] = useState(initData);
+	// const [filteredData, setFilteredData] = useState(initData);
 	const [startDate, setStartDate] = useState(dayjs(new Date()));
 	const [endDate, setEndDate] = useState('');
 	const [token, setToken] = usePersistedState('token');
-	const onTimeChange = (start) => {
-		const tmp = data.filter((data) => {
-			const date = dayjs(data.receiveDate, 'MM/YYYY');
-			return date.month() === start.month();
+
+	const filteredData = useMemo(() => {
+		const tmp = data.filter((item) => {
+			const isIncludesSearch = item.name.toLowerCase().includes(search.toLowerCase());
+			const date = dayjs(new Date(item.receiveDate));
+			return date.month() === startDate.month() && isIncludesSearch;
 		});
-		setFilteredData(tmp);
-		setStartDate(start);
-	};
-	useEffect(() => {
-		const tmp = data.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
-		setFilteredData(tmp);
-	}, [search]);
+		return tmp;
+	}, [search, startDate]);
+	const onTimeChange = useCallback(
+		(date) => {
+			setStartDate(date);
+			console.log(date.month());
+		},
+		[startDate]
+	);
+	// useEffect(() => {
+	// 	const tmp = data.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
+	// 	setFilteredData(tmp);
+	// }, [search]);
+
 	useEffect(() => {
 		onTimeChange(dayjs(new Date()));
 		const fetch = async () => {
