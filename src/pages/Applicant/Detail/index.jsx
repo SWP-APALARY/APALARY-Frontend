@@ -20,8 +20,6 @@ const ApplicantDetails = () => {
 	useEffect(() => {
 		const fetch = async () => {
 			const res = await apiHandler(applicantAPI, 'getOne', '', setLoading, params.id, token);
-			// convertBaseToFile(res.cv, 'cv' + res.id);
-			console.log(res.cv);
 			setApplicant(res);
 		};
 

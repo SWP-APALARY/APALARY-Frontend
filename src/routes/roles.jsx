@@ -1,14 +1,16 @@
 import { routeKey } from '../components/Layout/ManagerItems';
 import Applicants from '../pages/Applicant';
 import ApplicantDetails from '../pages/Applicant/Detail';
-import ApplyJob from '../pages/ApplyJob';
+import CreateApplication from '../pages/Application/Creating';
+import ApplicationDayLeave from '../pages/Application/DayLeave';
+import ApplicationRecruitment from '../pages/Application/Recruitment';
+import ApplicationSalary from '../pages/Application/SalaryIncreasing';
 import Contract from '../pages/Contract/Contract';
 import Contracts from '../pages/Contracts';
 import ContractCreation from '../pages/Contracts/Create';
 import ContractDetails from '../pages/Contracts/detail';
 import EmDashboard from '../pages/EmDashboard';
 import Salary from '../pages/EmSalary/Salary';
-import ErrorPage from '../pages/Errors';
 import Feedback from '../pages/Feedback/Feedback.jsx';
 import Home from '../pages/Home';
 import Homepage from '../pages/Homepage';
@@ -49,6 +51,18 @@ export const managerRoutes = [
 	{
 		path: routeKey.applicantsSpecific,
 		Element: <ApplicantDetails />,
+	},
+	{
+		path: routeKey.applications,
+		Element: <ApplicationSalary />,
+	},
+	{
+		path: routeKey.applicationSalaryIncreasing,
+		Element: <ApplicationSalary />,
+	},
+	{
+		path: routeKey.applicationCreating,
+		Element: <CreateApplication />,
 	},
 	{
 		path: routeKey.applicants,
@@ -106,6 +120,14 @@ export const managerRoutes = [
 	{
 		path: '/salary',
 		Element: <Salary />,
+	},
+	{
+		path: routeKey.applicationDayLeave,
+		Element: <ApplicationDayLeave />,
+	},
+	{
+		path: routeKey.applicationRecruitment,
+		Element: <ApplicationRecruitment />,
 	},
 ];
 export const employeeRoutes = [

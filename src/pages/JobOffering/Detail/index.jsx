@@ -35,7 +35,7 @@ const PostDetail = () => {
 	}, []);
 	return (
 		<Box>
-			<CustomCard bordered loading={loading}>
+			<CustomCard bordered loading={loading} width={'700px'}>
 				<Box direction='vertical'>
 					<Box direction='vertical' align='center'>
 						<Title>{data.title}</Title>
@@ -44,9 +44,11 @@ const PostDetail = () => {
 						<Title level={5} type='danger'>
 							Up to: {data.baseSalary}
 						</Title>
-						<Text level={5} type='success'>
-							Max Employees: {data.maxEmployee}
-						</Text>
+						<Text type='success'>Max Employees: {data.maxEmployee}</Text>
+						<Text>Department: {data.departmentName}</Text>
+						<Title level={4} strong>
+							Detail:
+						</Title>
 						<Editor readOnly editorState={editorState}></Editor>
 					</Box>
 				</Box>
