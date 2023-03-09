@@ -1,11 +1,94 @@
 import LocalStorageUtils from '../../LocalStorage/utils';
-import { get } from '../caller';
+import { get, post, put } from '../caller';
 
-const token = LocalStorageUtils.getItem('token');
+const token = 'Bearer ' + LocalStorageUtils.getItem('token');
+
 const applicationAPI = {
 	getAll: async () => {
 		const endpoint = '/application';
-		return await get(endpoint, {}, { Authorization: 'Bearer ' + token });
+		return await get(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
+	},
+	getOne: async (id) => {
+		const endpoint = `/application/${id}`;
+		return await get(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
+	},
+	getAllType: async () => {
+		const endpoint = '/application-type';
+		return await get(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
+	},
+	post: async (data) => {
+		const endpoint = '/application';
+		return await post(endpoint, data, {
+			Authorization: token,
+		});
+	},
+	getSalaryIncreasing: async (status) => {
+		const endpoint = '/application/salary-increase/' + status;
+		return await get(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
+	},
+	getDayLeaves: async (status) => {
+		const endpoint = '/application/day-leave/' + status;
+		return await get(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
+	},
+	getRecruitment: async (status) => {
+		const endpoint = '/application/recruitment/' + status;
+		return await get(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
+	},
+	approveOne: async (id) => {
+		const endpoint = `/application/approve/${id}`;
+		return await put(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
+	},
+	disapproveOne: async (id) => {
+		const endpoint = `/application/disapprove/${id}`;
+		return await put(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
 	},
 };
 

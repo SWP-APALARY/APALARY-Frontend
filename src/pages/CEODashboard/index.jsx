@@ -1,13 +1,15 @@
 import React from 'react';
 
 import { Button, Card, Col, List, Row } from 'antd';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+import { tabConfigWithAPIStatus } from '../../config/TabsConfig/index.js';
 import applicationAPI from '../../utils/Apis/applicationAPI/index.js';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
 import jobOfferingApi from '../../utils/Apis/jobOffering/index.js';
 import { getValueFromBlock } from '../../utils/DraftjsHelper/index.js';
 import LocalStorageUtils from '../../utils/LocalStorage/utils.js';
+import ApplicationModal from '../Application/Modal/index.jsx';
 import { DashboardComponent } from './styles';
 
 export default function CEODashboard() {
@@ -16,10 +18,17 @@ export default function CEODashboard() {
 	const [isLoading, setIsLoading] = React.useState(false);
 	const [listApplication, setListApplication] = React.useState([]);
 	const [listPost, setListPost] = React.useState([]);
+	const [id, setId] = React.useState(1);
+	const [openModal, setOpenModal] = React.useState(false);
 
 	const logout = () => {
 		LocalStorageUtils.clear();
 		navigate(0);
+	};
+
+	const onView = (id) => {
+		setOpenModal(true);
+		setId(id);
 	};
 
 	React.useEffect(() => {
@@ -63,7 +72,11 @@ export default function CEODashboard() {
 							dataSource={listApplication}
 							footer={false}
 							renderItem={(item) => (
-								<List.Item key={item.title}>
+								<List.Item
+									key={item.title}
+									onClick={() => onView(item.id)}
+									style={{ cursor: 'pointer' }}
+								>
 									<List.Item.Meta
 										title={<p>{item.title}</p>}
 										description={item.employeeName}
@@ -81,6 +94,9 @@ export default function CEODashboard() {
 						<p className='title'>{`HELLO ${name} ;)`}</p>
 					</Card>
 					<Card>
+						<p className='title' style={{ marginBottom: '1.5rem' }}>
+							POSTS
+						</p>
 						<List
 							itemLayout='vertical'
 							size='large'
@@ -117,6 +133,7 @@ export default function CEODashboard() {
 					</Card>
 				</Col>
 			</Row>
+			<ApplicationModal id={id} open={openModal} setOpen={setOpenModal} status='active' />
 		</DashboardComponent>
 	);
 }
