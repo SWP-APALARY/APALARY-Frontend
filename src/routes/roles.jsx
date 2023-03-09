@@ -5,6 +5,8 @@ import CreateApplication from '../pages/Application/Creating';
 import ApplicationDayLeave from '../pages/Application/DayLeave';
 import ApplicationRecruitment from '../pages/Application/Recruitment';
 import ApplicationSalary from '../pages/Application/SalaryIncreasing';
+import ApplyJob from '../pages/ApplyJob';
+import CEODashboard from '../pages/CEODashboard';
 import Contract from '../pages/Contract/Contract';
 import Contracts from '../pages/Contracts';
 import EmDashboard from '../pages/EmDashboard';
@@ -16,11 +18,14 @@ import JobOfferingDetail from '../pages/Homepage/job-offering';
 import JobOffering from '../pages/JobOffering';
 import PostCreation from '../pages/JobOffering/CreatePages';
 import PostDetail from '../pages/JobOffering/Detail';
+import ListEmployee from '../pages/ListEmployee';
+import EmployeeDetail from '../pages/ListEmployee/Detail';
 import FormDisabledDemo from '../pages/Profile/Profile';
 import Login from '../pages/login';
 
 export const roles = {
 	HR_MANAGER: 'HR_MANAGER',
+	CEO: 'HEAD_MANAGER',
 	HR_EMPLOYEE: 'HR_EMPLOYEE',
 	EMPLOYEE: 'EMPLOYEE',
 	MANAGER: 'MANAGER',
@@ -31,7 +36,7 @@ export const roles = {
 // public routes here
 export const publicRoutes = [
 	{
-		path: routeKey.homepage,
+		path: routeKey.dashBoard,
 		Element: <Homepage />,
 	},
 	{
@@ -128,5 +133,60 @@ export const employeeRoutes = [
 	{
 		path: routeKey.dashBoard,
 		Element: <EmDashboard />,
+	},
+];
+
+export const ceoRoutes = [
+	{
+		path: routeKey.dashBoard,
+		Element: <CEODashboard />,
+	},
+	{
+		path: routeKey.posts,
+		Element: <JobOffering />,
+	},
+	{
+		path: routeKey.employeesAll,
+		Element: <ListEmployee />,
+	},
+	{
+		path: routeKey.employees,
+		Element: <ListEmployee />,
+	},
+	{
+		path: routeKey.employeesSpecific,
+		Element: <EmployeeDetail />,
+	},
+	{
+		path: routeKey.postsSpecific,
+		Element: <PostDetail />,
+	},
+	{
+		path: routeKey.applicantsSpecific,
+		Element: <ApplicantDetails />,
+	},
+	{
+		path: routeKey.applicants,
+		Element: <Applicants />,
+	},
+	{
+		path: routeKey.applicationDayLeave,
+		Element: <ApplicationDayLeave />,
+	},
+	{
+		path: routeKey.applicationRecruitment,
+		Element: <ApplicationRecruitment />,
+	},
+	{
+		path: routeKey.applications,
+		Element: <ApplicationSalary />,
+	},
+	{
+		path: routeKey.applicationSalaryIncreasing,
+		Element: <ApplicationSalary />,
+	},
+	{
+		path: routeKey.applicationCreating,
+		Element: <CreateApplication />,
 	},
 ];

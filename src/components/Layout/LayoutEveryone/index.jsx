@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Card, Layout, Menu } from 'antd';
 import { Content, Header } from 'antd/es/layout/layout';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import Logo from '../../../assets';
 import StyledHeader from '../Header';
@@ -11,8 +11,7 @@ import { layoutContent, layoutHeader, menuLogo } from '../style';
 
 import Sider from 'antd/es/layout/Sider';
 
-const LayoutEveryone = (props) => {
-	const { children } = props;
+const LayoutEveryone = () => {
 	return (
 		<Layout style={{ minHeight: '100vh' }}>
 			<Layout
@@ -22,7 +21,9 @@ const LayoutEveryone = (props) => {
 				}}
 			>
 				<StyledHeader style={layoutHeader} isDashBoard />
-				<Content>{children}</Content>
+				<Content>
+					<Outlet />
+				</Content>
 			</Layout>
 		</Layout>
 	);

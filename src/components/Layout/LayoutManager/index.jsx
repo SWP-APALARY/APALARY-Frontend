@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Button, Card, Carousel, Layout, Menu } from 'antd';
 import { Content, Header } from 'antd/es/layout/layout';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 import Logo from '../../../assets';
 import Box from '../../Box';
@@ -12,8 +12,7 @@ import { layoutContent, layoutHeader, menuLogo } from '../style';
 
 import Sider from 'antd/es/layout/Sider';
 
-const LayoutManager = (props) => {
-	const { children } = props;
+const LayoutManager = () => {
 	const [link, setLink] = useState('/dashboard');
 	const navigate = useNavigate();
 	useEffect(() => {
@@ -40,7 +39,9 @@ const LayoutManager = (props) => {
 				}}
 			>
 				<StyledHeader hasLogo={false} style={layoutHeader}></StyledHeader>
-				<Content style={layoutContent}>{children}</Content>
+				<Content style={layoutContent}>
+					<Outlet />
+				</Content>
 			</Layout>
 		</Layout>
 	);
