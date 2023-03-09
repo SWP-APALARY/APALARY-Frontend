@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { notification } from 'antd';
-import { Navigate } from 'react-router-dom';
+import { Navigate, redirect, useNavigate } from 'react-router-dom';
 
 import toast from '../../components/Toast';
 import usePersistedState from '../LocalStorage/usePersistedState';
@@ -32,12 +32,11 @@ const apiHandler = async (api, action, successMessage, setLoading, ...rest) => {
 		})
 		.catch((error) => {
 			const status = error.response.status;
-			if (status === 401 || status === 403) {
+			if (status === 401 || status === 403 || status === 500) {
 				LocalStorageUtils.clear();
-				return <Navigate to='/' />;
 			}
 			toast(error.message, 'error');
-			return error;
+			return null;
 		})
 		.finally(() => {
 			if (setLoading) {

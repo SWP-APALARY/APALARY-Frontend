@@ -1,17 +1,18 @@
 import { Table, Row, Col, Button, Tabs, Space } from 'antd';
 import { Link } from 'react-router-dom';
 
-import { tabStatusConfig } from '../../config/TabsConfig';
+import { tabConfigWithAPIStatus, tabStatusConfig } from '../../config/TabsConfig';
 import Box from '../Box';
 import { routeKey } from '../Layout/ManagerItems';
 import SearchBar from '../SearchBar';
 
 import { PlusOutlined } from '@ant-design/icons';
 
-export const CustomTable = ({
+const CustomTable = ({
 	addNewButton,
 	columns,
 	onSearch,
+	tabConfig,
 	activeKey,
 	onTabChange,
 	children,
@@ -25,10 +26,10 @@ export const CustomTable = ({
 						<Col>
 							{onTabChange && (
 								<Tabs
-									defaultActiveKey='PROCESSING'
+									defaultActiveKey='Processing'
 									activeKey={activeKey}
 									onChange={onTabChange}
-									items={tabStatusConfig.map((item) => item)}
+									items={tabConfig.map((item) => item)}
 								/>
 							)}
 						</Col>
