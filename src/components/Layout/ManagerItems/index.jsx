@@ -14,7 +14,7 @@ export const routeKey = {
 	employees: '/employees',
 	employeesAll: '/employees/all',
 	employeesContracts: '/employees/contracts',
-	contractsSpecific: '/contract/:id',
+	contractsSpecific: '/employees/contracts/:id',
 	contractsCreate: '/contracts/create',
 	employeesSalaries: '/employees/salaries',
 	applications: '/application',

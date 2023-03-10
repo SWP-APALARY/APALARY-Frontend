@@ -7,10 +7,6 @@ const salaryAPI = {
 		const endpoint = '/salary/self';
 		return await get(endpoint, {}, { Authorization: token }, {});
 	},
-	getById: async (id) => {
-		const endpoint = `/contract/${id}`;
-		return await get(endpoint, {}, { Authorization: token }, {});
-	},
 };
 
 export default salaryAPI;

@@ -22,3 +22,17 @@ export const tabContractStatusConfig = [
 		label: 'UnActive',
 	},
 ];
+export const tabConfigWithAPIStatus = [
+	{
+		key: 'processing',
+		label: 'Waiting',
+	},
+	{
+		key: 'active',
+		label: 'Approved',
+	},
+	{
+		key: 'inactive',
+		label: 'Rejected',
+	},
+];
