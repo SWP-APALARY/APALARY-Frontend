@@ -195,4 +195,16 @@ export const ceoRoutes = [
 		path: routeKey.applicationCreating,
 		Element: <CreateApplication />,
 	},
+	{
+		path: routeKey.employeesContracts,
+		Element: <Contracts />,
+	},
+	{
+		path: routeKey.contractsSpecific,
+		Element: <ContractDetails />,
+	},
+	{
+		path: routeKey.contractsCreate,
+		Element: <ContractCreation />,
+	},
 ];
