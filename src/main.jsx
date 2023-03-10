@@ -8,9 +8,9 @@ import App from './App';
 import themeConfig from './utils/Theme';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-	<React.StrictMode>
-		<ConfigProvider theme={{ ...themeConfig }}>
-			<App />
-		</ConfigProvider>
-	</React.StrictMode>
+	// <React.StrictMode>
+	<ConfigProvider theme={{ ...themeConfig }}>
+		<App />
+	</ConfigProvider>
+	// </React.StrictMode>
 );
