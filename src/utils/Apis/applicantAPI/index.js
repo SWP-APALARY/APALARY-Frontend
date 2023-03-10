@@ -1,31 +1,34 @@
+import LocalStorageUtils from '../../LocalStorage/utils';
 import { get, post, put } from '../caller';
 
+const token = 'Bearer ' + LocalStorageUtils.getItem('token');
+
 const applicantAPI = {
-	getProcessing: async (token) => {
+	getProcessing: async () => {
 		const endpoint = '/applicant/processing';
-		return await get(endpoint, {}, { Authorization: 'Bearer ' + token });
+		return await get(endpoint, {}, { Authorization: token });
 	},
-	getAccepted: async (token) => {
+	getAccepted: async () => {
 		const endpoint = '/applicant/accepted';
-		return await get(endpoint, {}, { Authorization: 'Bearer ' + token });
+		return await get(endpoint, {}, { Authorization: token });
 	},
-	getRejected: async (token) => {
+	getRejected: async () => {
 		const endpoint = '/applicant/rejected';
-		return await get(endpoint, {}, { Authorization: 'Bearer ' + token });
+		return await get(endpoint, {}, { Authorization: token });
 	},
-	getOne: async (id, token) => {
+	getOne: async (id) => {
 		const endpoint = `/applicant/${id}`;
 		return await get(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
-	accept: async (id, isAccepted, token) => {
+	accept: async (id, isAccepted) => {
 		const endpoint = `/applicant/accept?applicantId=${id}&isAccepted=${isAccepted}`;
-		return await put(endpoint, {}, { Authorization: 'Bearer ' + token });
+		return await put(endpoint, {}, { Authorization: token });
 	},
 
 	createApplicant: async (body) => {

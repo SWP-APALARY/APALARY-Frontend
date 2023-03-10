@@ -9,10 +9,8 @@ import themeConfig from './utils/Theme';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
-		<BrowserRouter>
-			<ConfigProvider theme={{ ...themeConfig }}>
-				<App />
-			</ConfigProvider>
-		</BrowserRouter>
+		<ConfigProvider theme={{ ...themeConfig }}>
+			<App />
+		</ConfigProvider>
 	</React.StrictMode>
 );

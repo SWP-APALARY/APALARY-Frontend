@@ -12,6 +12,7 @@ export const routeKey = {
 	homepage: '/homepage',
 	dashBoard: '/dashboard',
 	employees: '/employees',
+	employeesSpecific: '/employees/:id',
 	employeesAll: '/employees/all',
 	employeesContracts: '/employees/contracts',
 	contractsSpecific: '/employees/contracts/:id',

@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from '../../../assets';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
+import LocalStorageUtils from '../../../utils/LocalStorage/utils';
 import { menuLogo } from '../style';
 import CustomBreadcrumb from './CustomBreadcrumb';
 import dropDownItem from './DropdownItem';
@@ -19,8 +20,9 @@ const StyledHeader = (props) => {
 	const [role, setRole] = usePersistedState('role');
 	const { style, isDashBoard } = props;
 	const logout = () => {
-		setToken('');
-		setRole('');
+		// setToken('');
+		// setRole('');
+		LocalStorageUtils.clear();
 		navigate('/');
 		navigate(0);
 	};
