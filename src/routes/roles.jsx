@@ -9,6 +9,8 @@ import ApplyJob from '../pages/ApplyJob';
 import CEODashboard from '../pages/CEODashboard';
 import Contract from '../pages/Contract/Contract';
 import Contracts from '../pages/Contracts';
+import ContractCreation from '../pages/Contracts/Create';
+import ContractDetails from '../pages/Contracts/detail';
 import EmDashboard from '../pages/EmDashboard';
 import Salary from '../pages/EmSalary/Salary';
 import Feedback from '../pages/Feedback/Feedback.jsx';
@@ -91,10 +93,6 @@ export const managerRoutes = [
 		path: '/admin',
 		Element: <Home />,
 	},
-	{
-		path: routeKey.employeesAll,
-		Element: <Home />,
-	},
 
 	{
 		path: routeKey.posts,
@@ -103,6 +101,14 @@ export const managerRoutes = [
 	{
 		path: routeKey.employeesContracts,
 		Element: <Contracts />,
+	},
+	{
+		path: routeKey.contractsSpecific,
+		Element: <ContractDetails />,
+	},
+	{
+		path: routeKey.contractsCreate,
+		Element: <ContractCreation />,
 	},
 	{
 		path: '/feedback',

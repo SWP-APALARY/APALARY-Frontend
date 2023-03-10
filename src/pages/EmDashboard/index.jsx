@@ -8,11 +8,13 @@ import { useNavigate } from 'react-router-dom';
 
 import Box from '../../components/Box/index.jsx';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
+import EmSalary from '../EmSalary/Salary';
+import data from '../EmSalary/data.js';
 import FeedBacks from '../Feedback/data.js';
-import Profile from '../Profile/Profile';
 
 // import ProData from '../Profile/data.js';
 import { FileTextFilled, IdcardFilled, ProfileFilled, MailFilled } from '@ant-design/icons';
+import { Column } from '@ant-design/plots';
 
 const { Header, Content, Footer } = Layout;
 
@@ -21,7 +23,7 @@ const EmDashboard = () => {
 	const [text, setText] = useState({
 		phone: '',
 		name: '',
-		id: '',
+		identifyNumber: '',
 		username: '',
 		password: '',
 		dateOfBirth: '',
@@ -31,6 +33,36 @@ const EmDashboard = () => {
 		let sum = 0;
 		FeedBacks.forEach((todo) => (sum = sum + todo.star));
 		return sum / FeedBacks.length;
+	};
+	const SalaryChart = () => {
+		const config = {
+			data,
+			xField: 'month',
+			yField: 'sales',
+			label: {
+				position: 'middle',
+
+				style: {
+					fill: '#FFFFFF',
+					opacity: 0.6,
+				},
+			},
+			xAxis: {
+				label: {
+					autoHide: true,
+					autoRotate: false,
+				},
+			},
+			meta: {
+				type: {
+					alias: 'Month',
+				},
+				sales: {
+					alias: 'Sale',
+				},
+			},
+		};
+		return <Column {...config} />;
 	};
 	// const { name, phone, number, username, password, gender, date } = ProData[0];
 	useEffect(() => {
@@ -44,6 +76,7 @@ const EmDashboard = () => {
 			<Content
 				style={{
 					background: '#F0F0F0',
+					maxWidth: 1200,
 				}}
 			>
 				<Image
@@ -151,14 +184,27 @@ const EmDashboard = () => {
 								}}
 							>
 								<Form.Item label='Full Name'>{text.name}</Form.Item>
-								<Form.Item label='Id'>{text.id}</Form.Item>
+								<Form.Item label='I.N'>{text.identifyNumber}</Form.Item>
 								<Form.Item label='UserName'>{text.username}</Form.Item>
 
-								<NavLink to='/profile'>More</NavLink>
+								<button>
+									<NavLink to='/profile'>More</NavLink>
+								</button>
 							</Card>
 						</Card>
 					</Col>
 				</Row>
+				<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+					<Content>
+						<Card>
+							<h3>Salary</h3>
+							<SalaryChart />
+							<button style={{ margin: '10px 0px' }}>
+								<NavLink to='/salary'>More</NavLink>
+							</button>
+						</Card>
+					</Content>
+				</Layout>
 			</Footer>
 		</Box>
 	);
