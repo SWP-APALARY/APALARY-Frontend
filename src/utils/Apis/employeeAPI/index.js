@@ -1,5 +1,5 @@
 import LocalStorageUtils from '../../LocalStorage/utils';
-import { get, put, del } from '../caller';
+import { get, put, del, post } from '../caller';
 
 const token = 'Bearer ' + LocalStorageUtils.getItem('token');
 const employeeAPI = {
@@ -26,6 +26,11 @@ const employeeAPI = {
 	deleteById: async (id) => {
 		const endpoint = `/employee/${id}`;
 		return await del(endpoint, {}, { Authorization: token }, {});
+	},
+	createOne: async (body) => {
+		console.log(body);
+		const endpoint = '/auth/create/employee';
+		return await post(endpoint, body, { Authorization: token }, {});
 	},
 };
 
