@@ -1,25 +1,27 @@
+import LocalStorageUtils from '../../LocalStorage/utils';
 import { get, post, put, del } from '../caller';
 
+const token = 'Bearer ' + LocalStorageUtils.getItem('token');
 const contractsAPI = {
-	getProcessing: async (token) => {
+	getProcessing: async () => {
 		const endpoint = '/contract/all';
-		return await get(endpoint, {}, { Authorization: 'Bearer ' + token });
+		return await get(endpoint, {}, { Authorization: token });
 	},
 
-	getOne: async (id, token) => {
+	getOne: async (id) => {
 		const endpoint = `/contract/${id}`;
 		return await get(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
-	post: async (data, token) => {
+	post: async (data) => {
 		const endpoint = '/contract';
 		return await post(endpoint, data, {
-			Authorization: 'Bearer ' + token,
+			Authorization: token,
 		});
 	},
 	// put: async (data, token) => {
@@ -28,13 +30,13 @@ const contractsAPI = {
 	// 		Authorization: 'Bearer ' + token,
 	// 	});
 	// },
-	delete: async (id, token) => {
+	delete: async (id) => {
 		const endpoint = '/contract/' + id;
 		return await del(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
