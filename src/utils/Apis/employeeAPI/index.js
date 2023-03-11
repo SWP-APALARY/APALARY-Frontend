@@ -28,7 +28,6 @@ const employeeAPI = {
 		return await del(endpoint, {}, { Authorization: token }, {});
 	},
 	createOne: async (body) => {
-		console.log(body);
 		const endpoint = '/auth/create/employee';
 		return await post(endpoint, body, { Authorization: token }, {});
 	},
