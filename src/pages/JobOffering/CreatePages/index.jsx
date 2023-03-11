@@ -55,18 +55,10 @@ const PostCreation = () => {
 			const departments = await apiHandler(departmentAPI, 'getAll', '', null, token);
 			setDepartmentOption(departments);
 			if (params.id) {
-				if (params.id) {
-					const res = await apiHandler(
-						jobOfferingApi,
-						'getOne',
-						'',
-						setLoading,
-						params.id
-					);
-					form.setFieldsValue(res);
-					setData(res);
-					setEditorState(convertToEditor(JSON.parse(res.description)));
-				}
+				const res = await apiHandler(jobOfferingApi, 'getOne', '', setLoading, params.id);
+				form.setFieldsValue(res);
+				setData(res);
+				setEditorState(convertToEditor(JSON.parse(res.description)));
 			}
 		};
 		fetch();

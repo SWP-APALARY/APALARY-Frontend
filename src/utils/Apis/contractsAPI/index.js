@@ -24,10 +24,10 @@ const contractsAPI = {
 			Authorization: token,
 		});
 	},
-	// put: async (data, token) => {
+	// put: async (data) => {
 	// 	const endpoint = '/job-offering';
 	// 	return await put(endpoint, data, {
-	// 		Authorization: 'Bearer ' + token,
+	// 		Authorization: token,
 	// 	});
 	// },
 	delete: async (id) => {

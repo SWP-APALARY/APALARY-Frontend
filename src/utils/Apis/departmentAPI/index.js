@@ -10,7 +10,7 @@ export const departmentAPI = {
 			endpoint,
 			{},
 			{
-				Authorization: `Bearer ${token}`,
+				Authorization: `${token}`,
 			}
 		);
 	},
