@@ -24,7 +24,7 @@ const FormDisabledDemo = () => {
 		identifyNumber: '',
 		username: '',
 		password: '',
-		dateOfBirth: '',
+		dateOfBirth: dayjs(new Date()),
 		gender: '',
 		base: '',
 		tax: '',
@@ -53,7 +53,7 @@ const FormDisabledDemo = () => {
 				name: text.name,
 				gender: text.gender,
 				phone: text.phone,
-				dateOfBirth: text.dateOfBirth,
+				dateOfBirth: text.dateOfBirth.toString(),
 			})
 			.then(() => toast('success'))
 			.catch((e) => toast('error', e));
@@ -65,9 +65,13 @@ const FormDisabledDemo = () => {
 			.then((res) =>
 				//setText(res.data))
 				{
-					contractAPI
-						.get(res.data.ContractId)
-						.then((rest) => setText({ ...rest.data, ...res.data }));
+					contractAPI.get(res.data.ContractId).then((rest) =>
+						setText({
+							...rest.data,
+							...res.data,
+							dateOfBirth: dayjs(res.data.dateOfBirth, 'YYYY/MM/DD'),
+						})
+					);
 					// .catch(() => navigate('/'));
 				}
 			)
@@ -117,25 +121,13 @@ const FormDisabledDemo = () => {
 				</Form.Item>
 
 				<Form.Item label='Gender'>
-					<Radio.Group value={text.gender}>
-						<Radio
-							value={0}
-							onChange={(e) => setText({ ...text, gender: e.target.value })}
-						>
-							Female
-						</Radio>
-						<Radio
-							value={1}
-							onChange={(e) => setText({ ...text, gender: e.target.value })}
-						>
-							Male
-						</Radio>
-						<Radio
-							value={2}
-							onChange={(e) => setText({ ...text, gender: e.target.value })}
-						>
-							Other
-						</Radio>
+					<Radio.Group
+						value={text.gender}
+						onChange={(e) => setText({ ...text, gender: e.target.value })}
+					>
+						<Radio value={0}>Female</Radio>
+						<Radio value={1}>Male</Radio>
+						<Radio value={2}>Other</Radio>
 					</Radio.Group>
 				</Form.Item>
 				<Form.Item
@@ -147,7 +139,12 @@ const FormDisabledDemo = () => {
 						},
 					]}
 				>
-					<DatePicker value={dayjs(text.dateOfBirth, 'YYYY-MM-DD')} />
+					<DatePicker
+						onChange={(value) =>
+							setText({ ...text, dateOfBirth: dayjs(value, 'YYYY-MM-DD') })
+						}
+						value={text.dateOfBirth}
+					/>
 				</Form.Item>
 
 				<Form.Item
@@ -175,7 +172,7 @@ const FormDisabledDemo = () => {
 				</Form.Item>
 
 				<Form.Item label='Type Of Work' style={{ width: 600 }}>
-					<Radio.Group value={text.contractTypeId}>
+					<Radio.Group value={text.contractTypeId} disabled>
 						<Radio value={2}> Full Time </Radio>
 						<Radio value={1}> Part Time </Radio>
 					</Radio.Group>

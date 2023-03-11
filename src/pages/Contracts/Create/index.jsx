@@ -23,40 +23,19 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const { Title, Text } = Typography;
 const ContractCreation = () => {
-	const { RangePicker } = DatePicker;
-	const params = useParams();
 	const [data, setData] = useState();
 	const [token] = usePersistedState('token');
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const [form] = Form.useForm();
-	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const onSubmit = async () => {
 		const formData = form.getFieldsValue();
-		const raw = convertToRaw(editorState.getCurrentContent());
-		const completedForm = {
-			id: params.id,
-			...formData,
-			createdTime: data.createdTime,
-			description: JSON.stringify(raw),
-			// TODO: change to user id when login is done
-		};
-		console.log(completedForm);
+		await apiHandler(contractsAPI, 'post', 'success', setLoading, formData, token).then(() => {
+			form.resetFields();
+		});
+		navigate(-1);
 	};
-	// TODO: fix that the input fields don't receive data from fetch
-	useEffect(() => {
-		const fetch = async () => {
-			if (params.id) {
-				if (params.id) {
-					const res = await apiHandler(contractsAPI, 'getOne', '', setLoading, params.id);
-					form.setFieldsValue(res);
-					setData(res);
-					setEditorState(convertToEditor(JSON.parse(res.description)));
-				}
-			}
-		};
-		fetch();
-	}, []);
+
 	const onFinishFailed = (errorInfo) => {
 		toast(errorInfo, 'error');
 	};
@@ -96,8 +75,6 @@ const ContractCreation = () => {
 												<TextArea style={{ width: '100%' }} />
 											) : item.type === 'date' ? (
 												<DatePicker style={{ width: '100%' }} />
-											) : item.type === 'date1' ? (
-												<RangePicker style={{ width: '100%' }} />
 											) : null
 											// <Input />
 										}
@@ -121,11 +98,6 @@ const ContractCreation = () => {
 					</Box>
 				</Box>
 			</CustomCard>
-			{/* <CustomCard bordered>
-				<Box>
-					<Text></Text>
-				</Box>
-			</CustomCard> */}
 		</Box>
 	);
 };
