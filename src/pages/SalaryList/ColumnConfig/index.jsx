@@ -2,33 +2,45 @@ import { Space } from 'antd';
 import { Link } from 'react-router-dom';
 
 import { routeKey } from '../../../components/Layout/ManagerItems';
+import moneyConverter from '../../../utils/moneyConverter';
 
 export const SalaryListColumnConfig = [
 	{
 		title: 'Name',
-		dataIndex: 'name',
-		key: 'name',
+		dataIndex: 'employeeName',
+		key: 'employeeName',
+		sorter: (a, b) => a.employeeName.localeCompare(b.employeeName),
+		sortDirections: ['descend', 'ascend'],
 	},
 	{
-		title: 'Receive',
-		dataIndex: 'receive',
-		key: 'receive',
+		title: 'Total Amount',
+		dataIndex: 'net',
+		key: 'net',
 		render: (text, record) => {
-			return <span>{text} VND</span>;
+			return <span>{moneyConverter(text)} VNĐ</span>;
 		},
+		sorter: (a, b) => a.net - b.net,
+		sortDirections: ['descend', 'ascend'],
 	},
 	{
 		title: 'Bonus',
 		dataIndex: 'bonus',
 		key: 'bonus',
 		render: (text, record) => {
-			return <span>{text} VND</span>;
+			return <span>{moneyConverter(text)} VNĐ</span>;
 		},
+		sorter: (a, b) => a.bonus - b.bonus,
+		sortDirections: ['descend', 'ascend'],
 	},
 	{
-		title: 'Receive Date',
-		dataIndex: 'receiveDate',
-		key: 'receiveDate',
+		title: 'Penalty',
+		dataIndex: 'penalty',
+		key: 'penalty',
+		render: (text, record) => {
+			return <span>{moneyConverter(text)} VNĐ</span>;
+		},
+		sorter: (a, b) => a.penalty - b.penalty,
+		sortDirections: ['descend', 'ascend'],
 	},
 	{
 		title: 'Action',
@@ -37,7 +49,7 @@ export const SalaryListColumnConfig = [
 		render: (text, record) => {
 			return (
 				<Space size='middle'>
-					<Link to={`${routeKey.employeesSalaries}/${record.id}`}>View</Link>
+					<Link to={`${routeKey.employeesSalaries}/${record.id}`}>Detail</Link>
 				</Space>
 			);
 		},

@@ -9,6 +9,7 @@ import apiHandler from '../../utils/Apis/handler';
 import salaryAPI from '../../utils/Apis/salaryAPI';
 import usePersistedState from '../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../utils/hooks/useSearch';
+import { toLowerCaseNonAccentVietnamese } from '../../utils/viewnameseConverter';
 import { SalaryListColumnConfig as salaryListColumnConfig } from './ColumnConfig';
 import { initData } from './data';
 
@@ -18,54 +19,52 @@ dayjs.extend(CustomParse);
 
 const { Column } = Table;
 const SalaryList = () => {
-	const [data, setData] = useState(initData);
+	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [search, searchRef, onSearch] = useSearch();
-	// const [filteredData, setFilteredData] = useState(initData);
 	const [startDate, setStartDate] = useState(dayjs(new Date()));
 	const [endDate, setEndDate] = useState('');
 	const [token, setToken] = usePersistedState('token');
+	const [filteredData, setFilteredData] = useState([]);
 
-	const filteredData = useMemo(() => {
-		const tmp = data.filter((item) => {
-			const isIncludesSearch = item.name.toLowerCase().includes(search.toLowerCase());
-			const date = dayjs(new Date(item.receiveDate));
-			return date.month() === startDate.month() && isIncludesSearch;
-		});
-		return tmp;
-	}, [search, startDate]);
 	const onTimeChange = useCallback(
 		(date) => {
 			setStartDate(date);
-			console.log(date.month());
 		},
 		[startDate]
 	);
-	// useEffect(() => {
-	// 	const tmp = data.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
-	// 	setFilteredData(tmp);
-	// }, [search]);
 
 	useEffect(() => {
+		const tmp = data.filter((item) =>
+			toLowerCaseNonAccentVietnamese(item.employeeName).includes(
+				toLowerCaseNonAccentVietnamese(search)
+			)
+		);
+		setFilteredData(tmp);
+	}, [search, data]);
+	useEffect(() => {
 		onTimeChange(dayjs(new Date()));
+	}, []);
+	useEffect(() => {
 		const fetch = async () => {
 			const res = await apiHandler(
 				salaryAPI,
 				'getByMonth',
 				'',
 				null,
-				startDate.month() + 1,
+				startDate.month(),
 				startDate.year(),
 				token
 			);
-			console.log(res);
+			setData(res || []);
 			setLoading(false);
 		};
 		fetch();
-	}, []);
+	}, [startDate]);
 	return (
 		<CustomCard>
 			<CustomTable
+				rowKey={(record) => record.id + '-salary-list'}
 				dataSource={filteredData}
 				onSearch={onSearch}
 				onTimeChange={onTimeChange}
@@ -74,7 +73,7 @@ const SalaryList = () => {
 				style={{ minWidth: ' 700px' }}
 			>
 				{salaryListColumnConfig.map((item) => {
-					return <Column key={item.key + 'salary-list'} {...item} />;
+					return <Column key={item.key + '-salary-list'} {...item} />;
 				})}
 			</CustomTable>
 		</CustomCard>
