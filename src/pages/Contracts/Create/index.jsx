@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, Form, Input, InputNumber, Select, Skeleton, Typography } from 'antd';
+import { Button, DatePicker, Form, Input, InputNumber, Skeleton, Typography, Upload } from 'antd';
 import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -9,26 +9,25 @@ import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
 import CustomEditor from '../../../components/Editor';
 import toast from '../../../components/Toast';
-import { departmentAPI } from '../../../utils/Apis/departmentAPI';
+import contractsAPI from '../../../utils/Apis/contractsAPI';
 import apiHandler from '../../../utils/Apis/handler';
-import jobOfferingApi from '../../../utils/Apis/jobOffering';
 import { convertToEditor } from '../../../utils/DraftjsHelper';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import themeConfig from '../../../utils/Theme';
-import { initData } from '../Detail/initData';
 import { formConfig } from './formConfig';
 
+import { PlusOutlined } from '@ant-design/icons';
 import Meta from 'antd/es/card/Meta';
 import TextArea from 'antd/es/input/TextArea';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const { Title, Text } = Typography;
-const PostCreation = () => {
+const ContractCreation = () => {
+	const { RangePicker } = DatePicker;
 	const params = useParams();
-	const [data, setData] = useState(initData);
+	const [data, setData] = useState();
 	const [token] = usePersistedState('token');
 	const [loading, setLoading] = useState(false);
-	const [departmentOption, setDepartmentOption] = useState([]);
 	const navigate = useNavigate();
 	const [form] = Form.useForm();
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -40,25 +39,20 @@ const PostCreation = () => {
 			...formData,
 			createdTime: data.createdTime,
 			description: JSON.stringify(raw),
+			// TODO: change to user id when login is done
 		};
-		if (params.id) {
-			await apiHandler(jobOfferingApi, 'put', 'success', setLoading, completedForm, token);
-			navigate(-1);
-			return;
-		}
-		await apiHandler(jobOfferingApi, 'post', 'success', setLoading, completedForm, token);
-		navigate(-1);
+		console.log(completedForm);
 	};
 	// TODO: fix that the input fields don't receive data from fetch
 	useEffect(() => {
 		const fetch = async () => {
-			const departments = await apiHandler(departmentAPI, 'getAll', '', null, token);
-			setDepartmentOption(departments);
 			if (params.id) {
-				const res = await apiHandler(jobOfferingApi, 'getOne', '', setLoading, params.id);
-				form.setFieldsValue(res);
-				setData(res);
-				setEditorState(convertToEditor(JSON.parse(res.description)));
+				if (params.id) {
+					const res = await apiHandler(contractsAPI, 'getOne', '', setLoading, params.id);
+					form.setFieldsValue(res);
+					setData(res);
+					setEditorState(convertToEditor(JSON.parse(res.description)));
+				}
 			}
 		};
 		fetch();
@@ -71,11 +65,7 @@ const PostCreation = () => {
 			<CustomCard bordered width='800px' loading={loading}>
 				<Box direction='vertical'>
 					<Box direction='vertical' align='center'>
-						{params.id ? (
-							<Title level={3}>Edit Post</Title>
-						) : (
-							<Title>Create New Post</Title>
-						)}
+						<Title>Create New Contract</Title>
 					</Box>
 					<Box direction='vertical'>
 						<Form
@@ -91,6 +81,11 @@ const PostCreation = () => {
 										label={item.label}
 										name={item.name}
 										rules={[...item.rules]}
+										style={{
+											display: 'inline-block',
+											width: 'calc(50% - 8px)',
+											marginLeft: 5,
+										}}
 									>
 										{
 											item.type === 'number' ? (
@@ -99,46 +94,27 @@ const PostCreation = () => {
 												<Input style={{ width: '100%' }} />
 											) : item.type === 'textarea' ? (
 												<TextArea style={{ width: '100%' }} />
-											) : (
-												<Select placeholder='Select a option and change input text above'>
-													{departmentOption?.map((item) => (
-														<Select.Option
-															key={item.id + 'select-post-department'}
-															value={item.id}
-														>
-															{item.name}
-														</Select.Option>
-													))}
-												</Select>
-											)
+											) : item.type === 'date' ? (
+												<DatePicker style={{ width: '100%' }} />
+											) : item.type === 'date1' ? (
+												<RangePicker style={{ width: '100%' }} />
+											) : null
 											// <Input />
 										}
 									</Form.Item>
 								);
 							})}
-							<Form.Item
-								label='Description'
-								name='description'
-								required
-								validateStatus={'error'}
-							>
-								<Box bordered>
-									<CustomEditor
-										height='200px'
-										required
-										editorState={editorState}
-										editorStyle={{
-											border: '1px solid ' + themeConfig.customColor.border,
-											padding: '10px',
-											minHeight: '200px',
-										}}
-										onEditorStateChange={setEditorState}
-									/>
-								</Box>
+							<Form.Item label='Description' valuePropName='fileList'>
+								<Upload listType='picture-card'>
+									<div>
+										<PlusOutlined />
+										<div style={{ marginTop: 8 }}>Upload</div>
+									</div>
+								</Upload>
 							</Form.Item>
 							<Form.Item>
 								<Button type='primary' htmlType='submit'>
-									{params.id ? 'Update' : 'Create'}
+									Create
 								</Button>
 							</Form.Item>
 						</Form>
@@ -154,4 +130,4 @@ const PostCreation = () => {
 	);
 };
 
-export default PostCreation;
+export default ContractCreation;

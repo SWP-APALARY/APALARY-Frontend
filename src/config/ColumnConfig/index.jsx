@@ -59,6 +59,71 @@ export const postColumns = [
 		dataIndex: 'status',
 	},
 ];
+export const contractColumns = [
+	{
+		title: 'Name',
+		dataIndex: 'employeeName',
+		sorter: true,
+		width: '20%',
+	},
+	{
+		title: 'SignedDate',
+		dataIndex: 'signedDate',
+		sorter: true,
+		width: '20%',
+	},
+	{
+		title: 'StartDate',
+		dataIndex: 'startDate',
+		sorter: true,
+		width: '20%',
+	},
+	{
+		title: 'EndDate',
+		dataIndex: 'endDate',
+		sorter: true,
+		width: '20%',
+	},
+];
+
+const Gender = ['Male', 'Female', 'Other'];
+export const employeeColumns = [
+	{
+		title: 'Name',
+		dataIndex: 'name',
+		sorter: true,
+		render: (value, record) => <Link to={`/employees/${record.id}`}>{value}</Link>,
+		width: '20%',
+	},
+	{
+		title: 'Gender',
+		dataIndex: 'gender',
+		ellipsis: true,
+		render: (value) => <Text>{Gender[value]}</Text>,
+		width: '10%',
+	},
+	{
+		title: 'Date of birth',
+		dataIndex: 'dateOfBirth',
+		width: '12%',
+	},
+	{
+		title: 'Phone',
+		dataIndex: 'phone',
+		width: '14%',
+	},
+	{
+		title: 'Email',
+		dataIndex: 'email',
+		width: '20%',
+	},
+	{
+		title: 'Role',
+		dataIndex: 'role',
+		width: '15%',
+	},
+];
+
 export const paginationConfig = {
 	showSizeChanger: true,
 	showQuickJumper: true,

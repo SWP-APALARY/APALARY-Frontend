@@ -12,7 +12,16 @@ export const tabStatusConfig = [
 		label: 'Rejected',
 	},
 ];
-
+export const tabContractStatusConfig = [
+	{
+		key: 'Processing',
+		label: 'Active',
+	},
+	{
+		key: 'Accepted',
+		label: 'UnActive',
+	},
+];
 export const tabConfigWithAPIStatus = [
 	{
 		key: 'processing',

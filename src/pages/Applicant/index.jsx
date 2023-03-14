@@ -27,6 +27,7 @@ const Applicants = () => {
 	const onTabChange = async (key) => {
 		setActiveKey(key);
 		const res = await apiHandler(applicantAPI, 'get' + key, '', setLoading, token);
+		setData(res);
 		setFilteredData(res || []);
 	};
 	const onAcceptApplicant = async (id, isAccepted) => {

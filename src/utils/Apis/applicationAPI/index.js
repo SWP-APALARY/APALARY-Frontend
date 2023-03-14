@@ -1,89 +1,92 @@
+import LocalStorageUtils from '../../LocalStorage/utils';
 import { get, post, put } from '../caller';
 
+const token = 'Bearer ' + LocalStorageUtils.getItem('token');
+
 const applicationAPI = {
-	getAll: async (token) => {
+	getAll: async () => {
 		const endpoint = '/application';
 		return await get(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
-	getOne: async (id, token) => {
+	getOne: async (id) => {
 		const endpoint = `/application/${id}`;
 		return await get(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
-	getAllType: async (token) => {
+	getAllType: async () => {
 		const endpoint = '/application-type';
 		return await get(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
-	post: async (data, token) => {
+	post: async (data) => {
 		const endpoint = '/application';
 		return await post(endpoint, data, {
-			Authorization: 'Bearer ' + token,
+			Authorization: token,
 		});
 	},
-	getSalaryIncreasing: async (status, token) => {
+	getSalaryIncreasing: async (status) => {
 		const endpoint = '/application/salary-increase/' + status;
 		return await get(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
-	getDayLeaves: async (status, token) => {
+	getDayLeaves: async (status) => {
 		const endpoint = '/application/day-leave/' + status;
 		return await get(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
-	getRecruitment: async (status, token) => {
+	getRecruitment: async (status) => {
 		const endpoint = '/application/recruitment/' + status;
 		return await get(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
-	approveOne: async (id, token) => {
+	approveOne: async (id) => {
 		const endpoint = `/application/approve/${id}`;
 		return await put(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
-	disapproveOne: async (id, token) => {
+	disapproveOne: async (id) => {
 		const endpoint = `/application/disapprove/${id}`;
 		return await put(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},

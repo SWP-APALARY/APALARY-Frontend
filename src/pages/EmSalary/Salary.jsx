@@ -2,7 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 import { Card, Col, Row, Layout, Collapse } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+import contractAPI from '../../utils/Apis/contractAPI/index.js';
+import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
+import salaryAPI from '../../utils/Apis/salaryAPI/index.js';
 import Profile from '../Profile/data.js';
 import data from './data.js';
 
@@ -43,7 +47,23 @@ export const SalaryChart = () => {
 };
 
 const emSalary = () => {
-	const { salary } = Profile[0];
+	const navigate = useNavigate();
+	const [text, setText] = useState({
+		contractId: '',
+		base: '',
+		net: '',
+	});
+	useEffect(() => {
+		salaryAPI
+			.get()
+			.then((res) => {
+				contractAPI
+					.get(res.data.contractId)
+					.then((rest) => setText({ ...rest.data, ...res.data }));
+				// .catch(() => navigate('/'));
+			})
+			.catch(() => navigate('/'));
+	}, []);
 	return (
 		<Card>
 			<Row style={{ marginBottom: 50 }}>
@@ -57,7 +77,7 @@ const emSalary = () => {
 						>
 							<Row>
 								<Col span={12} offset={6}>
-									<h1>{salary}$</h1>
+									<h1>{text.base}đ</h1>
 								</Col>
 							</Row>
 						</Card>
@@ -73,7 +93,7 @@ const emSalary = () => {
 						>
 							<Row>
 								<Col span={12} offset={6}>
-									<h1>{salary}$</h1>
+									<h1>{text.net}</h1>
 								</Col>
 							</Row>
 						</Card>

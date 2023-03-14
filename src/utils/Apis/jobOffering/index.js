@@ -1,4 +1,7 @@
+import LocalStorageUtils from '../../LocalStorage/utils';
 import { del, get, post, put } from '../caller';
+
+const token = 'Bearer ' + LocalStorageUtils.getItem('token');
 
 const jobOfferingApi = {
 	getJobOffering: async () => {
@@ -9,25 +12,25 @@ const jobOfferingApi = {
 		const endpoint = '/job-offering/' + id;
 		return await get(endpoint);
 	},
-	post: async (data, token) => {
+	post: async (data) => {
 		const endpoint = '/job-offering';
 		return await post(endpoint, data, {
-			Authorization: 'Bearer ' + token,
+			Authorization: token,
 		});
 	},
-	put: async (data, token) => {
+	put: async (data) => {
 		const endpoint = '/job-offering';
 		return await put(endpoint, data, {
-			Authorization: 'Bearer ' + token,
+			Authorization: token,
 		});
 	},
-	delete: async (id, token) => {
+	delete: async (id) => {
 		const endpoint = '/job-offering/' + id;
 		return await del(
 			endpoint,
 			{},
 			{
-				Authorization: 'Bearer ' + token,
+				Authorization: token,
 			}
 		);
 	},
