@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Card, Col, List, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
+import CustomCard from '../../components/Card/index.jsx';
 import { tabConfigWithAPIStatus } from '../../config/TabsConfig/index.js';
 import applicationAPI from '../../utils/Apis/applicationAPI/index.js';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
@@ -60,7 +61,7 @@ export default function CEODashboard() {
 		<DashboardComponent>
 			<Row gutter={[16, 16]}>
 				<Col className='col-left' span={16}>
-					<Card>
+					<CustomCard width='100%'>
 						<p className='title'>APPLICATIONS</p>
 						<List
 							itemLayout='vertical'
@@ -87,7 +88,7 @@ export default function CEODashboard() {
 								</List.Item>
 							)}
 						/>
-					</Card>
+					</CustomCard>
 				</Col>
 				<Col className='col-right' span={8}>
 					<Card style={{ marginBottom: '1rem' }}>
