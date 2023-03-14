@@ -23,7 +23,7 @@ const { Column } = Table;
 const SalaryList = () => {
 	const [loading, setLoading] = useState(true);
 	const [search, searchRef, onSearch] = useSearch();
-	const [startDate, setStartDate] = useState(dayjs(new Date()));
+	const [startDate, setStartDate] = useState(dayjs().month(dayjs().month() - 1));
 	const [endDate, setEndDate] = useState('');
 	const [token, setToken] = usePersistedState('token');
 	const [filteredData, setFilteredData] = useState([]);
@@ -43,9 +43,6 @@ const SalaryList = () => {
 		);
 		setFilteredData(tmp);
 	}, [search, salaryList]);
-	useEffect(() => {
-		onTimeChange(dayjs(new Date()));
-	}, []);
 	const fetch = async () => {
 		const res = await apiHandler(
 			salaryAPI,

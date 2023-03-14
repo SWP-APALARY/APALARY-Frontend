@@ -13,8 +13,6 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
 
-const { RangePicker } = DatePicker;
-
 const CustomTable = ({
 	addNewButton,
 	columns,
