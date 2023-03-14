@@ -23,6 +23,8 @@ import PostDetail from '../pages/JobOffering/Detail';
 import ListEmployee from '../pages/ListEmployee';
 import EmployeeDetail from '../pages/ListEmployee/Detail';
 import FormDisabledDemo from '../pages/Profile/Profile';
+import SalaryList from '../pages/SalaryList';
+import SalaryListDetail from '../pages/SalaryList/Detail';
 import Login from '../pages/login';
 
 export const roles = {
@@ -78,12 +80,20 @@ export const managerRoutes = [
 		Element: <EmDashboard />,
 	},
 	{
+		path: routeKey.employeesSalaries,
+		Element: <SalaryList />,
+	},
+	{
 		path: routeKey.postsCreate,
 		Element: <PostCreation />,
 	},
 	{
 		path: routeKey.postsEdit,
 		Element: <PostCreation />,
+	},
+	{
+		path: routeKey.employeesSalariesDetail,
+		Element: <SalaryListDetail />,
 	},
 	{
 		path: routeKey.postsSpecific,
