@@ -21,14 +21,13 @@ dayjs.extend(CustomParse);
 
 const { Column } = Table;
 const SalaryList = () => {
-	const [data, setData] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const [search, searchRef, onSearch] = useSearch();
 	const [startDate, setStartDate] = useState(dayjs(new Date()));
 	const [endDate, setEndDate] = useState('');
 	const [token, setToken] = usePersistedState('token');
 	const [filteredData, setFilteredData] = useState([]);
-	const salaryList = useSalaryStore((state) => state.salaryList);
+	const { salaryList, setSalary } = useSalaryStore();
 	const onTimeChange = useCallback(
 		(date) => {
 			setStartDate(date);
@@ -43,24 +42,23 @@ const SalaryList = () => {
 			)
 		);
 		setFilteredData(tmp);
-	}, [search, data]);
+	}, [search, salaryList]);
 	useEffect(() => {
 		onTimeChange(dayjs(new Date()));
 	}, []);
+	const fetch = async () => {
+		const res = await apiHandler(
+			salaryAPI,
+			'getByMonth',
+			'',
+			setLoading,
+			startDate.month() + 1,
+			startDate.year(),
+			token
+		);
+		setSalary(res || []);
+	};
 	useEffect(() => {
-		const fetch = async () => {
-			const res = await apiHandler(
-				salaryAPI,
-				'getByMonth',
-				'',
-				null,
-				startDate.month(),
-				startDate.year(),
-				token
-			);
-			salaryList.setSalaryList(res || []);
-			setLoading(false);
-		};
 		fetch();
 	}, [startDate]);
 	return (
@@ -73,6 +71,7 @@ const SalaryList = () => {
 				startDate={startDate}
 				endDate={endDate}
 				style={{ minWidth: ' 700px' }}
+				loading={loading}
 			>
 				{salaryListColumnConfig.map((item) => {
 					return <Column key={item.key + '-salary-list'} {...item} />;

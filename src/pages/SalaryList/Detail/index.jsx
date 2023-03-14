@@ -24,7 +24,6 @@ const SalaryListDetail = () => {
 	};
 	const [token, setToken] = usePersistedState('token');
 	useEffect(() => {
-		const memor = true;
 		const fetch = async () => {
 			setLoading(true);
 			const res = await apiHandler(
