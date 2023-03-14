@@ -77,8 +77,19 @@ export default function ListEmployee() {
 	const handleAdd = () => {
 		setIsCreate(true);
 	};
-	const onFinishForm = (values) => {
-		console.log(values);
+	const onFinishForm = (values, form, fetch, setMessage) => {
+		employeeAPI
+			.createOne(values)
+			.then(() => {
+				setIsCreate(false);
+				toast('Create successfully', 'success');
+				form.resetFields();
+				fetch();
+			})
+			.catch((err) => {
+				setMessage(err.response.data);
+				toast(err.response.data, 'error');
+			});
 	};
 
 	// Fetching data from employeeApi
@@ -154,6 +165,8 @@ export default function ListEmployee() {
 				centered
 				onClose={true}
 				onCancel={() => setIsCreate(false)}
+				width='50%'
+				style={{ minWidth: '520px' }}
 			>
 				<CreateEmployee onFinish={onFinishForm} />
 			</Modal>
