@@ -25,6 +25,12 @@ export const applicantColumns = [
 		sorter: true,
 	},
 	{
+		title: 'Interview Date',
+		dataIndex: 'interviewDate',
+		sorter: true,
+		render: (value) => <Text>{value ? value : 'Not set'}</Text>,
+	},
+	{
 		title: 'Gender',
 		dataIndex: 'gender',
 		sorter: true,

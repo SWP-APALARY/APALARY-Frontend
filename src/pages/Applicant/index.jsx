@@ -26,9 +26,12 @@ const Applicants = () => {
 	const [token] = usePersistedState('token');
 	const onTabChange = async (key) => {
 		setActiveKey(key);
-		const res = await apiHandler(applicantAPI, 'get' + key, '', setLoading, token);
-		setData(res);
-		setFilteredData(res || []);
+		const res = await apiHandler(applicantAPI, 'get' + key, '', setLoading, token).finally(
+			() => {
+				setLoading(false);
+			}
+		);
+		setData(res || []);
 	};
 	const onAcceptApplicant = async (id, isAccepted) => {
 		await apiHandler(applicantAPI, 'accept', 'Success', setLoading, id, isAccepted, token).then(
@@ -39,7 +42,15 @@ const Applicants = () => {
 	};
 	useEffect(() => {
 		const fetch = async () => {
-			const res = await apiHandler(applicantAPI, 'get' + activeKey, '', setLoading, token);
+			const res = await apiHandler(
+				applicantAPI,
+				'get' + activeKey,
+				'',
+				setLoading,
+				token
+			).finally(() => {
+				setLoading(false);
+			});
 			if (res instanceof Error) {
 				navigate('/login');
 			}
@@ -51,7 +62,7 @@ const Applicants = () => {
 	useEffect(() => {
 		const tmp = data.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
 		setFilteredData(tmp);
-	}, [search]);
+	}, [search, data]);
 	return (
 		<CustomCard>
 			<Box direction='vertical'>

@@ -8,6 +8,11 @@ export const tabStatusConfig = [
 		label: 'Approved',
 	},
 	{
+		// TODO: Change to key the same as status in api
+		key: 'Passed',
+		label: 'Passed',
+	},
+	{
 		key: 'Rejected',
 		label: 'Rejected',
 	},
