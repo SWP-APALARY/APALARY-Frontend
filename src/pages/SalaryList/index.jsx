@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useMemo } from 'react';
 
 import { Table } from 'antd';
 import dayjs from 'dayjs';
+import { useStore } from 'zustand';
 
 import CustomCard from '../../components/Card';
 import CustomTable from '../../components/Table';
@@ -9,6 +10,7 @@ import apiHandler from '../../utils/Apis/handler';
 import salaryAPI from '../../utils/Apis/salaryAPI';
 import usePersistedState from '../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../utils/hooks/useSearch';
+import useSalaryStore from '../../utils/store/salaryStore';
 import { toLowerCaseNonAccentVietnamese } from '../../utils/viewnameseConverter';
 import { SalaryListColumnConfig as salaryListColumnConfig } from './ColumnConfig';
 import { initData } from './data';
@@ -26,7 +28,7 @@ const SalaryList = () => {
 	const [endDate, setEndDate] = useState('');
 	const [token, setToken] = usePersistedState('token');
 	const [filteredData, setFilteredData] = useState([]);
-
+	const salaryList = useSalaryStore((state) => state.salaryList);
 	const onTimeChange = useCallback(
 		(date) => {
 			setStartDate(date);
@@ -35,7 +37,7 @@ const SalaryList = () => {
 	);
 
 	useEffect(() => {
-		const tmp = data.filter((item) =>
+		const tmp = salaryList.filter((item) =>
 			toLowerCaseNonAccentVietnamese(item.employeeName).includes(
 				toLowerCaseNonAccentVietnamese(search)
 			)
@@ -56,7 +58,7 @@ const SalaryList = () => {
 				startDate.year(),
 				token
 			);
-			setData(res || []);
+			salaryList.setSalaryList(res || []);
 			setLoading(false);
 		};
 		fetch();
