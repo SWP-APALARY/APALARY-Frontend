@@ -6,9 +6,14 @@ export const employeeFormConfig = [
 		col: 24,
 	},
 	{
+		label: 'Id',
+		key: 'id',
+		col: 12,
+	},
+	{
 		label: 'Username',
 		key: 'username',
-		col: 24,
+		col: 12,
 	},
 	{
 		label: 'Department',
@@ -36,13 +41,8 @@ export const employeeFormConfig = [
 		col: 12,
 	},
 	{
-		label: 'Id',
-		key: 'id',
-		col: 12,
-	},
-	{
 		label: 'Email',
 		key: 'email',
-		col: 24,
+		col: 12,
 	},
 ];

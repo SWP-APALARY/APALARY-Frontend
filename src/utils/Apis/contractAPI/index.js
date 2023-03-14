@@ -11,5 +11,9 @@ const contractAPI = {
 		const endpoint = `/contract`;
 		return await get(endpoint, {}, { Authorization: token }, {});
 	},
+	getUnassigned: async () => {
+		const endpoint = '/contract/unassigned';
+		return await get(endpoint, {}, { Authorization: token }, {});
+	},
 };
 export default contractAPI;
