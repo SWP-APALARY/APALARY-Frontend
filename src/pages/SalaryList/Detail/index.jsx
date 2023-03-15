@@ -9,15 +9,31 @@ import Loading, { LoadingContext } from '../../../components/Loading';
 import apiHandler from '../../../utils/Apis/handler';
 import salaryAPI from '../../../utils/Apis/salaryAPI';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
+import moneyConverter from '../../../utils/moneyConverter';
 import { SalaryDetailForm } from '../ColumnConfig';
 import ModalSalaryList from '../Modal';
 
 const { Title } = Typography;
+
+const initData = {
+	id: 0,
+	employeeName: '',
+	employeeId: '',
+	month: 0,
+	year: 0,
+	bonus: 0,
+	penalty: 0,
+	total: 0,
+	net: 0,
+	description: '',
+	ruleSalaryObtain: [],
+};
 const SalaryListDetail = () => {
 	const [openModal, setOpenModal] = useState(false);
 	// const [loading, setLoading] = useState(false);
 	const params = useParams();
 	const { loading, setLoading } = useContext(LoadingContext);
+	const [data, setData] = useState(initData);
 	const startDate = dayjs(new Date());
 	const onOpenModal = () => {
 		setOpenModal(true);
@@ -36,7 +52,12 @@ const SalaryListDetail = () => {
 				startDate.year(),
 				token
 			);
-			console.log(res);
+			setData({
+				...res,
+				receiveDate: dayjs()
+					.month(res.month - 1)
+					.year(res.year),
+			});
 		};
 		fetch();
 	}, []);
@@ -52,12 +73,23 @@ const SalaryListDetail = () => {
 									<Row gutter={10} justify={'space-between'} align='middle'>
 										<Col span={item.wrapperCol || 24}>
 											<Form.Item label={item.title} name={item.dataIndex}>
-												{!item.type && <Input readOnly />}
+												{!item.type && (
+													<Input readOnly value={data[item.dataIndex]} />
+												)}
 												{item.type === 'number' && (
-													<Input readOnly suffix='VNĐ' value='100000' />
+													<Input
+														readOnly
+														suffix='VNĐ'
+														value={moneyConverter(data[item.dataIndex])}
+													/>
 												)}
 												{item.type === 'date' && (
-													<DatePicker format='MM/YYYY' picker='month' />
+													<DatePicker
+														format='MM/YYYY'
+														picker='month'
+														readOnly
+														value={data[item.dataIndex]}
+													/>
 												)}
 											</Form.Item>
 										</Col>
@@ -74,7 +106,11 @@ const SalaryListDetail = () => {
 						})}
 					</Row>
 				</Form>
-				<ModalSalaryList open={openModal} setOpen={setOpenModal} />
+				<ModalSalaryList
+					open={openModal}
+					setOpen={setOpenModal}
+					ruleOption={data.ruleSalaryObtain}
+				/>
 			</CustomCard>
 		</Loading>
 	);

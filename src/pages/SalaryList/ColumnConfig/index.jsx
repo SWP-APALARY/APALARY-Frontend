@@ -59,22 +59,22 @@ export const SalaryListColumnConfig = [
 export const SalaryDetailForm = [
 	{
 		title: 'Name',
-		dataIndex: 'name',
-		key: 'name',
+		dataIndex: 'employeeName',
+		key: 'employeeName',
 		span: 24,
 	},
-	{
-		title: 'Department',
-		dataIndex: 'department',
-		key: 'department',
-		span: 10,
-	},
-	{
-		title: 'Role',
-		dataIndex: 'role',
-		key: 'role',
-		span: 10,
-	},
+	// {
+	// 	title: 'Department',
+	// 	dataIndex: 'department',
+	// 	key: 'department',
+	// 	span: 10,
+	// },
+	// {
+	// 	title: 'Role',
+	// 	dataIndex: 'role',
+	// 	key: 'role',
+	// 	span: 10,
+	// },
 	{
 		title: 'Receive Date',
 		dataIndex: 'receiveDate',

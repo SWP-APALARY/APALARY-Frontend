@@ -1,12 +1,15 @@
 import React from 'react';
 
-import { Modal } from 'antd';
+import { Modal, Typography } from 'antd';
+
+const { Title } = Typography;
 
 const ModalSalaryList = (props) => {
-	const { open, setOpen, onOk, onClose } = props;
+	const { open, setOpen, onOk, onClose, ruleOption } = props;
+	const bonus = ruleOption.filter((item) => item.type === 'BONUS');
 	return (
 		<Modal open={open} onCancel={() => setOpen(false)}>
-			Hello
+			<Title>Bonus Detail</Title>
 		</Modal>
 	);
 };
