@@ -1,12 +1,15 @@
 import { Typography } from 'antd';
+import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
 import { routeKey } from '../../components/Layout/ManagerItems';
 import { gender } from '../../pages/Applicant/Detail/config';
 import { getValueFromBlock } from '../../utils/DraftjsHelper';
 
-const { Text } = Typography;
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
+const { Text } = Typography;
+dayjs.extend(customParseFormat);
 export const applicantColumns = [
 	{
 		title: 'Name',
@@ -23,6 +26,16 @@ export const applicantColumns = [
 		title: 'Phone',
 		dataIndex: 'phone',
 		sorter: true,
+	},
+	{
+		title: 'Interview Date',
+		dataIndex: 'interviewDate',
+		sorter: true,
+		render: (value) => (
+			<Text>
+				{value ? dayjs(dayjs(value), 'DD/MM/YYYY').format('DD-MM-YYYY') : 'Not set'}
+			</Text>
+		),
 	},
 	{
 		title: 'Gender',
