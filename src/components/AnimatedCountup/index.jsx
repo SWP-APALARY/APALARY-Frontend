@@ -1,8 +1,6 @@
-import React from 'react';
-
 import CountUp from 'react-countup';
 
-const AnimatedCountUp = ({ value }) => {
+const AnimatedCountUp = (value) => {
 	return <CountUp end={value} separator=',' />;
 };
 

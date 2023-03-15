@@ -1,17 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Button, Col, DatePicker, Form, Input, Row, Typography } from 'antd';
+import { Button, Col, DatePicker, Form, Input, Row, Statistic, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { useParams } from 'react-router-dom';
 
+import AnimatedCountUp from '../../../components/AnimatedCountup';
 import CustomCard from '../../../components/Card';
 import Loading, { LoadingContext } from '../../../components/Loading';
 import apiHandler from '../../../utils/Apis/handler';
 import salaryAPI from '../../../utils/Apis/salaryAPI';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
+import themeConfig from '../../../utils/Theme';
 import moneyConverter from '../../../utils/moneyConverter';
 import { SalaryDetailForm } from '../ColumnConfig';
 import ModalSalaryList from '../Modal';
+import statisticCardConfig from '../Modal/StatisticColumnConfic';
 
 const { Title } = Typography;
 
@@ -72,22 +75,22 @@ const SalaryListDetail = () => {
 								<Col key={item.key + 'salary-list-detail'} span={item.span}>
 									<Row gutter={10} justify={'space-between'} align='middle'>
 										<Col span={item.wrapperCol || 24}>
-											<Form.Item label={item.title} name={item.dataIndex}>
+											<Form.Item label={item.title}>
 												{!item.type && (
 													<Input readOnly value={data[item.dataIndex]} />
 												)}
-												{item.type === 'number' && (
+												{/* {item.type === 'number' && (
 													<Input
 														readOnly
 														suffix='VNĐ'
 														value={moneyConverter(data[item.dataIndex])}
 													/>
-												)}
+												)} */}
 												{item.type === 'date' && (
 													<DatePicker
 														format='MM/YYYY'
 														picker='month'
-														readOnly
+														disabled
 														value={data[item.dataIndex]}
 													/>
 												)}
@@ -97,12 +100,40 @@ const SalaryListDetail = () => {
 								</Col>
 							);
 						})}
-						<Col span={4}>
-							{
-								<Button type='primary' onClick={onOpenModal}>
-									Detail
-								</Button>
-							}
+						<Col span={24}>
+							<Row gutter={16}>
+								{statisticCardConfig.map((item) => (
+									<Col
+										key={'statistic-column-config-' + item.dataIndex}
+										span={item.col}
+									>
+										<CustomCard width='100%'>
+											<Statistic
+												title={item.title}
+												valueStyle={{
+													color: themeConfig.token.colorPrimary,
+												}}
+												formatter={AnimatedCountUp}
+												value={data[item.dataIndex]}
+												suffix={'VNĐ'}
+											/>
+										</CustomCard>
+									</Col>
+								))}
+								{data.ruleSalaryObtain.map((item) => (
+									<Col span={12} key={'salary-rule-detail' + item.description}>
+										<CustomCard width='100%'>
+											<Statistic
+												title={item.description}
+												valueStyle={{
+													color: themeConfig.token.colorPrimary,
+												}}
+												value={item.count}
+											/>
+										</CustomCard>
+									</Col>
+								))}
+							</Row>
 						</Col>
 					</Row>
 				</Form>
