@@ -15,6 +15,7 @@ import ModalSalaryList from '../Modal';
 
 const { Title } = Typography;
 
+//Demo click up
 const initData = {
 	id: 0,
 	employeeName: '',
