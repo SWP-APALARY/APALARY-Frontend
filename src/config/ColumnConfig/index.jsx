@@ -1,7 +1,8 @@
-import { Typography } from 'antd';
+import { Image, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
+import DefaultImage from '../../assets/default-avatar.jpg';
 import { routeKey } from '../../components/Layout/ManagerItems';
 import { gender } from '../../pages/Applicant/Detail/config';
 import { getValueFromBlock } from '../../utils/DraftjsHelper';
@@ -106,14 +107,20 @@ export const employeeColumns = [
 		dataIndex: 'name',
 		sorter: true,
 		render: (value, record) => <Link to={`/employees/${record.id}`}>{value}</Link>,
-		width: '20%',
+		width: '18%',
+	},
+	{
+		title: 'Avatar',
+		dataIndex: 'avatar',
+		render: (value) => <Image src={value ? value : DefaultImage} width={50} />,
+		width: 'auto',
 	},
 	{
 		title: 'Gender',
 		dataIndex: 'gender',
 		ellipsis: true,
 		render: (value) => <Text>{Gender[value]}</Text>,
-		width: '10%',
+		width: 'auto',
 	},
 	{
 		title: 'Date of birth',
@@ -128,7 +135,7 @@ export const employeeColumns = [
 	{
 		title: 'Email',
 		dataIndex: 'email',
-		width: '20%',
+		width: '18%',
 	},
 	{
 		title: 'Role',
