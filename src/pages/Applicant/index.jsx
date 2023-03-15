@@ -89,7 +89,8 @@ const Applicants = () => {
 							/>
 						);
 					})}
-					{activeKey === tabStatusConfig[0].key && (
+					{(activeKey === tabStatusConfig[0].key ||
+						activeKey === tabStatusConfig[1].key) && (
 						<Column
 							title='Action'
 							dataIndex='action'

@@ -12,6 +12,10 @@ const applicantAPI = {
 		const endpoint = '/applicant/accepted';
 		return await get(endpoint, {}, { Authorization: token });
 	},
+	getApproved: async () => {
+		const endpoint = '/applicant/approved';
+		return await get(endpoint, {}, { Authorization: token });
+	},
 	getRejected: async () => {
 		const endpoint = '/applicant/rejected';
 		return await get(endpoint, {}, { Authorization: token });
@@ -30,7 +34,10 @@ const applicantAPI = {
 		const endpoint = `/applicant/accept?applicantId=${id}&isAccepted=${isAccepted}`;
 		return await put(endpoint, {}, { Authorization: token });
 	},
-
+	approve: async (id, isApproved) => {
+		const endpoint = `/applicant/approve?applicantId=${id}&isApproved=${isApproved}`;
+		return await put(endpoint, {}, { Authorization: token });
+	},
 	createApplicant: async (body) => {
 		const endpoint = `/applicant`;
 		try {
