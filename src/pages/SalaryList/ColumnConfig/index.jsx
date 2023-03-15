@@ -109,7 +109,7 @@ export const SalaryDetailForm = [
 		key: 'bonus',
 		type: 'number',
 		span: 24,
-		wrapperCol: 20,
+		wrapperCol: 24,
 		detail: true,
 	},
 	{
@@ -118,7 +118,7 @@ export const SalaryDetailForm = [
 		key: 'penalty',
 		type: 'number',
 		span: 24,
-		wrapperCol: 20,
+		wrapperCol: 24,
 		detail: true,
 	},
 	{

@@ -93,24 +93,20 @@ const SalaryListDetail = () => {
 												)}
 											</Form.Item>
 										</Col>
-										<Col span={4}>
-											{item.detail === true && (
-												<Button type='primary' onClick={onOpenModal}>
-													Detail
-												</Button>
-											)}
-										</Col>
 									</Row>
 								</Col>
 							);
 						})}
+						<Col span={4}>
+							{
+								<Button type='primary' onClick={onOpenModal}>
+									Detail
+								</Button>
+							}
+						</Col>
 					</Row>
 				</Form>
-				<ModalSalaryList
-					open={openModal}
-					setOpen={setOpenModal}
-					ruleOption={data.ruleSalaryObtain}
-				/>
+				<ModalSalaryList open={openModal} setOpen={setOpenModal} data={data} />
 			</CustomCard>
 		</Loading>
 	);
