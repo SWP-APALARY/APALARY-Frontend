@@ -1,13 +1,11 @@
 import LocalStorageUtils from '../../LocalStorage/utils';
-import { get } from '../caller';
+import { get, post, put, del } from '../caller';
 
 const token = 'Bearer ' + LocalStorageUtils.getItem('token');
-const salaryAPI = {
-	get: async () => {
-		const endpoint = '/salary/self/month-and-year?month=2&year=2023';
-		//fix params
+const feedbackAPI = {
+	get: async (month) => {
+		const endpoint = `/feedback?month=${month}&year=2023`;
 		return await get(endpoint, {}, { Authorization: token }, {});
 	},
 };
-
-export default salaryAPI;
+export default feedbackAPI;

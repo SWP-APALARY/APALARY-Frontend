@@ -1,21 +1,48 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { Button, Card, Rate, Space, Row } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
+import feedbackAPI from '../../utils/Apis/feedbackAPI';
+import apiHandler from '../../utils/Apis/handler';
 import FeedBacks from './data';
 
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
 const Review = () => {
-	const [index, setIndex] = useState(1);
-	const { title, description, star } = FeedBacks[index];
-	const [readMore, setReadMore] = useState(false);
+	const [loading, setLoading] = useState(false);
+	const navigate = useNavigate();
+	const [index, setIndex] = useState(0);
+	const [month, setMonth] = useState();
+	const [text, setText] = useState([
+		{
+			id: 0,
+			title: '',
+			description: '',
+			star: '',
+			createdDate: '',
+		},
+	]);
+
+	const prevPerson = () => {
+		setIndex((index) => {
+			let newIndex = index - 1;
+			return checkNumber(newIndex);
+		});
+	};
+	useEffect(() => {
+		const fetch = async () => {
+			const res = await apiHandler(feedbackAPI, 'get', '', setLoading, month.month(), null);
+			setText(res || []);
+		};
+		fetch();
+	});
 	const checkNumber = (number) => {
-		if (number > FeedBacks.length - 1) {
+		if (number > text.length - 1) {
 			return 0;
 		}
 		if (number < 0) {
-			return FeedBacks.length - 1;
+			return text.length - 1;
 		}
 		return number;
 	};
@@ -25,25 +52,19 @@ const Review = () => {
 			return checkNumber(newIndex);
 		});
 	};
-	const prevPerson = () => {
-		setIndex((index) => {
-			let newIndex = index - 1;
-			return checkNumber(newIndex);
-		});
-	};
-
+	// useEffect(() => {
+	// 	feedbackAPI
+	// 		.get(month)
+	// 		.then((res) => setText(res.data))
+	// 		.catch(() => navigate('/'));
+	// }, []);
 	return (
 		<Row justify={'center'}>
-			<Card size='large' title='FeedBack'>
-				<p>{title}</p>
+			<Card size='large' title='FeedBack' extra={text[index].createdDate}>
+				<p>{text[index].title}</p>
+				<p>{text[index].description}</p>
 				<p>
-					{readMore ? description : `${description.substring(0, 50)}...`}
-					<Button onClick={() => setReadMore(!readMore)}>
-						{readMore ? 'Show Less' : '  Read More'}
-					</Button>
-				</p>
-				<p>
-					<Rate disabled value={star} />
+					<Rate disabled value={text[index].star} />
 				</p>
 				<Space>
 					<Button type='primary' onClick={prevPerson}>

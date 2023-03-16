@@ -56,7 +56,7 @@ const ContractCreation = () => {
 							{formConfig.map((item) => {
 								return (
 									<Form.Item
-										key={item.name + '-post-form'}
+										key={item.label + '-contract-form'}
 										label={item.label}
 										name={item.name}
 										rules={[...item.rules]}
@@ -90,7 +90,7 @@ const ContractCreation = () => {
 								</Upload>
 							</Form.Item>
 							<Form.Item>
-								<Button type='primary' htmlType='submit'>
+								<Button type='primary' htmlType='submit' loading={loading}>
 									Create
 								</Button>
 							</Form.Item>

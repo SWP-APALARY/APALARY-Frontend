@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import { Form, Input, Select, DatePicker, Upload, Radio } from 'antd';
+import { Form, Input, Select, DatePicker, Upload, Radio, Card } from 'antd';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,7 +37,13 @@ const Contract = () => {
 			.catch(() => navigate('/'));
 	}, []);
 	return (
-		<>
+		<Card
+			title='Contract'
+			bordered={false}
+			style={{
+				width: 700,
+			}}
+		>
 			<Form
 				labelCol={{ span: 7 }}
 				wrapperCol={{ span: 14 }}
@@ -79,11 +85,9 @@ const Contract = () => {
 					<Input value={text.accidentalAssurances} readOnly />
 				</Form.Item>
 
-				<Form.Item label='Description' valuePropName='fileList'>
-					<PDFReader file={text.contractImage} id={text.id} />
-				</Form.Item>
+				<PDFReader file={text.contractImage} id={text.id} />
 			</Form>
-		</>
+		</Card>
 	);
 };
 

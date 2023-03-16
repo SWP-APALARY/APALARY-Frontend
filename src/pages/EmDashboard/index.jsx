@@ -8,6 +8,9 @@ import { useNavigate } from 'react-router-dom';
 
 import Box from '../../components/Box/index.jsx';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
+import feedbackAPI from '../../utils/Apis/feedbackAPI/index.js';
+import apiHandler from '../../utils/Apis/handler';
+import LocalStorageUtils from '../../utils/LocalStorage/utils.js';
 import EmSalary from '../EmSalary/Salary';
 import data from '../EmSalary/data.js';
 import FeedBacks from '../Feedback/data.js';
@@ -19,8 +22,11 @@ import { Column } from '@ant-design/plots';
 const { Header, Content, Footer } = Layout;
 
 const EmDashboard = () => {
+	const month = new Date();
 	const navigate = useNavigate();
-	const [text, setText] = useState({
+	const [loading, setLoading] = useState(false);
+	// const [month, setMonth] = useState();
+	const [textEmployee, setTextEmployee] = useState({
 		phone: '',
 		name: '',
 		identifyNumber: '',
@@ -29,11 +35,19 @@ const EmDashboard = () => {
 		dateOfBirth: '',
 		gender: '',
 	});
+	const [textFeedback, setTextFeedback] = useState([
+		{
+			star: '',
+		},
+	]);
+	const [textSalary, setTextSalary] = useState();
+
 	const sumStar = () => {
 		let sum = 0;
-		FeedBacks.forEach((todo) => (sum = sum + todo.star));
-		return sum / FeedBacks.length;
+		textFeedback.forEach((todo) => (sum = sum + todo.star));
+		return sum / textFeedback.length;
 	};
+
 	const SalaryChart = () => {
 		const config = {
 			data,
@@ -65,12 +79,25 @@ const EmDashboard = () => {
 		return <Column {...config} />;
 	};
 	// const { name, phone, number, username, password, gender, date } = ProData[0];
+
 	useEffect(() => {
-		employeeAPI
-			.get()
-			.then((res) => setText(res.data))
-			.catch(() => navigate('/'));
+		const fetch = async () => {
+			const res = await apiHandler(
+				feedbackAPI,
+				'get',
+				'',
+				setLoading,
+				month.getMonth(),
+				null
+			);
+			setTextFeedback(res || []);
+
+			const res1 = await apiHandler(employeeAPI, 'get', '', setLoading, null);
+			setTextEmployee(res1 || []);
+		};
+		fetch();
 	}, []);
+
 	return (
 		<Box direction='vertical'>
 			<Content
@@ -183,9 +210,9 @@ const EmDashboard = () => {
 									textAlign: 'center',
 								}}
 							>
-								<Form.Item label='Full Name'>{text.name}</Form.Item>
-								<Form.Item label='I.N'>{text.identifyNumber}</Form.Item>
-								<Form.Item label='UserName'>{text.username}</Form.Item>
+								<Form.Item label='Full Name'>{textEmployee.name}</Form.Item>
+								<Form.Item label='I.N'>{textEmployee.identifyNumber}</Form.Item>
+								<Form.Item label='UserName'>{textEmployee.username}</Form.Item>
 
 								<button>
 									<NavLink to='/profile'>More</NavLink>

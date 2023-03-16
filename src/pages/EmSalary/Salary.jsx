@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import contractAPI from '../../utils/Apis/contractAPI/index.js';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
+import apiHandler from '../../utils/Apis/handler.jsx';
 import salaryAPI from '../../utils/Apis/salaryAPI/index.js';
 import Profile from '../Profile/data.js';
 import data from './data.js';
@@ -47,23 +48,26 @@ export const SalaryChart = () => {
 };
 
 const emSalary = () => {
+	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
-	const [text, setText] = useState({
+	const [textContract, setTextContract] = useState({
 		contractId: '',
 		base: '',
-		net: '',
+	});
+	const [textSalary, setTextSalary] = useState({
+		total: '',
 	});
 	useEffect(() => {
-		salaryAPI
-			.get()
-			.then((res) => {
-				contractAPI
-					.get(res.data.contractId)
-					.then((rest) => setText({ ...rest.data, ...res.data }));
-				// .catch(() => navigate('/'));
-			})
-			.catch(() => navigate('/'));
+		const fetch = async () => {
+			const res = await apiHandler(contractAPI, 'get', '', setLoading, null);
+			setTextContract(res || []);
+
+			const res1 = await apiHandler(salaryAPI, 'get', '', setLoading, null);
+			setTextSalary(res1 || []);
+		};
+		fetch();
 	}, []);
+
 	return (
 		<Card>
 			<Row style={{ marginBottom: 50 }}>
@@ -77,7 +81,7 @@ const emSalary = () => {
 						>
 							<Row>
 								<Col span={12} offset={6}>
-									<h1>{text.base}đ</h1>
+									<h1>{textContract.base}đ</h1>
 								</Col>
 							</Row>
 						</Card>
@@ -93,7 +97,7 @@ const emSalary = () => {
 						>
 							<Row>
 								<Col span={12} offset={6}>
-									<h1>{text.net}</h1>
+									<h1>{textSalary.total}</h1>
 								</Col>
 							</Row>
 						</Card>
