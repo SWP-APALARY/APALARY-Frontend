@@ -152,6 +152,10 @@ export const managerRoutes = [
 		path: routeKey.employees,
 		Element: <ListEmployee />,
 	},
+	{
+		path: routeKey.employeesSpecific,
+		Element: <EmployeeDetail />,
+	},
 ];
 export const employeeRoutes = [
 	{
