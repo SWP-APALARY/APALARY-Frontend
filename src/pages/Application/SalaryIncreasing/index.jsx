@@ -49,7 +49,7 @@ const ApplicationSalary = () => {
 	}, [activeKey, openModal]);
 	useEffect(() => {
 		const tmp = data.filter((item) =>
-			item.employeeName.toLowerCase().includes(search.toLowerCase())
+			item.employeeName.toLowerCase().includes(search?.toLowerCase())
 		);
 		setFilteredData(tmp);
 	}, [search]);

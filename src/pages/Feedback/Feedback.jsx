@@ -53,7 +53,7 @@ const Review = () => {
 		});
 	};
 	// useEffect(() => {
-	// 	feedbackAPI
+	// 	feedbackApi
 	// 		.get(month)
 	// 		.then((res) => setText(res.data))
 	// 		.catch(() => navigate('/'));

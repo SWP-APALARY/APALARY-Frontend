@@ -134,6 +134,18 @@ export const managerRoutes = [
 		path: routeKey.applicationRecruitment,
 		Element: <ApplicationRecruitment />,
 	},
+	{
+		path: routeKey.employeesAll,
+		Element: <ListEmployee />,
+	},
+	{
+		path: routeKey.employees,
+		Element: <ListEmployee />,
+	},
+	{
+		path: routeKey.employeesSpecific,
+		Element: <EmployeeDetail />,
+	},
 ];
 export const employeeRoutes = [
 	{
