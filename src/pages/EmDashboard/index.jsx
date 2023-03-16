@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Box from '../../components/Box/index.jsx';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
+import LocalStorageUtils from '../../utils/LocalStorage/utils.js';
 import EmSalary from '../EmSalary/Salary';
 import data from '../EmSalary/data.js';
 import FeedBacks from '../Feedback/data.js';
@@ -69,7 +70,10 @@ const EmDashboard = () => {
 		employeeAPI
 			.get()
 			.then((res) => setText(res.data))
-			.catch(() => navigate('/'));
+			.catch(() => {
+				LocalStorageUtils.clear();
+				navigate('/login');
+			});
 	}, []);
 	return (
 		<Box direction='vertical'>

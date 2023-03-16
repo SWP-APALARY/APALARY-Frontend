@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { useParams } from 'react-router-dom';
+import { Typography } from 'antd';
+import { useNavigate, useParams } from 'react-router-dom';
 
+import CustomCard from '../../components/Card';
+
+const { Text } = Typography;
 export const ErrorPage = () => {
 	const params = useParams();
 
-	return <div>{params.statusCode}</div>;
+	return (
+		<CustomCard>
+			<Text type='danger'>Error 404</Text>
+		</CustomCard>
+	);
 };
 
 export default ErrorPage;
