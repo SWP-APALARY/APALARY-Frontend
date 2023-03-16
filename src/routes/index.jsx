@@ -4,6 +4,7 @@ import LayoutEveryone from '../components/Layout/LayoutEveryone';
 import LayoutManager from '../components/Layout/LayoutManager';
 import { roles } from '../components/Layout/ManagerItems';
 import ErrorPage from '../pages/Errors';
+import Homepage from '../pages/Homepage';
 import usePersistedState from '../utils/LocalStorage/usePersistedState';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
@@ -19,12 +20,14 @@ import {
 
 const AppRoutes = () => {
 	const [role, setRole] = usePersistedState('role');
+	const MainPage =
+		role && role !== '' ? <Navigate to='/dashboard' /> : <Navigate to='/homepage' />;
 	return (
 		<BrowserRouter>
 			<Routes>
 				{/* <Route exact path='/' element={<Navigate to={'/dashboard'} />} /> */}
 
-				<Route exact path='/' element={<Navigate to={'/dashboard'} />} />
+				<Route exact path='/' element={MainPage} />
 				<Route path={''} element={<PrivateRoute />}>
 					<Route element={<LayoutManager />}>
 						{role === roles.CEO &&
