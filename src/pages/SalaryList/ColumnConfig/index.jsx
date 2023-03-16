@@ -1,6 +1,3 @@
-import { Space } from 'antd';
-import { Link } from 'react-router-dom';
-
 import { routeKey } from '../../../components/Layout/ManagerItems';
 import moneyConverter from '../../../utils/moneyConverter';
 
@@ -42,18 +39,6 @@ export const SalaryListColumnConfig = [
 		},
 		sorter: (a, b) => a.penalty - b.penalty,
 		sortDirections: ['descend', 'ascend'],
-	},
-	{
-		title: 'Action',
-		dataIndex: 'action',
-		key: 'action',
-		render: (text, record) => {
-			return (
-				<Space size='middle'>
-					<Link to={`${routeKey.employeesSalaries}/${record.id}`}>Detail</Link>
-				</Space>
-			);
-		},
 	},
 ];
 

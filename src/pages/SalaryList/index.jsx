@@ -1,10 +1,13 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 
 import { Table } from 'antd';
+import { Space } from 'antd';
 import dayjs from 'dayjs';
+import { Link } from 'react-router-dom';
 import { useStore } from 'zustand';
 
 import CustomCard from '../../components/Card';
+import { routeKey } from '../../components/Layout/ManagerItems';
 import CustomTable from '../../components/Table';
 import apiHandler from '../../utils/Apis/handler';
 import salaryAPI from '../../utils/Apis/salaryAPI';
@@ -27,7 +30,7 @@ const SalaryList = () => {
 	const [endDate, setEndDate] = useState('');
 	const [token, setToken] = usePersistedState('token');
 	const [filteredData, setFilteredData] = useState([]);
-	const { salaryList, setSalary } = useSalaryStore();
+	const { salaryList, setSalary, setSelectedSalary } = useSalaryStore();
 	const onTimeChange = useCallback(
 		(date) => {
 			setStartDate(date);
@@ -73,6 +76,20 @@ const SalaryList = () => {
 				{salaryListColumnConfig.map((item) => {
 					return <Column key={item.key + '-salary-list'} {...item} />;
 				})}
+				<Column
+					key='action'
+					title='Action'
+					dataIndex='action'
+					render={(text, record) => {
+						return (
+							<Space size='middle'>
+								<Link to={`${routeKey.employeesSalaries}/${record.id}`}>
+									Detail
+								</Link>
+							</Space>
+						);
+					}}
+				/>
 			</CustomTable>
 		</CustomCard>
 	);

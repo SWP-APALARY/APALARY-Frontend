@@ -21,10 +21,10 @@ const statisticCardConfig = [
 		col: 12,
 	},
 	{
-		title: 'Social Insurance',
+		title: 'Assurance',
 		value: 0,
 		suffix: 'VNĐ',
-		dataIndex: 'socialAssurance',
+		dataIndex: 'assurance',
 		col: 12,
 	},
 	{

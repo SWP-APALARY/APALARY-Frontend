@@ -12,6 +12,7 @@ import salaryAPI from '../../../utils/Apis/salaryAPI';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import themeConfig from '../../../utils/Theme';
 import moneyConverter from '../../../utils/moneyConverter';
+import useSalaryStore from '../../../utils/store/salaryStore';
 import { SalaryDetailForm } from '../ColumnConfig';
 import ModalSalaryList from '../Modal';
 import statisticCardConfig from '../Modal/StatisticColumnConfic';
@@ -31,14 +32,21 @@ const initData = {
 	description: '',
 	ruleSalaryObtain: [],
 };
+const initRule = {
+	description: '',
+	count: 0,
+	money: 0,
+};
 const SalaryListDetail = () => {
 	const [openModal, setOpenModal] = useState(false);
 	// const [loading, setLoading] = useState(false);
 	const params = useParams();
 	const { loading, setLoading } = useContext(LoadingContext);
 	const [data, setData] = useState(initData);
+	const [selectedRule, setSelectedRule] = useState(initRule);
 	const startDate = dayjs(new Date());
-	const onOpenModal = () => {
+	const onOpenModal = (item) => {
+		setSelectedRule(item);
 		setOpenModal(true);
 	};
 	const [token, setToken] = usePersistedState('token');
@@ -61,7 +69,6 @@ const SalaryListDetail = () => {
 					.month(res.month - 1)
 					.year(res.year),
 			});
-			console.log(res);
 		};
 		fetch();
 	}, []);
@@ -123,13 +130,19 @@ const SalaryListDetail = () => {
 								))}
 								{data.ruleSalaryObtain.map((item) => (
 									<Col span={12} key={'salary-rule-detail' + item.description}>
-										<CustomCard width='100%'>
+										<CustomCard
+											width='100%'
+											onClick={() => onOpenModal(item)}
+											bodyStyle={{ hover: { cursor: 'pointer' } }}
+											clickable
+										>
 											<Statistic
 												title={item.description}
 												valueStyle={{
 													color: themeConfig.token.colorPrimary,
 												}}
 												value={item.count}
+												suffix={item.count <= 1 ? 'Time' : 'Times'}
 											/>
 										</CustomCard>
 									</Col>
@@ -138,7 +151,7 @@ const SalaryListDetail = () => {
 						</Col>
 					</Row>
 				</Form>
-				<ModalSalaryList open={openModal} setOpen={setOpenModal} data={data} />
+				<ModalSalaryList open={openModal} setOpen={setOpenModal} data={selectedRule} />
 			</CustomCard>
 		</Loading>
 	);
