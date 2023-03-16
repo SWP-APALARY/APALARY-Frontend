@@ -2,22 +2,30 @@ import { useEffect, useState } from 'react';
 
 import { Button, Card, Carousel, Layout, Menu } from 'antd';
 import { Content, Header } from 'antd/es/layout/layout';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from '../../../assets';
+import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import Box from '../../Box';
 import StyledHeader from '../Header';
-import { managerItems } from '../ManagerItems';
+import { managerHrItems } from '../ManagerItems';
 import { layoutContent, layoutHeader, menuLogo } from '../style';
 
 import Sider from 'antd/es/layout/Sider';
 
 const LayoutManager = () => {
-	const [link, setLink] = useState('/dashboard');
 	const navigate = useNavigate();
+	const location = useLocation();
+	const [link, setLink] = useState();
+	const [role, setRole] = usePersistedState('role');
+	const [key, setKey] = useState();
+	const menuItems = managerHrItems.filter((item) => item.roles.includes(role));
 	useEffect(() => {
 		navigate(link);
 	}, [link]);
+	useEffect(() => {
+		setLink(location.pathname);
+	}, [location]);
 	return (
 		<Layout>
 			<Sider>
@@ -26,10 +34,14 @@ const LayoutManager = () => {
 				</Box>
 				<Menu
 					theme='dark'
-					defaultSelectedKeys={['/dashboard']}
-					onClick={(item) => setLink(item.key)}
+					onClick={(item) => {
+						setLink(item.key);
+						setKey(item.key);
+					}}
 					mode='inline'
-					items={managerItems}
+					selectedKeys={[link]}
+					forceSubMenuRender
+					items={menuItems}
 				></Menu>
 			</Sider>
 			<Layout

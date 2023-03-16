@@ -6,7 +6,6 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 import Logo from '../../../assets';
 import StyledHeader from '../Header';
-import { managerItems } from '../ManagerItems';
 import { layoutContent, layoutHeader, menuLogo } from '../style';
 
 import Sider from 'antd/es/layout/Sider';

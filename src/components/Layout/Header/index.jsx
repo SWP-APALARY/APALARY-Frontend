@@ -50,7 +50,7 @@ const StyledHeader = (props) => {
 						}}
 						placement='bottomLeft'
 					>
-						<Avatar />
+						<Avatar src={LocalStorageUtils.getItem('avatar')} />
 					</Dropdown>
 				) : (
 					<Button onClick={() => navigate('/login')}>Login</Button>
