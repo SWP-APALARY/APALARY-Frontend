@@ -28,17 +28,57 @@ const ContractCreation = () => {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const [form] = Form.useForm();
+	const [fileBase64, setFileBase64] = React.useState('');
+	const [fileError, setFileError] = React.useState();
+	const [dateSigned, setDateSigned] = React.useState();
 	const onSubmit = async () => {
-		const formData = form.getFieldsValue();
-		await apiHandler(contractsAPI, 'post', 'success', setLoading, formData, token).then(() => {
-			form.resetFields();
-		});
-		navigate(-1);
+		if (fileError) return;
+		if (fileBase64 === '') {
+			setFileError('Please upload contract file!');
+		} else {
+			const formData = form.getFieldsValue();
+			console.log({ ...formData, contractImage: fileBase64 });
+			console.log('date signed', dateSigned);
+			// formData = {a: 1, b: 2}
+			// { ...formData, contractImage: fileBase64 }  === {a: 1, b: 2, contractImage: fileBase64}
+			// fileBase64 đây là file value
+			// await apiHandler(contractsAPI, 'post', 'success', setLoading, formData, token).then(() => {
+			// 	form.resetFields();
+			// });
+			// navigate(-1);
+		}
 	};
 
 	const onFinishFailed = (errorInfo) => {
 		toast(errorInfo, 'error');
 	};
+
+	const convertToBase64 = (file) => {
+		if (file) {
+			if (file.size < 3000000) {
+				const reader = new FileReader();
+
+				reader.onloadend = async () => {
+					if (reader.result.toString().startsWith('data:application/pdf')) {
+						await setFileBase64(reader.result.toString());
+						setFileError();
+					} else {
+						setFileBase64('');
+						setFileError('File upload must be pdf file!');
+					}
+				};
+
+				reader.readAsDataURL(file);
+			} else {
+				setFileBase64('');
+				setFileError('File size too large, should be less than 3gb!');
+			}
+		} else {
+			setFileBase64('');
+			setFileError('Please upload contract file!');
+		}
+	};
+
 	return (
 		<Box>
 			<CustomCard bordered width='800px' loading={loading}>
@@ -74,21 +114,39 @@ const ContractCreation = () => {
 											) : item.type === 'textarea' ? (
 												<TextArea style={{ width: '100%' }} />
 											) : item.type === 'date' ? (
-												<DatePicker style={{ width: '100%' }} />
+												<DatePicker
+													style={{ width: '100%' }}
+													onChange={(date, dateString) =>
+														setDateSigned(dateString)
+													}
+												/>
 											) : null
 											// <Input />
 										}
 									</Form.Item>
 								);
 							})}
-							<Form.Item label='Description' valuePropName='fileList'>
-								<Upload listType='picture-card'>
-									<div>
-										<PlusOutlined />
-										<div style={{ marginTop: 8 }}>Upload</div>
-									</div>
-								</Upload>
+
+							<Form.Item
+								label='Contract'
+								name='contractImage'
+								getValueFromEvent={(e) => convertToBase64(e.target.files[0])}
+								style={fileError ? { marginBottom: 0 } : {}}
+							>
+								<Input type='file' accept='application/pdf' />
 							</Form.Item>
+							{fileError && (
+								<span
+									style={{
+										display: 'inline-block',
+										color: 'red',
+										marginBottom: '1rem',
+									}}
+								>
+									{fileError}
+								</span>
+							)}
+
 							<Form.Item>
 								<Button type='primary' htmlType='submit' loading={loading}>
 									Create

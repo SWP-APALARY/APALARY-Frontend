@@ -55,7 +55,7 @@ const PDFReader = (props) => {
 						<Button type='primary' style={{ marginRight: '10px' }} onClick={onAccept}>
 							Accept
 						</Button>
-						<Button type='primary' onClick={onReject}>
+						<Button type='primary' onClick={onReject} danger>
 							Reject
 						</Button>
 					</Col>

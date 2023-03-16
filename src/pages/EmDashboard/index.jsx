@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Box from '../../components/Box/index.jsx';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
-import feedbackAPI from '../../utils/Apis/feedbackAPI/index.js';
+import feedbackApi from '../../utils/Apis/feedbackAPI/index.js';
 import apiHandler from '../../utils/Apis/handler';
 import LocalStorageUtils from '../../utils/LocalStorage/utils.js';
 import EmSalary from '../EmSalary/Salary';
@@ -83,7 +83,7 @@ const EmDashboard = () => {
 	useEffect(() => {
 		const fetch = async () => {
 			const res = await apiHandler(
-				feedbackAPI,
+				feedbackApi,
 				'get',
 				'',
 				setLoading,

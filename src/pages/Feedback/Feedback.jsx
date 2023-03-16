@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button, Card, Rate, Space, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import feedbackAPI from '../../utils/Apis/feedbackAPI';
+import feedbackApi from '../../utils/Apis/feedbackAPI';
 import apiHandler from '../../utils/Apis/handler';
 import FeedBacks from './data';
 
@@ -32,7 +32,7 @@ const Review = () => {
 	};
 	useEffect(() => {
 		const fetch = async () => {
-			const res = await apiHandler(feedbackAPI, 'get', '', setLoading, month.month(), null);
+			const res = await apiHandler(feedbackApi, 'get', '', setLoading, month.month(), null);
 			setText(res || []);
 		};
 		fetch();
@@ -53,7 +53,7 @@ const Review = () => {
 		});
 	};
 	// useEffect(() => {
-	// 	feedbackAPI
+	// 	feedbackApi
 	// 		.get(month)
 	// 		.then((res) => setText(res.data))
 	// 		.catch(() => navigate('/'));

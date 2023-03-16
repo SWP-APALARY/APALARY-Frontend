@@ -26,7 +26,9 @@ const ApplicantDetails = () => {
 		fetch();
 	}, []);
 	const onAccept = async () => {
-		await apiHandler(applicantAPI, 'accept', 'Success', setLoading, params.id, true, token);
+		let statusSend;
+		applicant.status === 'PROCESSING' ? (statusSend = 'approve') : (statusSend = 'accept');
+		await apiHandler(applicantAPI, statusSend, 'Success', setLoading, params.id, true, token);
 		navigate('/applicants');
 	};
 	const onReject = async () => {
@@ -63,7 +65,9 @@ const ApplicantDetails = () => {
 						id={applicant.id}
 						onAccept={onAccept}
 						onReject={onReject}
-						isWaiting={applicant.status === 'PROCESSING'}
+						isWaiting={
+							applicant.status === 'PROCESSING' || applicant.status === 'PROCESSING_2'
+						}
 					/>
 				</Form>
 			)}
