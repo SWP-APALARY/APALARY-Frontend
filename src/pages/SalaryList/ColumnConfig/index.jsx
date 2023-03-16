@@ -22,6 +22,7 @@ export const SalaryListColumnConfig = [
 		sorter: (a, b) => a.net - b.net,
 		sortDirections: ['descend', 'ascend'],
 	},
+	{},
 	{
 		title: 'Bonus',
 		dataIndex: 'bonus',

@@ -61,6 +61,7 @@ const SalaryListDetail = () => {
 					.month(res.month - 1)
 					.year(res.year),
 			});
+			console.log(res);
 		};
 		fetch();
 	}, []);
