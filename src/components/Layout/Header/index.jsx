@@ -24,7 +24,6 @@ const StyledHeader = (props) => {
 		// setRole('');
 		LocalStorageUtils.clear();
 		navigate('/');
-		navigate(0);
 	};
 
 	return (

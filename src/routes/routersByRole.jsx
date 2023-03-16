@@ -29,7 +29,7 @@ import Login from '../pages/login';
 // public routes here
 export const publicRoutes = [
 	{
-		path: '/dashboard',
+		path: '/homepage',
 		Element: <Homepage />,
 	},
 	{
