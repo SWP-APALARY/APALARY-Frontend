@@ -200,6 +200,14 @@ export const ceoRoutes = [
 		Element: <ListEmployee />,
 	},
 	{
+		path: routeKey.employeesSalaries,
+		Element: <SalaryList />,
+	},
+	{
+		path: routeKey.employeesSalariesDetail,
+		Element: <SalaryListDetail />,
+	},
+	{
 		path: routeKey.employeesSpecific,
 		Element: <EmployeeDetail />,
 	},

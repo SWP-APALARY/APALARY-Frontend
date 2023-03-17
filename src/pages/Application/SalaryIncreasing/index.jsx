@@ -27,7 +27,6 @@ const ApplicationSalary = () => {
 	const [search, searchRef, setSearchChange] = useSearch();
 	const [openModal, setOpenModal] = useState(false);
 	const [activeKey, setActiveKey] = useState(tabConfigWithAPIStatus[0].key);
-	// const tabForCEO = tabConfigWithAPIStatus.filter((item) => item.key !== 'processing');
 	const onTabChange = async (value) => {
 		setActiveKey(value);
 	};
