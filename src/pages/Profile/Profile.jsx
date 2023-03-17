@@ -194,8 +194,9 @@ const FormDisabledDemo = () => {
 				<Form.Item label='Salary'>
 					<Input value={text.base} disabled />
 				</Form.Item>
-
-				<PDFReader file={text.contractImage} id={text.id} />
+				<Form.Item>
+					<PDFReader file={text.contractImage} id={text.id} />
+				</Form.Item>
 
 				<Button
 					type='dashed'

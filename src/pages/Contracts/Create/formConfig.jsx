@@ -3,26 +3,26 @@ import { Button, Input, InputNumber } from 'antd';
 export const formConfig = [
 	{
 		label: 'Name',
-		name: 'nameOfEmployee',
+		name: 'nameEmp',
 		type: 'text',
 		rules: [{ required: true, message: 'Please input name!' }],
 	},
 	{
 		label: 'Singed Date',
-		name: 'singedDate',
+		name: 'signedDate',
 		type: 'date',
 		rules: [{ required: true, message: 'Please input day!' }],
 	},
 	{
 		label: 'Start Date',
 		name: 'startDate',
-		type: 'date',
+		type: 'date1',
 		rules: [{ required: true, message: 'Please input day!' }],
 	},
 	{
 		label: 'End Date',
 		name: 'endDate',
-		type: 'date',
+		type: 'date2',
 		rules: [{ required: true, message: 'Please input day!' }],
 	},
 	{

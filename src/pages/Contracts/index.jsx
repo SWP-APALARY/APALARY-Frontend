@@ -56,7 +56,7 @@ const Contracts = () => {
 	}, []);
 	useEffect(() => {
 		const tmp = data.filter((item) =>
-			item.nameOfEmployee.toLowerCase().includes(search.toLowerCase())
+			item.nameEmp.toLowerCase().includes(search.toLowerCase())
 		);
 		setFilteredData(tmp);
 	}, [search]);

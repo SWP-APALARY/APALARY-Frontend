@@ -23,6 +23,7 @@ import PostDetail from '../pages/JobOffering/Detail';
 import ListEmployee from '../pages/ListEmployee';
 import EmployeeDetail from '../pages/ListEmployee/Detail';
 import FormDisabledDemo from '../pages/Profile/Profile';
+import ResidentDashboard from '../pages/ResidentDashboard';
 import Login from '../pages/login';
 
 export const roles = {

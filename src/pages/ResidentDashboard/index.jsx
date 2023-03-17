@@ -7,14 +7,8 @@ import { NavLink, Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '../../components/Box/index.jsx';
-import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
-import feedbackApi from '../../utils/Apis/feedbackAPI/index.js';
 import apiHandler from '../../utils/Apis/handler';
-import salaryAPI from '../../utils/Apis/salaryAPI/index.js';
-import LocalStorageUtils from '../../utils/LocalStorage/utils.js';
-import EmSalary from '../EmSalary/Salary';
-import data from '../EmSalary/data.js';
-import FeedBacks from '../Feedback/data.js';
+import residentAPI from '../../utils/Apis/residentAPI/index.js';
 
 // import ProData from '../Profile/data.js';
 import { FileTextFilled, IdcardFilled, ProfileFilled, MailFilled } from '@ant-design/icons';
@@ -24,11 +18,9 @@ import { Column } from '@ant-design/plots';
 const { Header, Content, Footer } = Layout;
 
 const EmDashboard = () => {
-	const month = new Date();
-	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
-	// const [month, setMonth] = useState();
-	const [textEmployee, setTextEmployee] = useState({
+
+	const [resident, setResident] = useState({
 		phone: '',
 		name: '',
 		identifyNumber: '',
@@ -36,75 +28,13 @@ const EmDashboard = () => {
 		password: '',
 		dateOfBirth: '',
 		gender: '',
+		email: '',
 	});
-	const [textFeedback, setTextFeedback] = useState([
-		{
-			star: '',
-		},
-	]);
-	const [textSalary, setTextSalary] = useState([
-		{
-			month: '',
-			total: '',
-		},
-	]);
-
-	const sumStar = () => {
-		let sum = 0;
-		textFeedback.forEach((todo) => (sum = sum + todo.star));
-		return sum / textFeedback.length;
-	};
-
-	const SalaryChart = () => {
-		const config = {
-			data: textSalary,
-			xField: 'month',
-			yField: 'total',
-			label: {
-				position: 'middle',
-
-				style: {
-					fill: '#FFFFFF',
-					opacity: 0.6,
-				},
-			},
-			xAxis: {
-				label: {
-					autoHide: true,
-					autoRotate: false,
-				},
-			},
-			meta: {
-				type: {
-					alias: 'Month',
-				},
-				total: {
-					alias: 'Total',
-				},
-			},
-		};
-		return <Column {...config} />;
-	};
-	// const { name, phone, number, username, password, gender, date } = ProData[0];
-
+	console.log(resident);
 	useEffect(() => {
 		const fetch = async () => {
-			const res = await apiHandler(
-				feedbackApi,
-				'get',
-				'',
-				setLoading,
-				month.getMonth(),
-				null
-			);
-			setTextFeedback(res || []);
-
-			const resEm = await apiHandler(employeeAPI, 'get', '', setLoading, null);
-			setTextEmployee(resEm || []);
-
-			const resSa = await apiHandler(salaryAPI, 'getAll', '', setLoading, null);
-			setTextSalary(resSa || []);
-			// console.log(textSalary);
+			const res = await apiHandler(residentAPI, 'get', '', setLoading, null);
+			setResident(res || []);
 		};
 		fetch();
 	}, []);
@@ -192,23 +122,6 @@ const EmDashboard = () => {
 								</NavLink>
 							</Col>
 						</Row>
-
-						<Card
-							title={<VscFeedback style={{ fontSize: 50, marginLeft: 150 }} />}
-							style={{ marginTop: 10 }}
-						>
-							<p style={{ borderBottomStyle: 'solid' }}>
-								<Rate
-									disabled
-									allowHalf
-									value={sumStar()}
-									style={{
-										fontSize: 40,
-									}}
-								/>
-							</p>
-							<NavLink to='/feedback'>See More....</NavLink>
-						</Card>
 					</Col>
 					<Col span={12}>
 						<Card bordered={false}>
@@ -221,9 +134,9 @@ const EmDashboard = () => {
 									textAlign: 'center',
 								}}
 							>
-								<Form.Item label='Full Name'>{textEmployee.name}</Form.Item>
-								<Form.Item label='I.N'>{textEmployee.identifyNumber}</Form.Item>
-								<Form.Item label='UserName'>{textEmployee.username}</Form.Item>
+								<Form.Item label='Full Name'>{resident.name}</Form.Item>
+								<Form.Item label='I.N'>{resident.identifyNumber}</Form.Item>
+								<Form.Item label='UserName'>{resident.username}</Form.Item>
 
 								<button>
 									<NavLink to='/profile'>More</NavLink>
@@ -232,17 +145,6 @@ const EmDashboard = () => {
 						</Card>
 					</Col>
 				</Row>
-				<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
-					<Content>
-						<Card>
-							<h3>Salary</h3>
-							<SalaryChart />
-							<button style={{ margin: '10px 0px' }}>
-								<NavLink to='/salary'>More</NavLink>
-							</button>
-						</Card>
-					</Content>
-				</Layout>
 			</Footer>
 		</Box>
 	);

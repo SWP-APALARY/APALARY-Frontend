@@ -50,19 +50,23 @@ export const SalaryChart = () => {
 const emSalary = () => {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
+	const date = new Date();
+	const month = date.getMonth();
+
 	const [textContract, setTextContract] = useState({
 		contractId: '',
 		base: '',
 	});
 	const [textSalary, setTextSalary] = useState({
 		total: '',
+		net: '',
 	});
 	useEffect(() => {
 		const fetch = async () => {
 			const res = await apiHandler(contractAPI, 'get', '', setLoading, null);
 			setTextContract(res || []);
 
-			const res1 = await apiHandler(salaryAPI, 'get', '', setLoading, null);
+			const res1 = await apiHandler(salaryAPI, 'get', '', setLoading, month, null);
 			setTextSalary(res1 || []);
 		};
 		fetch();

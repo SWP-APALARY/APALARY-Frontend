@@ -3,8 +3,13 @@ import { get } from '../caller';
 
 const token = 'Bearer ' + LocalStorageUtils.getItem('token');
 const salaryAPI = {
-	get: async () => {
-		const endpoint = '/salary/self/month-and-year?month=2&year=2023';
+	getAll: async () => {
+		const endpoint = `/salary/self`;
+		//fix params
+		return await get(endpoint, {}, { Authorization: token }, {});
+	},
+	get: async (month) => {
+		const endpoint = `/salary/self/month-and-year?month=${month}&year=2023`;
 		//fix params
 		return await get(endpoint, {}, { Authorization: token }, {});
 	},
