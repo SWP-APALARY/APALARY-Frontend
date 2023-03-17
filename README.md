@@ -10,7 +10,7 @@ A small project at school which manage employees of apartment.
 - [x] Dashboard for employee
 - [ ] Contract
 - [ ] Manage employee
-- [ ] Calculate salary for each employee
+- [x] Calculate salary for each employee
 - [ ] Manage schedule interview
 - [ ] ...
 
