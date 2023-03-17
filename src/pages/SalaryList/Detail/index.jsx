@@ -63,12 +63,16 @@ const SalaryListDetail = () => {
 				startDate.year(),
 				token
 			);
+			const assurance = res.medicalAssurance + res.accidentalAssurance + res.socialAssurance;
+			const receiveDate = dayjs()
+				.month(res.month - 1)
+				.year(res.year);
 			setData({
 				...res,
-				receiveDate: dayjs()
-					.month(res.month - 1)
-					.year(res.year),
+				assurance,
+				receiveDate,
 			});
+			console.log(res);
 		};
 		fetch();
 	}, []);

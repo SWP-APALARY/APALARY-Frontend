@@ -1,6 +1,6 @@
 const statisticCardConfig = [
 	{
-		title: 'Net Receive',
+		title: 'NET Receive',
 		value: 0,
 		suffix: 'VNĐ',
 		dataIndex: 'net',
@@ -21,7 +21,14 @@ const statisticCardConfig = [
 		col: 12,
 	},
 	{
-		title: 'Assurance',
+		title: 'Social Assurance',
+		value: 0,
+		suffix: 'VNĐ',
+		dataIndex: 'socialAssurance',
+		col: 12,
+	},
+	{
+		title: 'Total Assurance',
 		value: 0,
 		suffix: 'VNĐ',
 		dataIndex: 'assurance',
@@ -32,7 +39,7 @@ const statisticCardConfig = [
 		value: 0,
 		suffix: 'VNĐ',
 		dataIndex: 'tax',
-		col: 12,
+		col: 24,
 	},
 	{
 		title: 'Bonus',
