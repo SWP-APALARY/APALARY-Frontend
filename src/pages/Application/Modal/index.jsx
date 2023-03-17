@@ -39,6 +39,7 @@ const ApplicationModal = (props) => {
 	const [loading, setLoading] = useState(false);
 	const handleAction = async (actionR1, actionR2, setLoading) => {
 		if (activeKey === tabConfigWithAPIStatus[0].key) {
+			console.log('hr');
 			return await apiHandler(
 				applicationAPI,
 				actionR1,

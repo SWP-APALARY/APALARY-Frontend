@@ -91,7 +91,12 @@ const ApplicationSalary = () => {
 					)}
 				/>
 			</CustomTable>
-			<ApplicationModal id={id} open={openModal} setOpen={setOpenModal} status={activeKey} />
+			<ApplicationModal
+				id={id}
+				open={openModal}
+				setOpen={setOpenModal}
+				activeKey={activeKey}
+			/>
 		</CustomCard>
 	);
 };
