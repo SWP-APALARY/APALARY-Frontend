@@ -87,7 +87,7 @@ const JobOffering = () => {
 		setFilteredData(tmp);
 	}, [searchText]);
 	return (
-		<CustomCard>
+		<CustomCard width='1200px'>
 			<Box direction='vertical'>
 				<CustomTable
 					rowKey={(record) => record.id + 'job-offering'}

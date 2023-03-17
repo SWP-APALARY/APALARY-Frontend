@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
+import { roles } from '../../../components/Layout/ManagerItems';
 import CustomTable from '../../../components/Table';
 import { paginationConfig } from '../../../config/ColumnConfig';
 import { tabConfigWithAPIStatus, tabStatusConfig } from '../../../config/TabsConfig';
@@ -18,13 +19,15 @@ import { salaryColumnConfig } from '../columnConfig';
 const { Column } = Table;
 const ApplicationSalary = () => {
 	const [token, setToken] = usePersistedState('token');
+	const [role, setRole] = usePersistedState('role');
 	const [data, setData] = useState([]);
 	const [filteredData, setFilteredData] = useState([]);
 	const [id, setId] = useState(1);
-	const [activeKey, setActiveKey] = useState(tabConfigWithAPIStatus[0].key);
 	const [loading, setLoading] = useState(tabStatusConfig);
 	const [search, searchRef, setSearchChange] = useSearch();
 	const [openModal, setOpenModal] = useState(false);
+	const [activeKey, setActiveKey] = useState(tabConfigWithAPIStatus[0].key);
+	// const tabForCEO = tabConfigWithAPIStatus.filter((item) => item.key !== 'processing');
 	const onTabChange = async (value) => {
 		setActiveKey(value);
 	};
@@ -34,12 +37,16 @@ const ApplicationSalary = () => {
 	};
 	useEffect(() => {
 		const fetch = async () => {
+			let activeKeyTmp = activeKey;
+			// if (role === roles.CEO && activeKey === tabConfigWithAPIStatus[0].key) {
+			// 	activeKeyTmp = 'processing-r2';
+			// }
 			const res = await apiHandler(
 				applicationAPI,
 				'getSalaryIncreasing',
 				'',
 				setLoading,
-				activeKey,
+				activeKeyTmp,
 				token
 			);
 			setData(res || []);

@@ -5,6 +5,7 @@ import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import Box from '../../../components/Box';
+import { roles } from '../../../components/Layout/ManagerItems';
 import toast from '../../../components/Toast';
 import applicationAPI from '../../../utils/Apis/applicationAPI';
 import apiHandler from '../../../utils/Apis/handler';
@@ -22,9 +23,11 @@ const initData = {
 	status: null,
 	description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
 };
+
 const ApplicationModal = (props) => {
 	const { id, open, setOpen, activeKey } = props;
 	const [token, setToken] = usePersistedState('token');
+	const [role, setRole] = usePersistedState('role');
 	const [approveLoading, setApproveLoading] = useState(false);
 	const [rejectLoading, setRejectLoading] = useState(false);
 	const [data, setData] = useState({
