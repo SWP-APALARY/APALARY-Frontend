@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button, Col, Modal, Row, Skeleton, Typography } from 'antd';
 import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import Box from '../../../components/Box';
-import { roles } from '../../../components/Layout/ManagerItems';
-import toast from '../../../components/Toast';
 import { tabConfigWithAPIStatus } from '../../../config/TabsConfig';
 import applicationAPI from '../../../utils/Apis/applicationAPI';
 import apiHandler from '../../../utils/Apis/handler';
@@ -29,7 +27,6 @@ const initData = {
 const ApplicationModal = (props) => {
 	const { id, open, setOpen, activeKey } = props;
 	const [token, setToken] = usePersistedState('token');
-	const [role, setRole] = usePersistedState('role');
 	const [approveLoading, setApproveLoading] = useState(false);
 	const [rejectLoading, setRejectLoading] = useState(false);
 	const [data, setData] = useState({
@@ -39,7 +36,6 @@ const ApplicationModal = (props) => {
 	const [loading, setLoading] = useState(false);
 	const handleAction = async (actionR1, actionR2, setLoading) => {
 		if (activeKey === tabConfigWithAPIStatus[0].key) {
-			console.log('hr');
 			return await apiHandler(
 				applicationAPI,
 				actionR1,
