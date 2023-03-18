@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, Navigate, BrowserRouter, HashRouter } from 'react-router-dom';
 
 import LayoutEveryone from '../components/Layout/LayoutEveryone';
 import LayoutManager from '../components/Layout/LayoutManager';
@@ -23,7 +23,7 @@ const AppRoutes = () => {
 	const MainPage =
 		role && role !== '' ? <Navigate to='/dashboard' /> : <Navigate to='/homepage' />;
 	return (
-		<BrowserRouter>
+		<HashRouter>
 			<Routes>
 				{/* <Route exact path='/' element={<Navigate to={'/dashboard'} />} /> */}
 
@@ -89,7 +89,7 @@ const AppRoutes = () => {
 				</Route>
 				<Route path={'*'} element={<LayoutEveryone />}></Route>
 			</Routes>
-		</BrowserRouter>
+		</HashRouter>
 	);
 };
 
