@@ -70,6 +70,16 @@ const applicationAPI = {
 			}
 		);
 	},
+	getSent: async () => {
+		const endpoint = '/application/employee';
+		return await get(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
+	},
 	approveOne: async (id) => {
 		const endpoint = `/application/approve/${id}`;
 		return await put(

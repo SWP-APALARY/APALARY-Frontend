@@ -63,6 +63,7 @@ const ApplicationSalary = () => {
 	return (
 		<CustomCard width='800px'>
 			<CustomTable
+				loading={loading}
 				dataSource={filteredData}
 				onSearch={setSearchChange}
 				activeKey={activeKey}

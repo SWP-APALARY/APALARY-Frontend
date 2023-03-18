@@ -37,6 +37,7 @@ export const routeKey = {
 	applicationCreating: '/application/create',
 	applicationDayLeave: '/application/day-leave',
 	applicationRecruitment: '/application/recruitment',
+	applicationSent: '/application/sent',
 	posts: '/posts',
 	postsCreate: '/posts/create',
 	postsEdit: '/posts/:id/edit',
@@ -91,15 +92,21 @@ export const managerHrItems = [
 			getMenuItem('Salary increasing', routeKey.applicationSalaryIncreasing),
 			getMenuItem('Day leave', routeKey.applicationDayLeave),
 			getMenuItem('Recruitment', routeKey.applicationRecruitment),
-			getMenuItem('Create Application', routeKey.applicationCreating),
+			getMenuItem('Create', routeKey.applicationCreating, null, null, [
+				roles.HR_MANAGER,
+				roles.CEO,
+			]),
 		],
 		roleHrManager
 	),
 	getMenuItem(
-		'Create Application',
-		routeKey.applicationCreating,
+		'Application',
+		routeKey.applications,
 		<MenuFoldOutlined />,
-		null,
+		[
+			getMenuItem('Sent', routeKey.applicationSent),
+			getMenuItem('Create', routeKey.applicationCreating),
+		],
 		roleEmployee
 	),
 	getMenuItem('Posts', routeKey.posts, <SendOutlined />, null, roleHrManager),

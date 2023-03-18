@@ -8,6 +8,7 @@ import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
 import CustomEditor from '../../../components/Editor';
 import CustomInput from '../../../components/Input';
+import { roles } from '../../../components/Layout/ManagerItems';
 import { tabConfigWithAPIStatus } from '../../../config/TabsConfig';
 import applicationAPI from '../../../utils/Apis/applicationAPI';
 import employeeAPI from '../../../utils/Apis/employeeAPI';
@@ -21,6 +22,7 @@ import { useForm } from 'antd/es/form/Form';
 const { Title } = Typography;
 const CreateApplication = () => {
 	const [token, setToken] = usePersistedState('token');
+	const [role] = usePersistedState('role');
 	const [type, setType] = useState();
 	const [form] = Form.useForm();
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -42,7 +44,11 @@ const CreateApplication = () => {
 	};
 	useEffect(() => {
 		const fetchType = async () => {
-			const res = await apiHandler(applicationAPI, 'getAllType', '', null, token);
+			const res = (await apiHandler(applicationAPI, 'getAllType', '', null, token)).filter(
+				//TODO: filter report type only unless role is manager
+				(item) => item.id !== 4 && !role.includes(roles.MANAGER)
+			);
+			console.log(res);
 			const employeeList = await apiHandler(employeeAPI, 'getAll', '', null, token);
 			setDestinationEmployees(
 				employeeList.map((item) => ({

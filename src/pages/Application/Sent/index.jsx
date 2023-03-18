@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
+import { roles } from '../../../components/Layout/ManagerItems';
 import CustomTable from '../../../components/Table';
 import { paginationConfig } from '../../../config/ColumnConfig';
 import { tabConfigWithAPIStatus, tabStatusConfig } from '../../../config/TabsConfig';
@@ -13,18 +14,18 @@ import apiHandler from '../../../utils/Apis/handler';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../../utils/hooks/useSearch';
 import ApplicationModal from '../Modal';
-import { salaryColumnConfig } from '../columnConfig';
+import { salaryColumnConfig, sentColumnConfig } from '../columnConfig';
 
 const { Column } = Table;
-const ApplicationRecruitment = () => {
+const ApplicationSent = () => {
 	const [token, setToken] = usePersistedState('token');
 	const [data, setData] = useState([]);
 	const [filteredData, setFilteredData] = useState([]);
 	const [id, setId] = useState(1);
-	const [activeKey, setActiveKey] = useState(tabConfigWithAPIStatus[0].key);
-	const [loading, setLoading] = useState(tabStatusConfig);
-	const [search, searchRef, setSearchChange] = useSearch();
+	const [loading, setLoading] = useState(false);
+	const [search, setSearchChange] = useSearch();
 	const [openModal, setOpenModal] = useState(false);
+	const [activeKey, setActiveKey] = useState(tabConfigWithAPIStatus[0].key);
 	const onTabChange = async (value) => {
 		setActiveKey(value);
 	};
@@ -32,25 +33,25 @@ const ApplicationRecruitment = () => {
 		setOpenModal(true);
 		setId(id);
 	};
-	const tabConfig = tabConfigWithAPIStatus.filter((item) => item.key !== 'processing-r2');
+
 	useEffect(() => {
 		const fetch = async () => {
 			const res = await apiHandler(
 				applicationAPI,
-				'getRecruitment',
+				'getSent',
 				'',
 				setLoading,
 				activeKey,
 				token
 			);
+			console.log(res);
 			setData(res || []);
-			setFilteredData(res || []);
 		};
 		fetch();
-	}, [activeKey, openModal]);
+	}, []);
 	useEffect(() => {
 		const tmp = data.filter((item) =>
-			item.employeeName.toLowerCase().includes(search.toLowerCase())
+			item.employeeName.toLowerCase().includes(search?.toLowerCase())
 		);
 		setFilteredData(tmp);
 	}, [search]);
@@ -59,17 +60,14 @@ const ApplicationRecruitment = () => {
 		<CustomCard width='800px'>
 			<CustomTable
 				loading={loading}
-				dataSource={filteredData}
+				dataSource={data}
 				onSearch={setSearchChange}
-				activeKey={activeKey}
-				tabConfig={tabConfig}
-				rowKey={(record) => record.id + '-application-salary'}
-				onTabChange={onTabChange}
+				rowKey={(record) => record.id + '-application-sent'}
 				pagination={{ ...paginationConfig }}
 			>
-				{salaryColumnConfig.map((column, index) => (
+				{sentColumnConfig.map((column, index) => (
 					<Column
-						key={index + '-application-salary'}
+						key={index + '-application-sent'}
 						title={column.title}
 						dataIndex={column.dataIndex}
 						width={column.width}
@@ -87,9 +85,14 @@ const ApplicationRecruitment = () => {
 					)}
 				/>
 			</CustomTable>
-			<ApplicationModal id={id} open={openModal} setOpen={setOpenModal} status={activeKey} />
+			<ApplicationModal
+				id={id}
+				open={openModal}
+				setOpen={setOpenModal}
+				activeKey={activeKey}
+			/>
 		</CustomCard>
 	);
 };
 
-export default ApplicationRecruitment;
+export default ApplicationSent;
