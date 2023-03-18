@@ -90,6 +90,26 @@ const applicationAPI = {
 			}
 		);
 	},
+	disapproveSalaryR2: async (id) => {
+		const endpoint = `/application/disapprove/salary-increase/${id}`;
+		return await put(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
+	},
+	approveSalaryR2: async (id) => {
+		const endpoint = `/application/approve/salary-increase/${id}`;
+		return await put(
+			endpoint,
+			{},
+			{
+				Authorization: token,
+			}
+		);
+	},
 };
 
 export default applicationAPI;

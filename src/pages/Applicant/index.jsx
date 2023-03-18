@@ -52,7 +52,7 @@ const Applicants = () => {
 				setLoading(false);
 			});
 			if (res instanceof Error) {
-				navigate('/login');
+				return navigate('/login');
 			}
 			setData(res || fakeData);
 			setFilteredData(res || fakeData);

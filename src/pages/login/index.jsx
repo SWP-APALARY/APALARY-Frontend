@@ -3,12 +3,12 @@ import React from 'react';
 import { Button, Form, Input, Spin, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import characterImage from '../../assets/login/character.png';
-import codeImage from '../../assets/login/code.png';
-import laptopImage from '../../assets/login/laptop-blank.png';
-import screenImage from '../../assets/login/screen.png';
-import authApi from '../../utils/Apis/auth';
 import LocalStorageUtils from '../../utils/LocalStorage/utils';
+import characterImage from './../../assets/login/character.png';
+import codeImage from './../../assets/login/code.png';
+import laptopImage from './../../assets/login/laptop-blank.png';
+import screenImage from './../../assets/login/screen.png';
+import authApi from './../../utils/Apis/auth';
 import { LoginComponent } from './style';
 
 import { UserOutlined } from '@ant-design/icons';

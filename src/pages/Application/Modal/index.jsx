@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Button, Col, Modal, Row, Skeleton, Typography } from 'antd';
 import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import Box from '../../../components/Box';
-import toast from '../../../components/Toast';
+import { tabConfigWithAPIStatus } from '../../../config/TabsConfig';
 import applicationAPI from '../../../utils/Apis/applicationAPI';
 import apiHandler from '../../../utils/Apis/handler';
 import { convertToEditor } from '../../../utils/DraftjsHelper';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
+import AuthButton from './AuthButton';
 
 const { Title, Text } = Typography;
 const initData = {
@@ -22,6 +23,7 @@ const initData = {
 	status: null,
 	description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
 };
+
 const ApplicationModal = (props) => {
 	const { id, open, setOpen, activeKey } = props;
 	const [token, setToken] = usePersistedState('token');
@@ -32,31 +34,31 @@ const ApplicationModal = (props) => {
 		status: null,
 	});
 	const [loading, setLoading] = useState(false);
-	const handleOk = async () => {
-		setApproveLoading(true);
-		await apiHandler(
+	const handleAction = async (actionR1, actionR2, setLoading) => {
+		if (activeKey === tabConfigWithAPIStatus[0].key) {
+			return await apiHandler(
+				applicationAPI,
+				actionR1,
+				'Approve successfully',
+				setLoading,
+				id,
+				token
+			).finally(() => setOpen(false));
+		}
+		return await apiHandler(
 			applicationAPI,
-			'approveOne',
+			actionR2,
 			'Approve successfully',
-			setApproveLoading,
+			setLoading,
 			id,
 			token
-		).finally(() => {
-			setOpen(false);
-		});
+		).finally(() => setOpen(false));
+	};
+	const handleOk = async () => {
+		return await handleAction('approveOne', 'approveSalaryR2', setApproveLoading);
 	};
 	const handleReject = async () => {
-		setRejectLoading(true);
-		await apiHandler(
-			applicationAPI,
-			'disapproveOne',
-			'Reject successfully',
-			setRejectLoading,
-			id,
-			token
-		).finally(() => {
-			setOpen(false);
-		});
+		return await handleAction('disapproveOne', 'disapproveSalaryR2', setRejectLoading);
 	};
 
 	useEffect(() => {
@@ -76,27 +78,13 @@ const ApplicationModal = (props) => {
 					<Col>
 						<Button onClick={() => setOpen(false)}>Cancel</Button>
 					</Col>
-					{data.status === 'PROCESSING' && (
-						<Col>
-							<Button
-								loading={rejectLoading}
-								disabled={approveLoading}
-								onClick={handleReject}
-								danger
-								type='primary'
-							>
-								Reject
-							</Button>
-							<Button
-								loading={approveLoading}
-								disabled={rejectLoading}
-								type='primary'
-								onClick={handleOk}
-							>
-								Approve
-							</Button>
-						</Col>
-					)}
+					<AuthButton
+						status={data.status}
+						rejectLoading={rejectLoading}
+						approveLoading={approveLoading}
+						handleReject={handleReject}
+						handleOk={handleOk}
+					/>
 				</Row>
 			}
 		>
