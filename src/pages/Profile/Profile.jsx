@@ -54,6 +54,7 @@ const FormDisabledDemo = () => {
 				gender: text.gender,
 				phone: text.phone,
 				dateOfBirth: text.dateOfBirth.toString(),
+				identifyNumber: text.identifyNumber,
 			})
 			.then(() => toast('success'))
 			.catch((e) => toast('error', e));
@@ -164,8 +165,21 @@ const FormDisabledDemo = () => {
 						onChange={(e) => setText({ ...text, phone: e.target.value })}
 					/>
 				</Form.Item>
-				<Form.Item label='IdentifyNumber' style={{ marginTop: 10 }}>
-					<Input value={text.identifyNumber} disabled />
+				<Form.Item
+					label='IdentifyNumber'
+					rules={[
+						{
+							pattern: new RegExp(/^[0-9]*$/),
+							message: 'Please, Enter a valid number',
+							required: true,
+						},
+					]}
+					style={{ marginTop: 10 }}
+				>
+					<Input
+						value={text.identifyNumber}
+						onChange={(e) => setText({ ...text, identifyNumber: e.target.value })}
+					/>
 				</Form.Item>
 				<Form.Item label='UserName' style={{ marginTop: 10 }}>
 					<Input value={text.username} disabled />

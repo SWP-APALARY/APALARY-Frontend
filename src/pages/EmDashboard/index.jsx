@@ -107,6 +107,13 @@ const EmDashboard = () => {
 			// console.log(textSalary);
 		};
 		fetch();
+		employeeAPI
+			.get()
+			.then((res) => setTextEmployee(res.data))
+			.catch(() => {
+				LocalStorageUtils.clear();
+				navigate('/login');
+			});
 	}, []);
 
 	return (

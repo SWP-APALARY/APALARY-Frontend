@@ -1,21 +1,33 @@
-import { useEffect, useState } from 'react';
-
 import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
 
 import LayoutEveryone from '../components/Layout/LayoutEveryone';
 import LayoutManager from '../components/Layout/LayoutManager';
+import { roles } from '../components/Layout/ManagerItems';
 import ErrorPage from '../pages/Errors';
+import Homepage from '../pages/Homepage';
 import usePersistedState from '../utils/LocalStorage/usePersistedState';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-import { ceoRoutes, employeeRoutes, managerRoutes, publicRoutes, roles } from './roles';
+import {
+	ceoRoutes,
+	employeeRoutes,
+	hrEmployeeRoutes,
+	hrManagerRoutes,
+	managerRoutes,
+	publicRoutes,
+	residentRoutes,
+} from './routersByRole';
 
 const AppRoutes = () => {
 	const [role, setRole] = usePersistedState('role');
+	const MainPage =
+		role && role !== '' ? <Navigate to='/dashboard' /> : <Navigate to='/homepage' />;
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route exact path='/' element={<Navigate to={'/dashboard'} />} />
+				{/* <Route exact path='/' element={<Navigate to={'/dashboard'} />} /> */}
+
+				<Route exact path='/' element={MainPage} />
 				<Route path={''} element={<PrivateRoute />}>
 					<Route element={<LayoutManager />}>
 						{role === roles.CEO &&
@@ -31,7 +43,7 @@ const AppRoutes = () => {
 				<Route path={''} element={<PrivateRoute />}>
 					<Route element={<LayoutManager />}>
 						{role === roles.HR_MANAGER &&
-							managerRoutes.map((route, index) => (
+							hrManagerRoutes.map((route, index) => (
 								<Route
 									key={index + route.path + 'manager'}
 									element={route.Element}
@@ -43,7 +55,23 @@ const AppRoutes = () => {
 				<Route path={''} element={<PrivateRoute />}>
 					<Route element={<LayoutManager />}>
 						{role === roles.HR_EMPLOYEE &&
-							employeeRoutes.map((route, index) => (
+							hrEmployeeRoutes.map((route, index) => (
+								<Route key={index} element={route.Element} path={route.path} />
+							))}
+					</Route>
+				</Route>
+				<Route path={''} element={<PrivateRoute />}>
+					<Route element={<LayoutManager />}>
+						{[roles.EMPLOYEE, roles.MANAGER].includes(role) &&
+							managerRoutes.map((route, index) => (
+								<Route key={index} element={route.Element} path={route.path} />
+							))}
+					</Route>
+				</Route>
+				<Route path={''} element={<PrivateRoute />}>
+					<Route element={<LayoutManager />}>
+						{role === roles.RESIDENT &&
+							residentRoutes.map((route, index) => (
 								<Route key={index} element={route.Element} path={route.path} />
 							))}
 					</Route>
@@ -59,8 +87,7 @@ const AppRoutes = () => {
 						))}
 					</Route>
 				</Route>
-				<Route path={'/error/:statusCode'} element={<ErrorPage />} />
-				<Route path={'*'} element={<Navigate to='/error/404' />} />
+				<Route path={'*'} element={<LayoutEveryone />}></Route>
 			</Routes>
 		</BrowserRouter>
 	);

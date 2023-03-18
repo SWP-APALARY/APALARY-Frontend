@@ -34,4 +34,19 @@ export const formConfig = [
 			{ required: true, message: 'Please input a valid number!' },
 		],
 	},
+	{
+		label: 'Contract Type',
+		name: 'contractTypeId',
+		type: 'type',
+		rules: [{ required: true, message: 'Please choose type of this contract!' }],
+	},
+	{
+		label: 'Number of Dependents',
+		name: 'numberOfDependents',
+		type: 'number',
+		rules: [
+			{ type: 'number', min: 0, message: 'Please, Enter a valid number!' },
+			{ required: true, message: 'Please input a valid number!' },
+		],
+	},
 ];

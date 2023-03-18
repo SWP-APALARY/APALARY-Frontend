@@ -24,7 +24,6 @@ const StyledHeader = (props) => {
 		// setRole('');
 		LocalStorageUtils.clear();
 		navigate('/');
-		navigate(0);
 	};
 
 	return (
@@ -50,7 +49,7 @@ const StyledHeader = (props) => {
 						}}
 						placement='bottomLeft'
 					>
-						<Avatar />
+						<Avatar src={LocalStorageUtils.getItem('avatar')} />
 					</Dropdown>
 				) : (
 					<Button onClick={() => navigate('/login')}>Login</Button>

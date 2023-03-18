@@ -13,7 +13,7 @@ const Review = () => {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const date = new Date();
-	const [month, setMoth] = useState(date.getMonth());
+	const [month, setMoth] = useState(date.getMonth() + 1);
 	const [index, setIndex] = useState(0);
 	console.log(month);
 	const [text, setText] = useState([
@@ -88,13 +88,16 @@ const Review = () => {
 					</Button>
 				</Space>
 				<Space>
-					<Button type='primary' onClick={prevMonth}>
-						past
-					</Button>
-
-					<Button type='primary' onClick={nextMonth}>
-						next
-					</Button>
+					{month !== 0 && (
+						<Button type='primary' onClick={prevMonth}>
+							past
+						</Button>
+					)}
+					{month !== date.getMonth() + 1 && (
+						<Button type='primary' onClick={nextMonth}>
+							next
+						</Button>
+					)}
 				</Space>
 			</Card>
 		</Row>

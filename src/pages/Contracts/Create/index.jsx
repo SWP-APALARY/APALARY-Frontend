@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, DatePicker, Form, Input, InputNumber, Skeleton, Typography, Upload } from 'antd';
+import {
+	Button,
+	DatePicker,
+	Form,
+	Input,
+	InputNumber,
+	Select,
+	Skeleton,
+	Typography,
+	Upload,
+} from 'antd';
 import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -10,6 +20,7 @@ import CustomCard from '../../../components/Card';
 import CustomEditor from '../../../components/Editor';
 import toast from '../../../components/Toast';
 import contractsAPI from '../../../utils/Apis/contractsAPI';
+import { departmentAPI } from '../../../utils/Apis/departmentAPI';
 import apiHandler from '../../../utils/Apis/handler';
 import { convertToEditor } from '../../../utils/DraftjsHelper';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
@@ -21,6 +32,7 @@ import Meta from 'antd/es/card/Meta';
 import TextArea from 'antd/es/input/TextArea';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+const { Option } = Select;
 const { Title, Text } = Typography;
 const ContractCreation = () => {
 	const [data, setData] = useState();
@@ -33,6 +45,8 @@ const ContractCreation = () => {
 	const [dateSigned, setDateSigned] = React.useState();
 	const [startDate, setStartDate] = React.useState();
 	const [endDate, setEndDate] = React.useState();
+	const [contractType, setContractType] = React.useState([]);
+	const [listDepartment, setListDepartment] = useState([]);
 	const onSubmit = async () => {
 		if (fileError) return;
 		if (fileBase64 === '') {
@@ -83,7 +97,13 @@ const ContractCreation = () => {
 			setFileError('Please upload contract file!');
 		}
 	};
-
+	useEffect(() => {
+		const fetch = async () => {
+			const resCon = await apiHandler(contractsAPI, 'getContractType', '', setLoading, null);
+			setContractType(resCon || []);
+		};
+		fetch();
+	}, []);
 	return (
 		<Box>
 			<CustomCard bordered width='800px' loading={loading}>
@@ -139,6 +159,14 @@ const ContractCreation = () => {
 														setEndDate(dateString)
 													}
 												/>
+											) : item.type === 'type' ? (
+												<Select placeholder='Select'>
+													{contractType.map((todo) => (
+														<Option value={todo.id} key={todo.id}>
+															{todo.type}
+														</Option>
+													))}
+												</Select>
 											) : null
 											// <Input />
 										}

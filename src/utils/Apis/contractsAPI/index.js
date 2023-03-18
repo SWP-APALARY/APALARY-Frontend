@@ -11,7 +11,10 @@ const contractsAPI = {
 		const endpoint = '/contract/all/inactive';
 		return await get(endpoint, {}, { Authorization: token });
 	},
-
+	getContractType: async () => {
+		const endpoint = '/contract/contract-type';
+		return await get(endpoint, {}, { Authorization: token });
+	},
 	getOne: async (id) => {
 		const endpoint = `/contract/${id}`;
 		return await get(

@@ -16,6 +16,7 @@ import Salary from '../pages/EmSalary/Salary';
 import Feedback from '../pages/Feedback/Feedback.jsx';
 import Home from '../pages/Home';
 import Homepage from '../pages/Homepage';
+import Dashboard from '../pages/Homepage/dashboard';
 import JobOfferingDetail from '../pages/Homepage/job-offering';
 import JobOffering from '../pages/JobOffering';
 import PostCreation from '../pages/JobOffering/CreatePages';
@@ -26,20 +27,10 @@ import FormDisabledDemo from '../pages/Profile/Profile';
 import ResidentDashboard from '../pages/ResidentDashboard';
 import Login from '../pages/login';
 
-export const roles = {
-	HR_MANAGER: 'HR_MANAGER',
-	CEO: 'HEAD_MANAGER',
-	HR_EMPLOYEE: 'HR_EMPLOYEE',
-	EMPLOYEE: 'EMPLOYEE',
-	MANAGER: 'MANAGER',
-	ADMIN: 'ADMIN',
-	GUEST: 'GUEST',
-	RESIDENT: 'RESIDENT',
-};
 // public routes here
 export const publicRoutes = [
 	{
-		path: routeKey.dashBoard,
+		path: '/homepage',
 		Element: <Homepage />,
 	},
 	{
@@ -52,8 +43,19 @@ export const publicRoutes = [
 	},
 ];
 
+export const generalRoutes = [
+	{
+		path: '/dashboard',
+		Element: <EmDashboard />,
+	},
+	{
+		path: routeKey.profile,
+		Element: <FormDisabledDemo />,
+	},
+];
 // private routes here
-export const managerRoutes = [
+export const hrManagerRoutes = [
+	...generalRoutes,
 	{
 		path: routeKey.applicantsSpecific,
 		Element: <ApplicantDetails />,
@@ -91,11 +93,6 @@ export const managerRoutes = [
 		Element: <PostDetail />,
 	},
 	{
-		path: '/admin',
-		Element: <Home />,
-	},
-
-	{
 		path: routeKey.posts,
 		Element: <JobOffering />,
 	},
@@ -112,19 +109,16 @@ export const managerRoutes = [
 		Element: <ContractCreation />,
 	},
 	{
-		path: '/feedback',
+		path: routeKey.feedBack,
 		Element: <Feedback />,
 	},
+
 	{
-		path: '/profile',
-		Element: <FormDisabledDemo />,
-	},
-	{
-		path: '/contract',
+		path: routeKey.contract,
 		Element: <Contract />,
 	},
 	{
-		path: '/salary',
+		path: routeKey.salary,
 		Element: <Salary />,
 	},
 	{
@@ -148,17 +142,41 @@ export const managerRoutes = [
 		Element: <EmployeeDetail />,
 	},
 ];
+export const hrEmployeeRoutes = [...hrManagerRoutes];
+
 export const employeeRoutes = [
+	...generalRoutes,
 	{
-		path: routeKey.dashBoard,
-		Element: <EmDashboard />,
+		path: routeKey.applicationCreating,
+		Element: <CreateApplication />,
+	},
+	{
+		path: routeKey.feedBack,
+		Element: <Feedback />,
 	},
 ];
 
+export const managerRoutes = [
+	...generalRoutes,
+	{
+		path: routeKey.applicationCreating,
+		Element: <CreateApplication />,
+	},
+	{
+		path: routeKey.feedBack,
+		Element: <Feedback />,
+	},
+];
+
+export const residentRoutes = [...generalRoutes];
 export const ceoRoutes = [
 	{
 		path: routeKey.dashBoard,
 		Element: <CEODashboard />,
+	},
+	{
+		path: routeKey.profile,
+		Element: <FormDisabledDemo />,
 	},
 	{
 		path: routeKey.posts,

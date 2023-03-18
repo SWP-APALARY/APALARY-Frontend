@@ -94,7 +94,9 @@ const Contracts = () => {
 						render={(text, record) => (
 							<Space size='middle'>
 								<Link to={`/employees/contracts/${record.id}`}>View</Link>
-								<Link onClick={() => handleDelete(record.id)}>Delete</Link>
+								{record.status !== 'INACTIVE' && (
+									<Link onClick={() => handleDelete(record.id)}>Delete</Link>
+								)}
 							</Space>
 						)}
 					/>
