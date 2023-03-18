@@ -68,10 +68,6 @@ export const postColumns = [
 		title: 'Max Employee',
 		dataIndex: 'maxEmployee',
 	},
-	{
-		title: 'Status',
-		dataIndex: 'status',
-	},
 ];
 export const contractColumns = [
 	{

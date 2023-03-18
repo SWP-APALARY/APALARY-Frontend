@@ -32,6 +32,7 @@ const ApplicationRecruitment = () => {
 		setOpenModal(true);
 		setId(id);
 	};
+	const tabConfig = tabConfigWithAPIStatus.filter((item) => item.key !== 'processing-r2');
 	useEffect(() => {
 		const fetch = async () => {
 			const res = await apiHandler(
@@ -60,7 +61,7 @@ const ApplicationRecruitment = () => {
 				dataSource={filteredData}
 				onSearch={setSearchChange}
 				activeKey={activeKey}
-				tabConfig={tabConfigWithAPIStatus}
+				tabConfig={tabConfig}
 				rowKey={(record) => record.id + '-application-salary'}
 				onTabChange={onTabChange}
 				pagination={{ ...paginationConfig }}

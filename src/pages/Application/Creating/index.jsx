@@ -8,6 +8,7 @@ import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
 import CustomEditor from '../../../components/Editor';
 import CustomInput from '../../../components/Input';
+import { tabConfigWithAPIStatus } from '../../../config/TabsConfig';
 import applicationAPI from '../../../utils/Apis/applicationAPI';
 import employeeAPI from '../../../utils/Apis/employeeAPI';
 import apiHandler from '../../../utils/Apis/handler';
@@ -19,14 +20,13 @@ import { useForm } from 'antd/es/form/Form';
 
 const { Title } = Typography;
 const CreateApplication = () => {
+	const [token, setToken] = usePersistedState('token');
 	const [type, setType] = useState();
 	const [form] = Form.useForm();
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 	const [destinationEmployees, setDestinationEmployees] = useState([]);
-	const [token, setToken] = usePersistedState('token');
 	const [loading, setLoading] = usePersistedState(false);
 	const navigate = useNavigate();
-
 	const onSubmit = async () => {
 		// Get content from editor then convert to raw
 		const raw = convertToRaw(editorState.getCurrentContent());
