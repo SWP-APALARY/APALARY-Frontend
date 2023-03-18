@@ -3,7 +3,7 @@ import { Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
 import LayoutEveryone from '../components/Layout/LayoutEveryone';
 import LayoutManager from '../components/Layout/LayoutManager';
 import { roles } from '../components/Layout/ManagerItems';
-import ErrorPage from '../pages/Errors';
+import ErrorPage from '../pages/ErrorPage';
 import Homepage from '../pages/Homepage';
 import usePersistedState from '../utils/LocalStorage/usePersistedState';
 import PrivateRoute from './PrivateRoute';
@@ -87,7 +87,9 @@ const AppRoutes = () => {
 						))}
 					</Route>
 				</Route>
-				<Route path={'*'} element={<LayoutEveryone />}></Route>
+				<Route path={'*'} element={<LayoutEveryone />}>
+					<Route path='*' key='error' element={<ErrorPage />} />
+				</Route>
 			</Routes>
 		</BrowserRouter>
 	);
