@@ -66,7 +66,7 @@ const emSalary = () => {
 			const res = await apiHandler(contractAPI, 'get', '', setLoading, null);
 			setTextContract(res || []);
 
-			const res1 = await apiHandler(salaryAPI, 'get', '', setLoading, month, null);
+			const res1 = await apiHandler(salaryAPI, 'getMonth', '', setLoading, month, null);
 			setTextSalary(res1 || []);
 		};
 		fetch();

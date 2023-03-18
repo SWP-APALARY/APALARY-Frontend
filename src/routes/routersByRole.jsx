@@ -25,6 +25,8 @@ import ListEmployee from '../pages/ListEmployee';
 import EmployeeDetail from '../pages/ListEmployee/Detail';
 import FormDisabledDemo from '../pages/Profile/Profile';
 import ResidentDashboard from '../pages/ResidentDashboard';
+import SalaryList from '../pages/SalaryList';
+import SalaryListDetail from '../pages/SalaryList/Detail';
 import Login from '../pages/login';
 
 // public routes here
@@ -81,12 +83,20 @@ export const hrManagerRoutes = [
 		Element: <EmDashboard />,
 	},
 	{
+		path: routeKey.employeesSalaries,
+		Element: <SalaryList />,
+	},
+	{
 		path: routeKey.postsCreate,
 		Element: <PostCreation />,
 	},
 	{
 		path: routeKey.postsEdit,
 		Element: <PostCreation />,
+	},
+	{
+		path: routeKey.employeesSalariesDetail,
+		Element: <SalaryListDetail />,
 	},
 	{
 		path: routeKey.postsSpecific,
@@ -189,6 +199,14 @@ export const ceoRoutes = [
 	{
 		path: routeKey.employees,
 		Element: <ListEmployee />,
+	},
+	{
+		path: routeKey.employeesSalaries,
+		Element: <SalaryList />,
+	},
+	{
+		path: routeKey.employeesSalariesDetail,
+		Element: <SalaryListDetail />,
 	},
 	{
 		path: routeKey.employeesSpecific,

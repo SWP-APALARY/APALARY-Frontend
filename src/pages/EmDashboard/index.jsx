@@ -102,7 +102,7 @@ const EmDashboard = () => {
 			const resEm = await apiHandler(employeeAPI, 'get', '', setLoading, null);
 			setTextEmployee(resEm || []);
 
-			const resSa = await apiHandler(salaryAPI, 'getAll', '', setLoading, null);
+			const resSa = await apiHandler(salaryAPI, 'get', '', setLoading, null);
 			setTextSalary(resSa || []);
 			// console.log(textSalary);
 		};

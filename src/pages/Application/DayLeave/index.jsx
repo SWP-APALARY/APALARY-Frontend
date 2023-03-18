@@ -25,6 +25,7 @@ const ApplicationDayLeave = () => {
 	const [loading, setLoading] = useState(false);
 	const [search, searchRef, setSearchChange] = useSearch();
 	const [openModal, setOpenModal] = useState(false);
+	const tabConfig = tabConfigWithAPIStatus.filter((item) => item.key !== 'processing-r2');
 	const onTabChange = async (value) => {
 		setActiveKey(value);
 	};
@@ -58,7 +59,7 @@ const ApplicationDayLeave = () => {
 				dataSource={filteredData}
 				onSearch={setSearchChange}
 				activeKey={activeKey}
-				tabConfig={tabConfigWithAPIStatus}
+				tabConfig={tabConfig}
 				rowKey={(record) => record.id + 'application-day-leave'}
 				onTabChange={onTabChange}
 				pagination={{ ...paginationConfig }}

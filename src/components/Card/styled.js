@@ -7,4 +7,8 @@ export const StyledCard = styled(Card)`
 	border: 0;
 	margin-bottom: 20px;
 	width: ${(props) => props.width || 'fit-content'};
+	transition: all 0.3s ease-in-out;
+	:hover {
+		cursor: ${(props) => (props.clickable ? 'pointer' : 'default')};
+	}
 `;
