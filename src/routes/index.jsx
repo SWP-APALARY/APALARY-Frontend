@@ -23,73 +23,71 @@ const AppRoutes = () => {
 	const MainPage =
 		role && role !== '' ? <Navigate to='/dashboard' /> : <Navigate to='/homepage' />;
 	return (
-		<HashRouter>
-			<Routes>
-				{/* <Route exact path='/' element={<Navigate to={'/dashboard'} />} /> */}
+		<Routes>
+			{/* <Route exact path='/' element={<Navigate to={'/dashboard'} />} /> */}
 
-				<Route exact path='/' element={MainPage} />
-				<Route path={''} element={<PrivateRoute />}>
-					<Route element={<LayoutManager />}>
-						{role === roles.CEO &&
-							ceoRoutes.map((route, index) => (
-								<Route
-									key={index + route.path + 'ceo'}
-									element={route.Element}
-									path={route.path}
-								/>
-							))}
-					</Route>
-				</Route>
-				<Route path={''} element={<PrivateRoute />}>
-					<Route element={<LayoutManager />}>
-						{role === roles.HR_MANAGER &&
-							hrManagerRoutes.map((route, index) => (
-								<Route
-									key={index + route.path + 'manager'}
-									element={route.Element}
-									path={route.path}
-								/>
-							))}
-					</Route>
-				</Route>
-				<Route path={''} element={<PrivateRoute />}>
-					<Route element={<LayoutManager />}>
-						{role === roles.HR_EMPLOYEE &&
-							hrEmployeeRoutes.map((route, index) => (
-								<Route key={index} element={route.Element} path={route.path} />
-							))}
-					</Route>
-				</Route>
-				<Route path={''} element={<PrivateRoute />}>
-					<Route element={<LayoutManager />}>
-						{[roles.EMPLOYEE, roles.MANAGER].includes(role) &&
-							managerRoutes.map((route, index) => (
-								<Route key={index} element={route.Element} path={route.path} />
-							))}
-					</Route>
-				</Route>
-				<Route path={''} element={<PrivateRoute />}>
-					<Route element={<LayoutManager />}>
-						{role === roles.RESIDENT &&
-							residentRoutes.map((route, index) => (
-								<Route key={index} element={route.Element} path={route.path} />
-							))}
-					</Route>
-				</Route>
-				<Route path={''} element={<PublicRoute />}>
-					<Route element={<LayoutEveryone />}>
-						{publicRoutes.map((route, index) => (
+			<Route exact path='/' element={MainPage} />
+			<Route path={''} element={<PrivateRoute />}>
+				<Route element={<LayoutManager />}>
+					{role === roles.CEO &&
+						ceoRoutes.map((route, index) => (
 							<Route
-								key={index + route.path + 'public'}
+								key={index + route.path + 'ceo'}
 								element={route.Element}
 								path={route.path}
 							/>
 						))}
-					</Route>
 				</Route>
-				<Route path={'*'} element={<LayoutEveryone />}></Route>
-			</Routes>
-		</HashRouter>
+			</Route>
+			<Route path={''} element={<PrivateRoute />}>
+				<Route element={<LayoutManager />}>
+					{role === roles.HR_MANAGER &&
+						hrManagerRoutes.map((route, index) => (
+							<Route
+								key={index + route.path + 'manager'}
+								element={route.Element}
+								path={route.path}
+							/>
+						))}
+				</Route>
+			</Route>
+			<Route path={''} element={<PrivateRoute />}>
+				<Route element={<LayoutManager />}>
+					{role === roles.HR_EMPLOYEE &&
+						hrEmployeeRoutes.map((route, index) => (
+							<Route key={index} element={route.Element} path={route.path} />
+						))}
+				</Route>
+			</Route>
+			<Route path={''} element={<PrivateRoute />}>
+				<Route element={<LayoutManager />}>
+					{[roles.EMPLOYEE, roles.MANAGER].includes(role) &&
+						managerRoutes.map((route, index) => (
+							<Route key={index} element={route.Element} path={route.path} />
+						))}
+				</Route>
+			</Route>
+			<Route path={''} element={<PrivateRoute />}>
+				<Route element={<LayoutManager />}>
+					{role === roles.RESIDENT &&
+						residentRoutes.map((route, index) => (
+							<Route key={index} element={route.Element} path={route.path} />
+						))}
+				</Route>
+			</Route>
+			<Route path={''} element={<PublicRoute />}>
+				<Route element={<LayoutEveryone />}>
+					{publicRoutes.map((route, index) => (
+						<Route
+							key={index + route.path + 'public'}
+							element={route.Element}
+							path={route.path}
+						/>
+					))}
+				</Route>
+			</Route>
+			<Route path={'*'} element={<LayoutEveryone />}></Route>
+		</Routes>
 	);
 };
 
