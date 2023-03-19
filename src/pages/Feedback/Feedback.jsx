@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Button, Card, Rate, Space, Row, Col, Typography } from 'antd';
+import { Button, Rate, Row, Col, Typography } from 'antd';
 
 import Box from '../../components/Box';
 import CustomCard from '../../components/Card';

@@ -62,7 +62,11 @@ const CustomTable = ({
 				</Col>
 				<Col>
 					{onSearch && (
-						<SearchBar placeholder='Search by name' enterButton onSearch={onSearch} />
+						<SearchBar
+							placeholder='Search something...'
+							enterButton
+							onSearch={onSearch}
+						/>
 					)}
 				</Col>
 			</Row>

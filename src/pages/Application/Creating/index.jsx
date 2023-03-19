@@ -9,15 +9,12 @@ import CustomCard from '../../../components/Card';
 import CustomEditor from '../../../components/Editor';
 import CustomInput from '../../../components/Input';
 import { roles } from '../../../components/Layout/ManagerItems';
-import { tabConfigWithAPIStatus } from '../../../config/TabsConfig';
 import applicationAPI from '../../../utils/Apis/applicationAPI';
 import employeeAPI from '../../../utils/Apis/employeeAPI';
 import apiHandler from '../../../utils/Apis/handler';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import themeConfig from '../../../utils/Theme';
 import { applicationConfigForm, applicationConfigTypeReport } from './configForm';
-
-import { useForm } from 'antd/es/form/Form';
 
 const { Title } = Typography;
 const CreateApplication = () => {

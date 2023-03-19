@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { Button, Form, Input, InputNumber, Select, Skeleton, Typography } from 'antd';
+import { Button, Form, Input, InputNumber, Select, Typography } from 'antd';
 import { convertToRaw, EditorState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
 import { useParams, useNavigate } from 'react-router-dom';
 
 import Box from '../../../components/Box';
@@ -18,11 +17,10 @@ import themeConfig from '../../../utils/Theme';
 import { initData } from '../Detail/initData';
 import { formConfig } from './formConfig';
 
-import Meta from 'antd/es/card/Meta';
 import TextArea from 'antd/es/input/TextArea';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 const PostCreation = () => {
 	const params = useParams();
 	const [data, setData] = useState(initData);

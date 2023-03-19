@@ -1,14 +1,9 @@
-import { useEffect, useState } from 'react';
+import { Layout } from 'antd';
+import { Content } from 'antd/es/layout/layout';
+import { Outlet } from 'react-router-dom';
 
-import { Card, Layout, Menu } from 'antd';
-import { Content, Header } from 'antd/es/layout/layout';
-import { Outlet, useNavigate } from 'react-router-dom';
-
-import Logo from '../../../assets';
 import StyledHeader from '../Header';
-import { layoutContent, layoutHeader, menuLogo } from '../style';
-
-import Sider from 'antd/es/layout/Sider';
+import { layoutHeader } from '../style';
 
 const LayoutEveryone = () => {
 	return (

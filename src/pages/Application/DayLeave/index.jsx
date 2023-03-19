@@ -7,13 +7,13 @@ import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
 import CustomTable from '../../../components/Table';
 import { paginationConfig } from '../../../config/ColumnConfig';
-import { tabConfigWithAPIStatus, tabStatusConfig } from '../../../config/TabsConfig';
+import { tabConfigWithAPIStatus } from '../../../config/TabsConfig';
 import applicationAPI from '../../../utils/Apis/applicationAPI';
 import apiHandler from '../../../utils/Apis/handler';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../../utils/hooks/useSearch';
 import ApplicationModal from '../Modal';
-import { dayLeaveColumnConfig, salaryColumnConfig } from '../columnConfig';
+import { dayLeaveColumnConfig } from '../columnConfig';
 
 const { Column } = Table;
 const ApplicationDayLeave = () => {
@@ -34,7 +34,9 @@ const ApplicationDayLeave = () => {
 		setId(id);
 	};
 	useEffect(() => {
-		const tmp = data.filter((item) => item.name.toLowerCase().includes(search.toLowerCase()));
+		const tmp = data.filter((item) =>
+			item.employeeName.toLowerCase().includes(search.toLowerCase())
+		);
 		setFilteredData(tmp);
 	}, [search]);
 	useEffect(() => {
@@ -56,6 +58,7 @@ const ApplicationDayLeave = () => {
 	return (
 		<CustomCard width='800px'>
 			<CustomTable
+				loading={loading}
 				dataSource={filteredData}
 				onSearch={setSearchChange}
 				activeKey={activeKey}

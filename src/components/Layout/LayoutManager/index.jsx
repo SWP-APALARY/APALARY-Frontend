@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Button, Card, Carousel, Layout, Menu } from 'antd';
-import { Content, Header } from 'antd/es/layout/layout';
+import { Layout, Menu } from 'antd';
+import { Content } from 'antd/es/layout/layout';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from '../../../assets';

@@ -25,7 +25,7 @@ const initData = {
 };
 
 const ApplicationModal = (props) => {
-	const { id, open, setOpen, activeKey } = props;
+	const { id, open, setOpen, activeKey, report } = props;
 	const [token, setToken] = usePersistedState('token');
 	const [approveLoading, setApproveLoading] = useState(false);
 	const [rejectLoading, setRejectLoading] = useState(false);
@@ -92,6 +92,14 @@ const ApplicationModal = (props) => {
 							{data.employeeName}
 						</Text>
 					</Text>
+					{report && (
+						<Text>
+							Report for:{' '}
+							<Text type='span' strong>
+								{data?.destinationEmployeeName}
+							</Text>
+						</Text>
+					)}
 					<Text>Date: {new Date(data.createdTime).toLocaleString()}</Text>
 					<Editor
 						readOnly

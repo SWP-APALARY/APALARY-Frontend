@@ -1,20 +1,19 @@
 import { useEffect, useState } from 'react';
 
-import { Table, Typography } from 'antd';
+import { Table } from 'antd';
 import { Link } from 'react-router-dom';
 
 import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
-import { roles } from '../../../components/Layout/ManagerItems';
 import CustomTable from '../../../components/Table';
 import { paginationConfig } from '../../../config/ColumnConfig';
-import { tabConfigWithAPIStatus, tabStatusConfig } from '../../../config/TabsConfig';
+import { tabConfigWithAPIStatus } from '../../../config/TabsConfig';
 import applicationAPI from '../../../utils/Apis/applicationAPI';
 import apiHandler from '../../../utils/Apis/handler';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../../utils/hooks/useSearch';
 import ApplicationModal from '../Modal';
-import { salaryColumnConfig, sentColumnConfig } from '../columnConfig';
+import { sentColumnConfig } from '../columnConfig';
 
 const { Column } = Table;
 const ApplicationSent = () => {
@@ -23,12 +22,10 @@ const ApplicationSent = () => {
 	const [filteredData, setFilteredData] = useState([]);
 	const [id, setId] = useState(1);
 	const [loading, setLoading] = useState(false);
-	const [search, setSearchChange] = useSearch();
+	const [search, searchRef, setSearchChange] = useSearch();
 	const [openModal, setOpenModal] = useState(false);
 	const [activeKey, setActiveKey] = useState(tabConfigWithAPIStatus[0].key);
-	const onTabChange = async (value) => {
-		setActiveKey(value);
-	};
+
 	const onView = (id) => {
 		setOpenModal(true);
 		setId(id);
@@ -45,13 +42,12 @@ const ApplicationSent = () => {
 				token
 			);
 			setData(res || []);
+			setFilteredData(res || []);
 		};
 		fetch();
 	}, []);
 	useEffect(() => {
-		const tmp = data.filter((item) =>
-			item.employeeName.toLowerCase().includes(search?.toLowerCase())
-		);
+		const tmp = data.filter((item) => item.title.toLowerCase().includes(search?.toLowerCase()));
 		setFilteredData(tmp);
 	}, [search]);
 
@@ -59,7 +55,7 @@ const ApplicationSent = () => {
 		<CustomCard width='800px'>
 			<CustomTable
 				loading={loading}
-				dataSource={data}
+				dataSource={filteredData}
 				onSearch={setSearchChange}
 				rowKey={(record) => record.id + '-application-sent'}
 				pagination={{ ...paginationConfig }}
