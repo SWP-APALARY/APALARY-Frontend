@@ -2,7 +2,9 @@ import { useState } from 'react';
 
 import { Button, Col, Row, Spin, Typography } from 'antd';
 
+import usePersistedState from '../../utils/LocalStorage/usePersistedState';
 import Box from '../Box';
+import { roles } from '../Layout/ManagerItems';
 
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
@@ -11,6 +13,7 @@ import { Document, Page } from 'react-pdf/dist/esm/entry.vite';
 const { Text } = Typography;
 const PDFReader = (props) => {
 	const { onAccept, onReject, isWaiting, file, id } = props;
+	const [role] = usePersistedState('role');
 	const [numPages, setNumPages] = useState(null);
 	const [pageNumber, setPageNumber] = useState(1);
 	function onDocumentLoadSuccess({ numPages }) {
@@ -50,7 +53,7 @@ const PDFReader = (props) => {
 						Next
 					</Button>
 				</Col>
-				{isWaiting && (
+				{isWaiting && role === roles.HR_EMPLOYEE && (
 					<Col>
 						<Button type='primary' style={{ marginRight: '10px' }} onClick={onAccept}>
 							Accept

@@ -33,13 +33,7 @@ const Applicants = () => {
 		);
 		setData(res || []);
 	};
-	const onAcceptApplicant = async (id, isAccepted) => {
-		await apiHandler(applicantAPI, 'accept', 'Success', setLoading, id, isAccepted, token).then(
-			() => {
-				onTabChange(activeKey);
-			}
-		);
-	};
+
 	useEffect(() => {
 		const fetch = async () => {
 			const res = await apiHandler(

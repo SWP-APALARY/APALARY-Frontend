@@ -20,6 +20,7 @@ const initData = {
 	role: '',
 	createdDate: '',
 	updatedDate: '',
+	destinationEmployeeName: '',
 	status: null,
 	description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
 };
