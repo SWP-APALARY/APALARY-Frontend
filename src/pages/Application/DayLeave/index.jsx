@@ -51,7 +51,7 @@ const ApplicationDayLeave = () => {
 			setFilteredData(res || []);
 		};
 		fetch();
-	}, [activeKey]);
+	}, [activeKey, openModal]);
 
 	return (
 		<CustomCard width='800px'>
@@ -84,7 +84,12 @@ const ApplicationDayLeave = () => {
 					)}
 				/>
 			</CustomTable>
-			<ApplicationModal id={id} open={openModal} setOpen={setOpenModal} status={activeKey} />
+			<ApplicationModal
+				id={id}
+				open={openModal}
+				setOpen={setOpenModal}
+				activeKey={activeKey}
+			/>
 		</CustomCard>
 	);
 };

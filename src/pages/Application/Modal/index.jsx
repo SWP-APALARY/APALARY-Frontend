@@ -39,20 +39,15 @@ const ApplicationModal = (props) => {
 			return await apiHandler(
 				applicationAPI,
 				actionR1,
-				'Approve successfully',
+				'Success',
 				setLoading,
 				id,
 				token
 			).finally(() => setOpen(false));
 		}
-		return await apiHandler(
-			applicationAPI,
-			actionR2,
-			'Approve successfully',
-			setLoading,
-			id,
-			token
-		).finally(() => setOpen(false));
+		return await apiHandler(applicationAPI, actionR2, 'Success', setLoading, id, token).finally(
+			() => setOpen(false)
+		);
 	};
 	const handleOk = async () => {
 		return await handleAction('approveOne', 'approveSalaryR2', setApproveLoading);

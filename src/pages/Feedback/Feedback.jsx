@@ -1,11 +1,14 @@
 import { useState } from 'react';
 
-import { Button, Card, Rate, Space, Row } from 'antd';
+import { Button, Card, Rate, Space, Row, Col, Typography } from 'antd';
 
+import Box from '../../components/Box';
+import CustomCard from '../../components/Card';
 import FeedBacks from './data';
 
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
+const { Text } = Typography;
 const Review = () => {
 	const [index, setIndex] = useState(1);
 	const { title, description, star } = FeedBacks[index];
@@ -34,27 +37,36 @@ const Review = () => {
 
 	return (
 		<Row justify={'center'}>
-			<Card size='large' title='FeedBack'>
+			<CustomCard width={'450px'} title='FeedBack'>
 				<p>{title}</p>
-				<p>
-					{readMore ? description : `${description.substring(0, 50)}...`}
+				<p>{readMore ? description : `${description.substring(0, 50)}...`}</p>
+				<Box>
 					<Button onClick={() => setReadMore(!readMore)}>
 						{readMore ? 'Show Less' : '  Read More'}
 					</Button>
-				</p>
-				<p>
-					<Rate disabled value={star} />
-				</p>
-				<Space>
-					<Button type='primary' onClick={prevPerson}>
-						<ArrowLeftOutlined />
-					</Button>
-
-					<Button type='primary' onClick={nextPerson}>
-						<ArrowRightOutlined />
-					</Button>
-				</Space>
-			</Card>
+				</Box>
+				<Row justify='center' align='middle'>
+					<Col>
+						<Rate disabled defaultValue={star} />
+					</Col>
+					<Col span={24}>
+						<Row justify={'space-between'}>
+							<Col>
+								<Button type='primary' onClick={prevPerson}>
+									<ArrowLeftOutlined />
+									Previous
+								</Button>
+							</Col>
+							<Col>
+								<Button type='primary' onClick={nextPerson}>
+									Next
+									<ArrowRightOutlined />
+								</Button>
+							</Col>
+						</Row>
+					</Col>
+				</Row>
+			</CustomCard>
 		</Row>
 	);
 };

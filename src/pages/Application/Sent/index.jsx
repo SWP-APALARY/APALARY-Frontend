@@ -44,7 +44,6 @@ const ApplicationSent = () => {
 				activeKey,
 				token
 			);
-			console.log(res);
 			setData(res || []);
 		};
 		fetch();

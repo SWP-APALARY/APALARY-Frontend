@@ -44,11 +44,11 @@ const CreateApplication = () => {
 	};
 	useEffect(() => {
 		const fetchType = async () => {
-			const res = (await apiHandler(applicationAPI, 'getAllType', '', null, token)).filter(
-				//TODO: filter report type only unless role is manager
-				(item) => item.id !== 4 && !role.includes(roles.MANAGER)
+			const res = await apiHandler(applicationAPI, 'getAllType', '', null, token);
+			const typesTmp = res.filter(
+				//filter report type only unless role is manager
+				(item) => item.id !== 4 || role.includes(roles.MANAGER)
 			);
-			console.log(res);
 			const employeeList = await apiHandler(employeeAPI, 'getAll', '', null, token);
 			setDestinationEmployees(
 				employeeList.map((item) => ({
@@ -56,7 +56,7 @@ const CreateApplication = () => {
 					id: `${item.id}`,
 				}))
 			);
-			setType(res);
+			setType(typesTmp);
 		};
 		fetchType();
 	}, []);
