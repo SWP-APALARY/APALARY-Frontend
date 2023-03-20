@@ -29,6 +29,7 @@ import FormDisabledDemo from '../pages/Profile/Profile';
 import SalaryList from '../pages/SalaryList';
 import SalaryListDetail from '../pages/SalaryList/Detail';
 import Login from '../pages/login';
+import CreateFeedback from '../pages/Feedback/create';
 
 // public routes here
 export const publicRoutes = [
@@ -211,7 +212,13 @@ export const managerRoutes = [
 	},
 ];
 
-export const residentRoutes = [...generalRoutes];
+export const residentRoutes = [
+	...generalRoutes,
+	{
+		path: routeKey.feedBack,
+		Element: <CreateFeedback />,
+	}
+];
 export const ceoRoutes = [
 	{
 		path: routeKey.dashBoard,
