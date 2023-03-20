@@ -193,6 +193,10 @@ export const managerRoutes = [
 		Element: <JobOffering />,
 	},
 	{
+		path: routeKey.employees,
+		Element: <ListEmployee />,
+	},
+	{
 		path: routeKey.postsSpecific,
 		Element: <JobOfferingDetail />,
 	},
@@ -297,6 +301,10 @@ export const ceoRoutes = [
 	{
 		path: routeKey.employeesContracts,
 		Element: <Contracts />,
+	},
+	{
+		path: routeKey.reports,
+		Element: <Reports />,
 	},
 	{
 		path: routeKey.contractsSpecific,
