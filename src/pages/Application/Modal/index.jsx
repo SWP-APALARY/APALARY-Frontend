@@ -94,13 +94,50 @@ const ApplicationModal = (props) => {
 						</Text>
 					</Text>
 					{report && (
-						<Text>
-							Report for:{' '}
-							<Text type='span' strong>
-								{data?.destinationEmployeeName}
-							</Text>
-						</Text>
+						<Row>
+							<Col span={24}>
+								<Text>
+									Report for:{' '}
+									<Text type='span' strong>
+										{data?.destinationEmployeeName}
+									</Text>
+								</Text>
+							</Col>
+							<Col span={6}>
+								<Text>
+									Present Days:{' '}
+									<Text type='span' strong>
+										{data.presentDay}
+									</Text>
+								</Text>
+							</Col>
+							<Col span={6}>
+								<Text>
+									Absent Days:{' '}
+									<Text type='span' strong>
+										{data.absentDay}
+									</Text>
+								</Text>
+							</Col>
+							<Col span={6}>
+								<Text>
+									Overtime Days:{' '}
+									<Text type='span' strong>
+										{data.otDay}
+									</Text>
+								</Text>
+							</Col>
+							<Col span={6}>
+								<Text>
+									Late Days:{' '}
+									<Text type='span' strong>
+										{data.lateDay}
+									</Text>
+								</Text>
+							</Col>
+						</Row>
 					)}
+
 					<Text>Date: {new Date(data.createdTime).toLocaleString()}</Text>
 					<Editor
 						readOnly

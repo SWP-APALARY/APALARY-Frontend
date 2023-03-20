@@ -39,7 +39,7 @@ export const applicationConfigTypeReport = [
 	},
 	{
 		label: 'Overtime days',
-		name: 'overtimeDay',
+		name: 'otDay',
 		type: 'number',
 		col: 24,
 	},
