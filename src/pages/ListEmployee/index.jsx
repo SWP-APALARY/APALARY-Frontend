@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 
 import Box from '../../components/Box';
 import CustomCard from '../../components/Card';
+// import CustomTable from '../../components/Table';
 import toast from '../../components/Toast';
 import { employeeColumns, paginationConfig } from '../../config/ColumnConfig';
 import employeeAPI from '../../utils/Apis/employeeAPI';
+import usePersistedState from '../../utils/LocalStorage/usePersistedState';
 import themeConfig from '../../utils/Theme';
 import useSearch from '../../utils/hooks/useSearch';
 import CreateEmployee from './Create';
@@ -21,6 +23,7 @@ const { confirm } = Modal;
 export default function ListEmployee() {
 	const [data, setData] = useState([]);
 	const [filteredData, setFilteredData] = useState([]);
+	const [role] = usePersistedState('role');
 	const [searchText, searchRef, onSearchChange] = useSearch();
 	const [loading, setLoading] = useState(false);
 	const [isCreate, setIsCreate] = useState(false);
@@ -124,7 +127,7 @@ export default function ListEmployee() {
 					pagination={{
 						...paginationConfig,
 					}}
-					addNewButton={handleAdd}
+					addNewButton={role.includes('HR') ? handleAdd : null}
 					onSearch={onSearchChange}
 					onChange={handleTableChange}
 				>
@@ -140,23 +143,25 @@ export default function ListEmployee() {
 							width={column.width}
 						/>
 					))}
-					<Column
-						title={'Action'}
-						key={'action job-offering'}
-						render={(text, record) => (
-							<Space size='middle'>
-								<Link
-									to={`/employees/${record.id}`}
-									style={{ color: themeConfig.token.colorPrimary }}
-								>
-									Detail
-								</Link>
-								<Link onClick={() => showDeleteConfirm(record.id)}>
-									<DeleteTwoTone twoToneColor='red' />
-								</Link>
-							</Space>
-						)}
-					/>
+					{role.includes('HR') && (
+						<Column
+							title={'Action'}
+							key={'action job-offering'}
+							render={(text, record) => (
+								<Space size='middle'>
+									<Link
+										to={`/employees/${record.id}`}
+										style={{ color: themeConfig.token.colorPrimary }}
+									>
+										Detail
+									</Link>
+									<Link onClick={() => showDeleteConfirm(record.id)}>
+										<DeleteTwoTone twoToneColor='red' />
+									</Link>
+								</Space>
+							)}
+						/>
+					)}
 				</CustomTable>
 			</Box>
 			<Modal

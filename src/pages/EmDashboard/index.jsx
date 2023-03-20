@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Layout, Card, Image, Row, Col, Rate, Form } from 'antd';
+import { Layout, Card, Image, Row, Col, Rate, Form, Button } from 'antd';
 import { FaMoneyBillWave } from 'react-icons/fa';
 import { VscFeedback } from 'react-icons/vsc';
 import { NavLink, Routes, Route } from 'react-router-dom';
@@ -8,6 +8,9 @@ import { useNavigate } from 'react-router-dom';
 
 import Box from '../../components/Box/index.jsx';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
+import feedbackApi from '../../utils/Apis/feedbackAPI/index.js';
+import apiHandler from '../../utils/Apis/handler';
+import salaryAPI from '../../utils/Apis/salaryAPI/index.js';
 import LocalStorageUtils from '../../utils/LocalStorage/utils.js';
 import EmSalary from '../EmSalary/Salary';
 import data from '../EmSalary/data.js';
@@ -15,13 +18,17 @@ import FeedBacks from '../Feedback/data.js';
 
 // import ProData from '../Profile/data.js';
 import { FileTextFilled, IdcardFilled, ProfileFilled, MailFilled } from '@ant-design/icons';
+import { Line } from '@ant-design/plots';
 import { Column } from '@ant-design/plots';
 
 const { Header, Content, Footer } = Layout;
 
 const EmDashboard = () => {
+	const month = new Date();
 	const navigate = useNavigate();
-	const [text, setText] = useState({
+	const [loading, setLoading] = useState(false);
+	// const [month, setMonth] = useState();
+	const [textEmployee, setTextEmployee] = useState({
 		phone: '',
 		name: '',
 		identifyNumber: '',
@@ -29,17 +36,31 @@ const EmDashboard = () => {
 		password: '',
 		dateOfBirth: '',
 		gender: '',
+		role: '',
 	});
+	const [textFeedback, setTextFeedback] = useState([
+		{
+			star: '',
+		},
+	]);
+	const [textSalary, setTextSalary] = useState([
+		{
+			month: '',
+			total: '',
+		},
+	]);
+
 	const sumStar = () => {
 		let sum = 0;
-		FeedBacks.forEach((todo) => (sum = sum + todo.star));
-		return sum / FeedBacks.length;
+		textFeedback.forEach((todo) => (sum = sum + todo.star));
+		return sum / textFeedback.length;
 	};
+
 	const SalaryChart = () => {
 		const config = {
-			data,
+			data: textSalary,
 			xField: 'month',
-			yField: 'sales',
+			yField: 'total',
 			label: {
 				position: 'middle',
 
@@ -58,23 +79,44 @@ const EmDashboard = () => {
 				type: {
 					alias: 'Month',
 				},
-				sales: {
-					alias: 'Sale',
+				total: {
+					alias: 'Total',
 				},
 			},
 		};
 		return <Column {...config} />;
 	};
 	// const { name, phone, number, username, password, gender, date } = ProData[0];
+
 	useEffect(() => {
+		const fetch = async () => {
+			const res = await apiHandler(
+				feedbackApi,
+				'get',
+				'',
+				setLoading,
+				month.getMonth(),
+				null
+			);
+			setTextFeedback(res || []);
+
+			const resEm = await apiHandler(employeeAPI, 'get', '', setLoading, null);
+			setTextEmployee(resEm || []);
+
+			const resSa = await apiHandler(salaryAPI, 'get', '', setLoading, null);
+			setTextSalary(resSa || []);
+			// console.log(textSalary);
+		};
+		fetch();
 		employeeAPI
 			.get()
-			.then((res) => setText(res.data))
+			.then((res) => setTextEmployee(res.data))
 			.catch(() => {
 				LocalStorageUtils.clear();
 				navigate('/login');
 			});
 	}, []);
+
 	return (
 		<Box direction='vertical'>
 			<Content
@@ -95,11 +137,22 @@ const EmDashboard = () => {
 					width: '100%',
 				}}
 			>
+				<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+					<Content>
+						<Card>
+							<h3>Salary</h3>
+							<SalaryChart />
+							<Button style={{ margin: '10px 0px' }}>
+								<NavLink to='/salary'>More</NavLink>
+							</Button>
+						</Card>
+					</Content>
+				</Layout>
 				<Row gutter={18}>
 					<Col span={12}>
 						<Row>
 							<Col span={8}>
-								<NavLink to='/application'>
+								<NavLink to='/application/create'>
 									<Card
 										hoverable
 										bordered={true}
@@ -158,23 +211,6 @@ const EmDashboard = () => {
 								</NavLink>
 							</Col>
 						</Row>
-
-						<Card
-							title={<VscFeedback style={{ fontSize: 50, marginLeft: 150 }} />}
-							style={{ marginTop: 10 }}
-						>
-							<p style={{ borderBottomStyle: 'solid' }}>
-								<Rate
-									disabled
-									allowHalf
-									value={sumStar()}
-									style={{
-										fontSize: 40,
-									}}
-								/>
-							</p>
-							<NavLink to='/feedback'>See More....</NavLink>
-						</Card>
 					</Col>
 					<Col span={12}>
 						<Card bordered={false}>
@@ -187,28 +223,17 @@ const EmDashboard = () => {
 									textAlign: 'center',
 								}}
 							>
-								<Form.Item label='Full Name'>{text.name}</Form.Item>
-								<Form.Item label='I.N'>{text.identifyNumber}</Form.Item>
-								<Form.Item label='UserName'>{text.username}</Form.Item>
+								<Form.Item label='Full Name'>{textEmployee.name}</Form.Item>
+								<Form.Item label='I.N'>{textEmployee.identifyNumber}</Form.Item>
+								<Form.Item label='UserName'>{textEmployee.username}</Form.Item>
 
-								<button>
+								<Button>
 									<NavLink to='/profile'>More</NavLink>
-								</button>
+								</Button>
 							</Card>
 						</Card>
 					</Col>
 				</Row>
-				<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
-					<Content>
-						<Card>
-							<h3>Salary</h3>
-							<SalaryChart />
-							<button style={{ margin: '10px 0px' }}>
-								<NavLink to='/salary'>More</NavLink>
-							</button>
-						</Card>
-					</Content>
-				</Layout>
 			</Footer>
 		</Box>
 	);

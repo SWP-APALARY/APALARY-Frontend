@@ -1,18 +1,14 @@
 import { Table, Row, Col, Button, Tabs, Space } from 'antd';
-import { Link } from 'react-router-dom';
 
 import Box from '../../../components/Box';
-import { routeKey } from '../../../components/Layout/ManagerItems';
 import SearchBar from '../../../components/SearchBar';
-import { tabStatusConfig } from '../../../config/TabsConfig';
+import { tabSalaryMonthConfig, tabSalaryYearConfig } from '../../../config/TabsConfig';
 
-import { PlusOutlined } from '@ant-design/icons';
-
-export const CustomTable = ({
-	addNewButton,
+export const CustomSTable = ({
 	columns,
 	onSearch,
-	activeKey,
+	activeKey1,
+	activeKey2,
 	onTabChange,
 	children,
 	...rest
@@ -25,22 +21,11 @@ export const CustomTable = ({
 						<Col>
 							{onTabChange && (
 								<Tabs
-									defaultActiveKey='PROCESSING'
-									activeKey={activeKey}
+									defaultActiveKey='2023'
+									activeKey={activeKey1}
 									onChange={onTabChange}
-									items={tabStatusConfig.map((item) => item)}
+									items={tabSalaryYearConfig.map((item) => item)}
 								/>
-							)}
-						</Col>
-						<Col>
-							{addNewButton && (
-								<Button
-									icon={<PlusOutlined />}
-									type='primary'
-									onClick={addNewButton}
-								>
-									Add new
-								</Button>
 							)}
 						</Col>
 					</Row>
@@ -48,6 +33,18 @@ export const CustomTable = ({
 				<Col>
 					{onSearch && (
 						<SearchBar placeholder='Search by name' enterButton onSearch={onSearch} />
+					)}
+				</Col>
+			</Row>
+			<Row>
+				<Col>
+					{onTabChange && (
+						<Tabs
+							defaultActiveKey='1'
+							activeKey={activeKey2}
+							onChange={onTabChange}
+							items={tabSalaryMonthConfig.map((item) => item)}
+						/>
 					)}
 				</Col>
 			</Row>
@@ -60,4 +57,4 @@ export const CustomTable = ({
 	);
 };
 
-export default CustomTable;
+export default CustomSTable;

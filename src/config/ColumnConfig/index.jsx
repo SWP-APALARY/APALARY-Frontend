@@ -6,6 +6,7 @@ import DefaultImage from '../../assets/default-avatar.jpg';
 import { routeKey } from '../../components/Layout/ManagerItems';
 import { gender } from '../../pages/Applicant/Detail/config';
 import { getValueFromBlock } from '../../utils/DraftjsHelper';
+import moneyConverter from '../../utils/moneyConverter';
 
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
@@ -50,7 +51,8 @@ export const postColumns = [
 	{
 		title: 'Job title',
 		dataIndex: 'title',
-		sorter: true,
+		sorter: (a, b) => a.title.localeCompare(b.title),
+		sortDirections: ['descend', 'ascend'],
 		render: (value, record) => <Link to={`${routeKey.posts}/${record.id}`}>{value}</Link>,
 		width: '20%',
 	},
@@ -63,6 +65,9 @@ export const postColumns = [
 	{
 		title: 'Salary',
 		dataIndex: 'baseSalary',
+		render: (value) => <Text>{value ? `${moneyConverter(value)} VNĐ` : 'Not set'}</Text>,
+		sorter: (a, b) => a.baseSalary - b.baseSalary,
+		sortDirections: ['descend', 'ascend'],
 	},
 	{
 		title: 'Max Employee',
@@ -72,7 +77,7 @@ export const postColumns = [
 export const contractColumns = [
 	{
 		title: 'Name',
-		dataIndex: 'employeeName',
+		dataIndex: 'nameEmp',
 		sorter: true,
 		width: '20%',
 	},

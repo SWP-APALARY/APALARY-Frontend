@@ -279,7 +279,7 @@ export default function CreateEmployee({ onFinish }) {
 						<Select placeholder='Select'>
 							{listContract.map((todo) => (
 								<Option value={todo.id} key={todo.id}>
-									{todo.nameOfEmployee}
+									{todo.nameEmp}
 								</Option>
 							))}
 						</Select>
