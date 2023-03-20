@@ -94,6 +94,7 @@ export const managerHrItems = [
 		],
 		roleMangerCEO
 	),
+	getMenuItem('Employees', routeKey.employees, <UserOutlined />, null, [roles.MANAGER]),
 	getMenuItem('Applications', routeKey.applicationSalaryIncreasing, <MenuFoldOutlined />, null, [
 		roles.CEO,
 	]),

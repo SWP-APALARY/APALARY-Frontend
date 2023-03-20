@@ -52,7 +52,11 @@ const CustomTable = ({
 						<Col>
 							{addNewButton && (
 								<Link to={routeKey.postsCreate}>
-									<Button icon={<PlusOutlined />} type='primary'>
+									<Button
+										icon={<PlusOutlined />}
+										type='primary'
+										onClick={addNewButton}
+									>
 										Add new
 									</Button>
 								</Link>

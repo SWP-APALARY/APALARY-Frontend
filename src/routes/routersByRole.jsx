@@ -190,6 +190,10 @@ export const managerRoutes = [
 		Element: <JobOffering />,
 	},
 	{
+		path: routeKey.employees,
+		Element: <ListEmployee />,
+	},
+	{
 		path: routeKey.postsSpecific,
 		Element: <JobOfferingDetail />,
 	},
