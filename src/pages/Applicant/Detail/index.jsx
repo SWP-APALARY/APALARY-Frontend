@@ -17,6 +17,7 @@ const ApplicantDetails = () => {
 	const navigate = useNavigate();
 	const [applicant, setApplicant] = React.useState({});
 	const [loading, setLoading] = React.useState(false);
+	const statusSend = applicant.status === 'PROCESSING' ? 'approve' : 'accept';
 	useEffect(() => {
 		const fetch = async () => {
 			const res = await apiHandler(applicantAPI, 'getOne', '', setLoading, params.id, token);
@@ -26,13 +27,11 @@ const ApplicantDetails = () => {
 		fetch();
 	}, []);
 	const onAccept = async () => {
-		let statusSend;
-		applicant.status === 'PROCESSING' ? (statusSend = 'approve') : (statusSend = 'accept');
 		await apiHandler(applicantAPI, statusSend, 'Success', setLoading, params.id, true, token);
 		navigate('/applicants');
 	};
 	const onReject = async () => {
-		await apiHandler(applicantAPI, 'accept', 'Success', setLoading, params.id, false, token);
+		await apiHandler(applicantAPI, statusSend, 'Success', setLoading, params.id, false, token);
 		navigate('/applicants');
 	};
 	return (
