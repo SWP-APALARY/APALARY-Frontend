@@ -7,8 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import PDFReader from '../../components/PDFReder';
 import toast from '../../components/Toast';
-import contractAPI from '../../utils/Apis/contractAPI';
-import employeeAPI from '../../utils/Apis/employeeAPI';
+import residentAPI from '../../utils/Apis/residentAPI/index.js';
 
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -24,21 +23,8 @@ const FormDisabledDemo = () => {
 		identifyNumber: '',
 		username: '',
 		password: '',
-		dateOfBirth: dayjs(new Date()),
 		gender: '',
-		base: '',
-		tax: '',
-		description: '',
-		signedDate: '',
-		startDate: '',
-		endDate: '',
-		contractId: '',
-		contractImage: '',
-		contractTypeId: '',
-		ruleSalaryRuleNumbers: '',
-		managerName: '',
-		departmentName: '',
-		role: '',
+		apartmentNumber: '',
 		email: '',
 	});
 	const onFormLayoutChange = ({ disabled }) => {
@@ -52,7 +38,7 @@ const FormDisabledDemo = () => {
 	};
 	const onSubmitForm = (e) => {
 		setComponentDisabled(!e.target.checked);
-		employeeAPI
+		residentAPI
 			.updateProfile({
 				name: text.name,
 				gender: text.gender,
@@ -66,21 +52,9 @@ const FormDisabledDemo = () => {
 	};
 
 	useEffect(() => {
-		employeeAPI
+		residentAPI
 			.get()
-			.then((res) =>
-				//setText(res.data))
-				{
-					contractAPI.get(res.data.ContractId).then((rest) =>
-						setText({
-							...rest.data,
-							...res.data,
-							dateOfBirth: dayjs(res.data.dateOfBirth, 'YYYY/MM/DD'),
-						})
-					);
-					// .catch(() => navigate('/'));
-				}
-			)
+			.then((res) => setText(res.data))
 			.catch(() => navigate('/'));
 	}, []);
 
@@ -136,22 +110,6 @@ const FormDisabledDemo = () => {
 					</Radio.Group>
 				</Form.Item>
 				<Form.Item
-					label='Birth'
-					rules={[
-						{
-							required: true,
-							message: 'Please input your Birth!',
-						},
-					]}
-				>
-					<DatePicker
-						onChange={(value) =>
-							setText({ ...text, dateOfBirth: dayjs(value, 'YYYY-MM-DD') })
-						}
-						value={text.dateOfBirth}
-					/>
-				</Form.Item>
-				<Form.Item
 					label='Phone'
 					rules={[
 						{
@@ -199,43 +157,11 @@ const FormDisabledDemo = () => {
 						onChange={(e) => setText({ ...text, email: e.target.value })}
 					/>
 				</Form.Item>
-				<Form.Item label='UserName' style={{ marginTop: 10 }}>
-					<Input value={text.username} disabled />
+
+				<Form.Item label='Apartment Number' style={{ marginTop: 10 }}>
+					<Input value={text.apartmentNumber} disabled />
 				</Form.Item>
-				<Form.Item label='Type Of Work' style={{ width: 600 }}>
-					<Radio.Group value={text.contractTypeId} disabled>
-						<Radio value={2}> Full Time </Radio>
-						<Radio value={1}> Part Time </Radio>
-					</Radio.Group>
-				</Form.Item>
-				<Form.Item label='SignDate'>
-					<DatePicker value={dayjs(text.signedDate, 'YYYY-MM-DD')} disabled />
-				</Form.Item>
-				<Form.Item label='Term'>
-					<RangePicker
-						value={[
-							dayjs(text.startDate, 'YYYY-MM-DD'),
-							dayjs(text.endDate, 'YYYY-MM-DD'),
-						]}
-						style={{ width: 400 }}
-						disabled
-					/>
-				</Form.Item>
-				<Form.Item label='Salary'>
-					<Input value={text.base} disabled />
-				</Form.Item>
-				{
-					// <Form.Item label='Manager Name' style={{ marginTop: 10 }}>
-					// 	// <Input value={text.managerName} disabled />
-					// 	//{' '}
-					// </Form.Item>
-				}
-				<Form.Item label='Department Name' style={{ marginTop: 10 }}>
-					<Input value={text.departmentName} disabled />
-				</Form.Item>
-				<Form.Item>
-					<PDFReader file={text.contractImage} id={text.id} />
-				</Form.Item>
+
 				<Button
 					type='dashed'
 					htmlType='submit'

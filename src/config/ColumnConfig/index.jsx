@@ -72,7 +72,7 @@ export const postColumns = [
 export const contractColumns = [
 	{
 		title: 'Name',
-		dataIndex: 'employeeName',
+		dataIndex: 'nameEmp',
 		sorter: true,
 		width: '20%',
 	},
