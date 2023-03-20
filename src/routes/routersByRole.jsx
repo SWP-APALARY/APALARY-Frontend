@@ -16,6 +16,7 @@ import ContractDetails from '../pages/Contracts/detail';
 import EmDashboard from '../pages/EmDashboard';
 import Salary from '../pages/EmSalary/Salary';
 import Feedback from '../pages/Feedback/Feedback.jsx';
+import CreateFeedback from '../pages/Feedback/create';
 import Home from '../pages/Home';
 import Homepage from '../pages/Homepage';
 import Dashboard from '../pages/Homepage/dashboard';
@@ -29,7 +30,6 @@ import FormDisabledDemo from '../pages/Profile/Profile';
 import SalaryList from '../pages/SalaryList';
 import SalaryListDetail from '../pages/SalaryList/Detail';
 import Login from '../pages/login';
-import CreateFeedback from '../pages/Feedback/create';
 
 // public routes here
 export const publicRoutes = [
@@ -221,7 +221,7 @@ export const residentRoutes = [
 	{
 		path: routeKey.feedBack,
 		Element: <CreateFeedback />,
-	}
+	},
 ];
 export const ceoRoutes = [
 	{
@@ -291,6 +291,10 @@ export const ceoRoutes = [
 	{
 		path: routeKey.employeesContracts,
 		Element: <Contracts />,
+	},
+	{
+		path: routeKey.reports,
+		Element: <Reports />,
 	},
 	{
 		path: routeKey.contractsSpecific,
