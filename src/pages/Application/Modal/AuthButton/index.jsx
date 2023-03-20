@@ -7,7 +7,10 @@ import usePersistedState from '../../../../utils/LocalStorage/usePersistedState'
 
 const AuthButton = ({ status, rejectLoading, approveLoading, handleReject, handleOk }) => {
 	const [role] = usePersistedState('role');
-	const condition = status === 'PROCESSING' || (status === 'PROCESSING_2' && role === roles.CEO);
+	const condition =
+		(status === 'PROCESSING' && role === roles.HR_MANAGER) ||
+		(status === 'PROCESSING_2' && role === roles.CEO);
+
 	return (
 		condition && (
 			<Col>

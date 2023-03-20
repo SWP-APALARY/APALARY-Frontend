@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-import { Card, Col, Row, Layout, Collapse } from 'antd';
+import { Card, Col, Row, Layout } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import contractAPI from '../../utils/Apis/contractAPI/index.js';
-import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
 import salaryAPI from '../../utils/Apis/salaryAPI/index.js';
-import Profile from '../Profile/data.js';
 import data from './data.js';
 
-import { MoneyCollectOutlined } from '@ant-design/icons';
 import { Column } from '@ant-design/plots';
 
 const { Content, Header, Footer } = Layout;

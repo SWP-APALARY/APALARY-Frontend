@@ -4,7 +4,9 @@ import ApplicantDetails from '../pages/Applicant/Detail';
 import CreateApplication from '../pages/Application/Creating';
 import ApplicationDayLeave from '../pages/Application/DayLeave';
 import ApplicationRecruitment from '../pages/Application/Recruitment';
+import Reports from '../pages/Application/Report';
 import ApplicationSalary from '../pages/Application/SalaryIncreasing';
+import ApplicationSent from '../pages/Application/Sent';
 import ApplyJob from '../pages/ApplyJob';
 import CEODashboard from '../pages/CEODashboard';
 import Contract from '../pages/Contract/Contract';
@@ -59,6 +61,10 @@ export const generalRoutes = [
 export const hrManagerRoutes = [
 	...generalRoutes,
 	{
+		path: routeKey.reports,
+		Element: <Reports />,
+	},
+	{
 		path: routeKey.applicantsSpecific,
 		Element: <ApplicantDetails />,
 	},
@@ -89,6 +95,10 @@ export const hrManagerRoutes = [
 	{
 		path: routeKey.postsCreate,
 		Element: <PostCreation />,
+	},
+	{
+		path: routeKey.applicationSent,
+		Element: <ApplicationSent />,
 	},
 	{
 		path: routeKey.postsEdit,
@@ -164,6 +174,10 @@ export const employeeRoutes = [
 		path: routeKey.feedBack,
 		Element: <Feedback />,
 	},
+	{
+		path: routeKey.applicationSent,
+		Element: <ApplicationSent />,
+	},
 ];
 
 export const managerRoutes = [
@@ -173,8 +187,28 @@ export const managerRoutes = [
 		Element: <CreateApplication />,
 	},
 	{
+		path: routeKey.posts,
+		Element: <JobOffering />,
+	},
+	{
+		path: routeKey.postsSpecific,
+		Element: <JobOfferingDetail />,
+	},
+	{
+		path: routeKey.reports,
+		Element: <Reports />,
+	},
+	{
+		path: routeKey.applicationSent,
+		Element: <ApplicationSent />,
+	},
+	{
 		path: routeKey.feedBack,
 		Element: <Feedback />,
+	},
+	{
+		path: routeKey.applicationSent,
+		Element: <ApplicationSent />,
 	},
 ];
 
