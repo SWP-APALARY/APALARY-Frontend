@@ -33,9 +33,15 @@ export const CustomTable = ({
 							)}
 						</Col>
 						<Col>
-							<Button icon={<PlusOutlined />} type='primary' onClick={addNewButton}>
-								Add new
-							</Button>
+							{addNewButton && (
+								<Button
+									icon={<PlusOutlined />}
+									type='primary'
+									onClick={addNewButton}
+								>
+									Add new
+								</Button>
+							)}
 						</Col>
 					</Row>
 				</Col>

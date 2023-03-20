@@ -61,7 +61,7 @@ const JobOfferingDetail = () => {
 						</Box>
 						<Box direction='vertical'>
 							<Text level={5} type='danger'>
-								<b>Upto:</b> {data.baseSalary} $
+								<b>Upto:</b> {data.baseSalary} VNĐ
 							</Text>
 							<Text level={5} type='success'>
 								<b>Max Employees:</b> {data.maxEmployee}

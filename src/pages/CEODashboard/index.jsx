@@ -118,7 +118,7 @@ export default function CEODashboard() {
 										title={<p>{item.title}</p>}
 										description={
 											<div>
-												<p className='content'>{`Salary: ${item.baseSalary}$`}</p>
+												<p className='content'>{`Salary: ${item.baseSalary} VNĐ`}</p>
 												<p className='content'>{`Department: ${item.departmentName}`}</p>
 											</div>
 										}

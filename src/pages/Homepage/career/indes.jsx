@@ -19,7 +19,7 @@ export default function Career() {
 			const realData = jobOffering.data.map((todo, index) => ({
 				...todo,
 				key: index,
-				baseSalary: todo.baseSalary + ' $',
+				baseSalary: todo.baseSalary + ' VNĐ',
 				description: getValueFromBlock(JSON.parse(todo.description)),
 			}));
 			setList(realData);
