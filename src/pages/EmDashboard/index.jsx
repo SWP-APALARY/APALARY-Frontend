@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Layout, Card, Image, Row, Col, Rate, Form } from 'antd';
+import { Layout, Card, Image, Row, Col, Rate, Form, Button } from 'antd';
 import { FaMoneyBillWave } from 'react-icons/fa';
 import { VscFeedback } from 'react-icons/vsc';
 import { NavLink, Routes, Route } from 'react-router-dom';
@@ -232,9 +232,9 @@ const EmDashboard = () => {
 								<Form.Item label='I.N'>{textEmployee.identifyNumber}</Form.Item>
 								<Form.Item label='UserName'>{textEmployee.username}</Form.Item>
 
-								<button>
+								<Button>
 									<NavLink to='/profile'>More</NavLink>
-								</button>
+								</Button>
 							</Card>
 						</Card>
 					</Col>
@@ -244,9 +244,9 @@ const EmDashboard = () => {
 						<Card>
 							<h3>Salary</h3>
 							<SalaryChart />
-							<button style={{ margin: '10px 0px' }}>
+							<Button style={{ margin: '10px 0px' }}>
 								<NavLink to='/salary'>More</NavLink>
-							</button>
+							</Button>
 						</Card>
 					</Content>
 				</Layout>
