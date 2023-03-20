@@ -107,7 +107,6 @@ const JobOffering = () => {
 							dataIndex={column.dataIndex}
 							key={column.key + 'job-offering'}
 							sorter={column.sorter}
-							sortOrder={tableParams.columnKey === column.key && tableParams.order}
 							ellipsis={column.ellipsis}
 							render={column.render}
 						/>
