@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 
 import { Layout, Card, Image, Row, Col, Rate, Form } from 'antd';
 import { FaMoneyBillWave } from 'react-icons/fa';
+import { FaHome, FaUser, FaCog } from 'react-icons/fa';
 import { VscFeedback } from 'react-icons/vsc';
-import { NavLink, Routes, Route } from 'react-router-dom';
+import { NavLink, Routes, Route, Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '../../components/Box/index.jsx';
@@ -30,7 +31,7 @@ const EmDashboard = () => {
 		gender: '',
 		email: '',
 	});
-	console.log(resident);
+
 	useEffect(() => {
 		const fetch = async () => {
 			const res = await apiHandler(residentAPI, 'get', '', setLoading, null);
@@ -38,71 +39,81 @@ const EmDashboard = () => {
 		};
 		fetch();
 	}, []);
+	const [currentDateTime, setCurrentDateTime] = useState('');
 
+	useEffect(() => {
+		setInterval(() => {
+			const date = new Date();
+			const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+			const formattedDate = date.toLocaleDateString('en-US', options);
+			const time = date.toLocaleTimeString();
+			setCurrentDateTime(`${formattedDate} ${time}`);
+		}, 1000);
+	}, []);
+
+	const dashboardStyle = {
+		backgroundColor: '#f5f5f5',
+		padding: '20px',
+		borderRadius: '10px',
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		textAlign: 'center',
+	};
+
+	const greetingStyle = {
+		fontSize: '32px',
+		fontWeight: 'bold',
+		margin: '0',
+		marginBottom: '10px',
+	};
+
+	const usernameStyle = {
+		color: '#FF6F61',
+	};
+
+	const dateTimeStyle = {
+		fontSize: '24px',
+		fontWeight: 'bold',
+		margin: '0',
+		marginBottom: '20px',
+	};
+
+	const iconStyle = {
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+		textDecoration: 'none',
+		color: '#666666',
+		margin: '10px',
+		cursor: 'pointer',
+		transition: 'all 0.3s ease-in-out',
+	};
+
+	const iconLabelStyle = {
+		fontSize: '16px',
+		fontWeight: 'bold',
+		margin: '5px',
+	};
+
+	const iconHoverStyle = {
+		transform: 'scale(1.1)',
+		color: '#FF6F61',
+	};
 	return (
 		<Box direction='vertical'>
-			<Content
-				style={{
-					background: '#F0F0F0',
-					maxWidth: 1200,
-				}}
-			>
-				<Image
-					width='100%'
-					height={250}
-					src='https://www.umassalumni.com/s/1640/images/gid2/editor/alumni_association/campus_partners/architecture/dbexterior.jpg'
-				></Image>
-			</Content>
-			<Footer
-				style={{
-					background: '#F0F0F0',
-					width: '100%',
-				}}
-			>
-				<Row gutter={18}>
-					<Col span={12}>
-						<Row>
-							<Col span={8}>
-								<NavLink to='/application'>
-									<Card
-										hoverable
-										bordered={true}
-										style={{
-											background: '#F0F0F0',
-											width: '99%',
-											height: 120,
-										}}
-									>
-										<MailFilled style={{ fontSize: 50, marginLeft: 13 }} />
-										Application
-									</Card>
-								</NavLink>
-							</Col>
-						</Row>
-					</Col>
-					<Col span={12}>
-						<Card bordered={false}>
-							<Card
-								title='Personal Information'
-								bordered={false}
-								style={{
-									border: '2px solid black',
-									height: 303,
-									textAlign: 'center',
-								}}
-							>
-								<Form.Item label='Full Name'>{resident.name}</Form.Item>
-								<Form.Item label='I.N'>{resident.identifyNumber}</Form.Item>
-								<Form.Item label='UserName'>{resident.username}</Form.Item>
-
-								<button>
-									<NavLink to='/reProfile'>More</NavLink>
-								</button>
-							</Card>
-						</Card>
-					</Col>
-				</Row>
-			</Footer>
+			<Image
+				width={1000}
+				height={450}
+				src='https://www.umassalumni.com/s/1640/images/gid2/editor/alumni_association/campus_partners/architecture/dbexterior.jpg'
+			/>
+			<div style={dashboardStyle}>
+				<h1 style={greetingStyle}>
+					Hello <span style={usernameStyle}>{resident.name}</span>, welcome back!
+				</h1>
+				<p style={dateTimeStyle}> {currentDateTime}</p>
+			</div>
 		</Box>
 	);
 };

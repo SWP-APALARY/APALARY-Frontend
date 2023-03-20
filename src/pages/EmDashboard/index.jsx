@@ -36,6 +36,7 @@ const EmDashboard = () => {
 		password: '',
 		dateOfBirth: '',
 		gender: '',
+		role: '',
 	});
 	const [textFeedback, setTextFeedback] = useState([
 		{
@@ -136,11 +137,22 @@ const EmDashboard = () => {
 					width: '100%',
 				}}
 			>
+				<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+					<Content>
+						<Card>
+							<h3>Salary</h3>
+							<SalaryChart />
+							<Button style={{ margin: '10px 0px' }}>
+								<NavLink to='/salary'>More</NavLink>
+							</Button>
+						</Card>
+					</Content>
+				</Layout>
 				<Row gutter={18}>
 					<Col span={12}>
 						<Row>
 							<Col span={8}>
-								<NavLink to='/application'>
+								<NavLink to='/application/create'>
 									<Card
 										hoverable
 										bordered={true}
@@ -199,23 +211,6 @@ const EmDashboard = () => {
 								</NavLink>
 							</Col>
 						</Row>
-
-						<Card
-							title={<VscFeedback style={{ fontSize: 50, marginLeft: 150 }} />}
-							style={{ marginTop: 10 }}
-						>
-							<p style={{ borderBottomStyle: 'solid' }}>
-								<Rate
-									disabled
-									allowHalf
-									value={sumStar()}
-									style={{
-										fontSize: 40,
-									}}
-								/>
-							</p>
-							<NavLink to='/feedback'>See More....</NavLink>
-						</Card>
 					</Col>
 					<Col span={12}>
 						<Card bordered={false}>
@@ -239,17 +234,6 @@ const EmDashboard = () => {
 						</Card>
 					</Col>
 				</Row>
-				<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
-					<Content>
-						<Card>
-							<h3>Salary</h3>
-							<SalaryChart />
-							<Button style={{ margin: '10px 0px' }}>
-								<NavLink to='/salary'>More</NavLink>
-							</Button>
-						</Card>
-					</Content>
-				</Layout>
 			</Footer>
 		</Box>
 	);

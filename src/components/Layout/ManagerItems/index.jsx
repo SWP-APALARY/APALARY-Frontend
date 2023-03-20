@@ -48,8 +48,6 @@ export const routeKey = {
 	applicantsSpecific: '/applicants/:id',
 	profile: '/profile',
 	feedBack: '/feedback',
-	reDashboard: '/reDashboard',
-	reProfile: '/reProfile',
 };
 
 const roleManger = Object.values(roles).filter(
