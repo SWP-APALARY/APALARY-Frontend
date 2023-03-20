@@ -18,6 +18,8 @@ import {
 	residentRoutes,
 } from './routersByRole';
 
+// import { managerRoutes, publicRoutes, roles } from './roles';
+
 const AppRoutes = () => {
 	const [role, setRole] = usePersistedState('role');
 	const MainPage =
