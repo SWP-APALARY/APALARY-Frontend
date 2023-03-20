@@ -72,18 +72,6 @@ const Contract = () => {
 				<Form.Item label='Salary'>
 					<Input value={text.base} readOnly />
 				</Form.Item>
-				<Form.Item label='Tax'>
-					<Input value={text.tax} readOnly />
-				</Form.Item>
-				<Form.Item label='Social Assurances'>
-					<Input value={text.socialAssurances} readOnly />
-				</Form.Item>
-				<Form.Item label='Medical Assurances'>
-					<Input value={text.medicalAssurances} readOnly />
-				</Form.Item>
-				<Form.Item label='Accidental Assurances'>
-					<Input value={text.accidentalAssurances} readOnly />
-				</Form.Item>
 
 				<PDFReader file={text.contractImage} id={text.id} />
 			</Form>
