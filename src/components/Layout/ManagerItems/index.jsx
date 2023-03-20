@@ -60,6 +60,7 @@ const roleMangerCEO = [...roleHrManager, roles.CEO];
 const roleEmployee = Object.values(roles).filter(
 	(role) => role === roles.EMPLOYEE || role === roles.MANAGER
 );
+const roleResident = Object.values(roles).filter((role) => role === roles.RESIDENT);
 const general = Object.values(roles);
 
 export const getMenuItem = (label, key, icon, children, roles) => {
@@ -122,6 +123,7 @@ export const managerHrItems = [
 	getMenuItem('Feedbacks', routeKey.feedBack, <ContainerOutlined />, null, [
 		...roleEmployee,
 		...roleHrManager,
+		...roleResident,
 	]),
 	getMenuItem('Profile', routeKey.profile, <AppstoreOutlined />, null, general),
 ];
