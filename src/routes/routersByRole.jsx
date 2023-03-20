@@ -4,7 +4,9 @@ import ApplicantDetails from '../pages/Applicant/Detail';
 import CreateApplication from '../pages/Application/Creating';
 import ApplicationDayLeave from '../pages/Application/DayLeave';
 import ApplicationRecruitment from '../pages/Application/Recruitment';
+import Reports from '../pages/Application/Report';
 import ApplicationSalary from '../pages/Application/SalaryIncreasing';
+import ApplicationSent from '../pages/Application/Sent';
 import ApplyJob from '../pages/ApplyJob';
 import CEODashboard from '../pages/CEODashboard';
 import Contract from '../pages/Contract/Contract';
@@ -24,6 +26,7 @@ import PostDetail from '../pages/JobOffering/Detail';
 import ListEmployee from '../pages/ListEmployee';
 import EmployeeDetail from '../pages/ListEmployee/Detail';
 import FormDisabledDemo from '../pages/Profile/Profile';
+import ReProfile from '../pages/ReProfile';
 import ResidentDashboard from '../pages/ResidentDashboard';
 import SalaryList from '../pages/SalaryList';
 import SalaryListDetail from '../pages/SalaryList/Detail';
@@ -59,6 +62,10 @@ export const generalRoutes = [
 export const hrManagerRoutes = [
 	...generalRoutes,
 	{
+		path: routeKey.reports,
+		Element: <Reports />,
+	},
+	{
 		path: routeKey.applicantsSpecific,
 		Element: <ApplicantDetails />,
 	},
@@ -89,6 +96,10 @@ export const hrManagerRoutes = [
 	{
 		path: routeKey.postsCreate,
 		Element: <PostCreation />,
+	},
+	{
+		path: routeKey.applicationSent,
+		Element: <ApplicationSent />,
 	},
 	{
 		path: routeKey.postsEdit,
@@ -164,6 +175,10 @@ export const employeeRoutes = [
 		path: routeKey.feedBack,
 		Element: <Feedback />,
 	},
+	{
+		path: routeKey.applicationSent,
+		Element: <ApplicationSent />,
+	},
 ];
 
 export const managerRoutes = [
@@ -173,15 +188,39 @@ export const managerRoutes = [
 		Element: <CreateApplication />,
 	},
 	{
+		path: routeKey.posts,
+		Element: <JobOffering />,
+	},
+	{
+		path: routeKey.postsSpecific,
+		Element: <JobOfferingDetail />,
+	},
+	{
+		path: routeKey.reports,
+		Element: <Reports />,
+	},
+	{
+		path: routeKey.applicationSent,
+		Element: <ApplicationSent />,
+	},
+	{
 		path: routeKey.feedBack,
 		Element: <Feedback />,
+	},
+	{
+		path: routeKey.applicationSent,
+		Element: <ApplicationSent />,
 	},
 ];
 
 export const residentRoutes = [
 	{
-		path: '/dashboard',
+		path: routeKey.reDashboard,
 		Element: <ResidentDashboard />,
+	},
+	{
+		path: routeKey.reProfile,
+		Element: <ReProfile />,
 	},
 ];
 export const ceoRoutes = [

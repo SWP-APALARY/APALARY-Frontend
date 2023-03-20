@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 
-import { Button, Card, Rate, Space, Row, Layout, Col } from 'antd';
+import { Button, Card, Rate, Space, Row, Layout, Col, Typography } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '../../components/Box';
+import CustomCard from '../../components/Card';
 import feedbackApi from '../../utils/Apis/feedbackAPI';
 import apiHandler from '../../utils/Apis/handler';
 import FeedBacks from './data';
 
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 
+const { Text } = Typography;
 const Review = () => {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();

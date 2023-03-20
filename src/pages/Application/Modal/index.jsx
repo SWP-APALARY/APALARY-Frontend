@@ -20,12 +20,13 @@ const initData = {
 	role: '',
 	createdDate: '',
 	updatedDate: '',
+	destinationEmployeeName: '',
 	status: null,
 	description: JSON.stringify(convertToRaw(EditorState.createEmpty().getCurrentContent())),
 };
 
 const ApplicationModal = (props) => {
-	const { id, open, setOpen, activeKey } = props;
+	const { id, open, setOpen, activeKey, report } = props;
 	const [token, setToken] = usePersistedState('token');
 	const [approveLoading, setApproveLoading] = useState(false);
 	const [rejectLoading, setRejectLoading] = useState(false);
@@ -39,20 +40,15 @@ const ApplicationModal = (props) => {
 			return await apiHandler(
 				applicationAPI,
 				actionR1,
-				'Approve successfully',
+				'Success',
 				setLoading,
 				id,
 				token
 			).finally(() => setOpen(false));
 		}
-		return await apiHandler(
-			applicationAPI,
-			actionR2,
-			'Approve successfully',
-			setLoading,
-			id,
-			token
-		).finally(() => setOpen(false));
+		return await apiHandler(applicationAPI, actionR2, 'Success', setLoading, id, token).finally(
+			() => setOpen(false)
+		);
 	};
 	const handleOk = async () => {
 		return await handleAction('approveOne', 'approveSalaryR2', setApproveLoading);
@@ -97,6 +93,14 @@ const ApplicationModal = (props) => {
 							{data.employeeName}
 						</Text>
 					</Text>
+					{report && (
+						<Text>
+							Report for:{' '}
+							<Text type='span' strong>
+								{data?.destinationEmployeeName}
+							</Text>
+						</Text>
+					)}
 					<Text>Date: {new Date(data.createdTime).toLocaleString()}</Text>
 					<Editor
 						readOnly

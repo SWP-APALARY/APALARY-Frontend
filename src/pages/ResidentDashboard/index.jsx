@@ -96,7 +96,7 @@ const EmDashboard = () => {
 								<Form.Item label='UserName'>{resident.username}</Form.Item>
 
 								<button>
-									<NavLink to='/profile'>More</NavLink>
+									<NavLink to='/reProfile'>More</NavLink>
 								</button>
 							</Card>
 						</Card>

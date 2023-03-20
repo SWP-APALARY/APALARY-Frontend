@@ -34,6 +34,7 @@ const apiHandler = async (api, action, successMessage, setLoading, ...rest) => {
 			const status = error.response.status;
 			if (status === 401 || status === 403 || status === 500) {
 				LocalStorageUtils.clear();
+				return <Navigate to='/login' />;
 			}
 			toast(error.message, 'error');
 			return null;

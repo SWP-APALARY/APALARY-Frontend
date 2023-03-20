@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { Card, Col, Row, Layout, Collapse } from 'antd';
+import { Card, Col, Row, Layout } from 'antd';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,47 +10,14 @@ import contractAPI from '../../utils/Apis/contractAPI/index.js';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
 import apiHandler from '../../utils/Apis/handler.jsx';
 import salaryAPI from '../../utils/Apis/salaryAPI/index.js';
-import CustomTable from '../ListEmployee/Detail/customTable.jsx';
 import Profile from '../Profile/data.js';
-import CustomSTable from './ColumnConfig/customTable.jsx';
 import { SalaryColumnConfig } from './ColumnConfig/index';
 import data from './data.js';
+import CustomSTable from './table/customTable';
 
-import { MoneyCollectOutlined } from '@ant-design/icons';
 import { Column } from '@ant-design/plots';
 
 const { Content, Header, Footer } = Layout;
-
-export const SalaryChart = () => {
-	const config = {
-		data,
-		xField: 'month',
-		yField: 'sales',
-		label: {
-			position: 'middle',
-
-			style: {
-				fill: '#FFFFFF',
-				opacity: 0.6,
-			},
-		},
-		xAxis: {
-			label: {
-				autoHide: true,
-				autoRotate: false,
-			},
-		},
-		meta: {
-			type: {
-				alias: 'Month',
-			},
-			sales: {
-				alias: 'Sale',
-			},
-		},
-	};
-	return <Column {...config} />;
-};
 
 const emSalary = () => {
 	const [loading, setLoading] = useState(false);
@@ -91,11 +58,12 @@ const emSalary = () => {
 	};
 	useEffect(() => {
 		const fetch = async () => {
-			const res = await apiHandler(contractAPI, 'get', '', setLoading, null);
-			setTextContract(res || []);
+			const resCon = await apiHandler(contractAPI, 'get', '', setLoading, null);
+			setTextContract(resCon || []);
 
-			const res1 = await apiHandler(salaryAPI, 'get', '', setLoading, null);
-			setTextSalary(res1 || []);
+			const resSa = await apiHandler(salaryAPI, 'get', '', setLoading, null);
+			setTextSalary(resSa || []);
+			console.log(resSa);
 		};
 		fetch();
 	}, []);
