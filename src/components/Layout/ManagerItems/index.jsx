@@ -1,5 +1,6 @@
 import {
 	AppstoreOutlined,
+	AuditOutlined,
 	ContainerOutlined,
 	MenuFoldOutlined,
 	PieChartOutlined,
@@ -37,6 +38,8 @@ export const routeKey = {
 	applicationCreating: '/application/create',
 	applicationDayLeave: '/application/day-leave',
 	applicationRecruitment: '/application/recruitment',
+	applicationSent: '/application/sent',
+	reports: '/reports',
 	posts: '/posts',
 	postsCreate: '/posts/create',
 	postsEdit: '/posts/:id/edit',
@@ -47,9 +50,13 @@ export const routeKey = {
 	feedBack: '/feedback',
 };
 
-const roleHrManager = Object.values(roles).filter(
-	(role) => role === roles.HR_EMPLOYEE || role === roles.HR_MANAGER || role === roles.CEO
+const roleManger = Object.values(roles).filter(
+	(role) => role === roles.HR_MANAGER || role === roles.MANAGER || role === roles.CEO
 );
+const roleHrManager = Object.values(roles).filter(
+	(role) => role === roles.HR_EMPLOYEE || role === roles.HR_MANAGER
+);
+const roleMangerCEO = [...roleHrManager, roles.CEO];
 const roleEmployee = Object.values(roles).filter(
 	(role) => role === roles.EMPLOYEE || role === roles.MANAGER
 );
@@ -64,12 +71,16 @@ export const getMenuItem = (label, key, icon, children, roles) => {
 		roles,
 	};
 };
-
-export const generalItems = [
-	getMenuItem('Dashboard', routeKey.dashBoard, <PieChartOutlined />),
-	getMenuItem('Profile', routeKey.profile, <AppstoreOutlined />),
+const applicationItems = [
+	getMenuItem('Salary increasing', routeKey.applicationSalaryIncreasing),
+	getMenuItem('Day leave', routeKey.applicationDayLeave),
+	getMenuItem('Recruitment', routeKey.applicationRecruitment),
+	getMenuItem('Create', routeKey.applicationCreating),
+	getMenuItem('Sent', routeKey.applicationSent),
 ];
-
+const applicationItemsForEmployee = applicationItems.filter(
+	(item) => item.key === routeKey.applicationSent || item.key === routeKey.applicationCreating
+);
 export const managerHrItems = [
 	getMenuItem('Dashboard', routeKey.dashBoard, <PieChartOutlined />, null, general),
 	getMenuItem(
@@ -81,45 +92,38 @@ export const managerHrItems = [
 			getMenuItem('Contracts', routeKey.employeesContracts),
 			getMenuItem('Salaries', routeKey.employeesSalaries),
 		],
+		roleMangerCEO
+	),
+	getMenuItem('Applications', routeKey.applicationSalaryIncreasing, <MenuFoldOutlined />, null, [
+		roles.CEO,
+	]),
+	getMenuItem(
+		'Applications',
+		routeKey.applicationSalaryIncreasing,
+		<MenuFoldOutlined />,
+		applicationItems,
 		roleHrManager
 	),
 	getMenuItem(
 		'Applications',
 		routeKey.applications,
 		<MenuFoldOutlined />,
-		[
-			getMenuItem('Salary increasing', routeKey.applicationSalaryIncreasing),
-			getMenuItem('Day leave', routeKey.applicationDayLeave),
-			getMenuItem('Recruitment', routeKey.applicationRecruitment),
-			getMenuItem('Create Application', routeKey.applicationCreating),
-		],
-		roleHrManager
-	),
-	getMenuItem(
-		'Create Application',
-		routeKey.applicationCreating,
-		<MenuFoldOutlined />,
-		null,
+		applicationItemsForEmployee,
 		roleEmployee
 	),
-	getMenuItem('Posts', routeKey.posts, <SendOutlined />, null, roleHrManager),
+	getMenuItem('Posts', routeKey.posts, <SendOutlined />, null, [
+		...roleHrManager,
+		roles.MANAGER,
+		roles.CEO,
+	]),
+	getMenuItem('Reports', routeKey.reports, <AuditOutlined />, null, roleManger),
+
 	getMenuItem('Applicants', routeKey.applicants, <UsergroupAddOutlined />, null, roleHrManager),
-	getMenuItem('Feedback', routeKey.feedBack, <ContainerOutlined />, null, [
+	getMenuItem('Feedbacks', routeKey.feedBack, <ContainerOutlined />, null, [
 		...roleEmployee,
 		...roleHrManager,
 	]),
 	getMenuItem('Profile', routeKey.profile, <AppstoreOutlined />, null, general),
-];
-
-export const normalRoleItem = [
-	getMenuItem('Dashboard', routeKey.dashBoard, <PieChartOutlined />),
-	getMenuItem('Profile', routeKey.profile, <AppstoreOutlined />),
-	getMenuItem('Create Application', routeKey.applicationCreating, <MenuFoldOutlined />),
-	getMenuItem('Feedback', routeKey.feedBack, <ContainerOutlined />),
-];
-export const residentItem = [
-	getMenuItem('Dashboard', routeKey.dashBoard, <PieChartOutlined />),
-	getMenuItem('Profile', routeKey.profile, <AppstoreOutlined />),
 ];
 
 export const roleMenuItems = {};

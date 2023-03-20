@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 import Box from '../../components/Box';
 import CustomCard from '../../components/Card';
-import { routeKey } from '../../components/Layout/ManagerItems';
+import { roles, routeKey } from '../../components/Layout/ManagerItems';
 import SearchBar from '../../components/SearchBar';
 import CustomTable from '../../components/Table';
 import toast from '../../components/Toast';
@@ -22,6 +22,7 @@ const JobOffering = () => {
 	// const searchRef = useRef('');
 	// const [searchText, setSearchText] = useState('');
 	const [token] = usePersistedState('token');
+	const [role] = usePersistedState('role');
 	const [searchText, searchRef, onSearchChange] = useSearch();
 	const [loading, setLoading] = useState(false);
 	const [tableParams, setTableParams] = useState({
@@ -96,7 +97,7 @@ const JobOffering = () => {
 					pagination={{
 						...paginationConfig,
 					}}
-					addNewButton={true}
+					addNewButton={role === roles.HR_EMPLOYEE}
 					onSearch={onSearchChange}
 					onChange={handleTableChange}
 				>
@@ -111,16 +112,18 @@ const JobOffering = () => {
 							render={column.render}
 						/>
 					))}
-					<Column
-						title={'Action'}
-						key={'action job-offering'}
-						render={(text, record) => (
-							<Space size='middle'>
-								<Link to={`${routeKey.posts}/${record.id}/edit`}>Edit</Link>
-								<Link onClick={() => handleDelete(record.id)}>Delete</Link>
-							</Space>
-						)}
-					/>
+					{role === roles.HR_EMPLOYEE && (
+						<Column
+							title={'Action'}
+							key={'action job-offering'}
+							render={(text, record) => (
+								<Space size='middle'>
+									<Link to={`${routeKey.posts}/${record.id}/edit`}>Edit</Link>
+									<Link onClick={() => handleDelete(record.id)}>Delete</Link>
+								</Space>
+							)}
+						/>
+					)}
 				</CustomTable>
 			</Box>
 		</CustomCard>

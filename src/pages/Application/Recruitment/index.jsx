@@ -58,6 +58,7 @@ const ApplicationRecruitment = () => {
 	return (
 		<CustomCard width='800px'>
 			<CustomTable
+				loading={loading}
 				dataSource={filteredData}
 				onSearch={setSearchChange}
 				activeKey={activeKey}
@@ -86,7 +87,12 @@ const ApplicationRecruitment = () => {
 					)}
 				/>
 			</CustomTable>
-			<ApplicationModal id={id} open={openModal} setOpen={setOpenModal} status={activeKey} />
+			<ApplicationModal
+				id={id}
+				open={openModal}
+				setOpen={setOpenModal}
+				activeKey={activeKey}
+			/>
 		</CustomCard>
 	);
 };
