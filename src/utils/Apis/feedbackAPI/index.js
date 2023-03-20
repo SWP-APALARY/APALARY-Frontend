@@ -12,6 +12,10 @@ const feedbackApi = {
 		const endpoint = `/feedback/${employeeId}`;
 		return await get(endpoint, {}, { Authorization: token });
 	},
+	createOne: async (body) => {
+		const endpoint = '/feedback';
+		return await post(endpoint, body, { Authorization: token });
+	},
 };
 
 export default feedbackApi;
