@@ -5,6 +5,7 @@ const themeConfig = {
 		colorBackground: '#D6DDFF',
 	},
 	customColor: {
+		border: '#E5E7EB',
 		LayerColor: '#F0F2F5',
 	},
 };

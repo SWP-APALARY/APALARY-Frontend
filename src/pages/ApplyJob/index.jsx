@@ -30,12 +30,15 @@ export default function ApplyJob({ onOk, id }) {
 		if (fileError) return;
 		if (fileBase64 === '') {
 			setFileError('Please upload your CV!');
+		} else if (!fileBase64.includes('data:application/pdf')) {
+			setFileError('File upload must be PDF file');
 		} else {
 			await setIsLoad(true);
 			await applicantAPI.createApplicant({
 				name: value.name,
 				phone: value.phone,
 				email: value.email,
+				gender: value.sex,
 				cv: fileBase64,
 				jobOfferingId: id,
 			});
@@ -65,7 +68,7 @@ export default function ApplyJob({ onOk, id }) {
 		}
 	};
 
-	const openNotificationWithIcon = (name) => {
+	const openNotificationWithIcon = () => {
 		api['success']({
 			message: 'Submit successfully',
 			description: `We will response to you soon ❤️`,
@@ -145,7 +148,7 @@ export default function ApplyJob({ onOk, id }) {
 					getValueFromEvent={(e) => convertToBase64(e.target.files[0])}
 					style={fileError ? { marginBottom: 0 } : {}}
 				>
-					<Input type='file' />
+					<Input type='file' accept='application/pdf' />
 				</Form.Item>
 				{fileError && (
 					<span style={{ display: 'inline-block', color: 'red', marginBottom: '1rem' }}>

@@ -1,98 +1,97 @@
-import { useEffect, useState } from 'react';
-
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, BrowserRouter, HashRouter } from 'react-router-dom';
 
 import LayoutEveryone from '../components/Layout/LayoutEveryone';
 import LayoutManager from '../components/Layout/LayoutManager';
-import { routeKey } from '../components/Layout/ManagerItems';
-import Applicants from '../pages/Applicant/indes';
-import ApplyJob from '../pages/ApplyJob';
-import ErrorPage from '../pages/Errors';
-import Feedback from '../pages/Feedback/Feedback.jsx';
-import Home from '../pages/Home';
+import { roles } from '../components/Layout/ManagerItems';
+import ErrorPage from '../pages/ErrorPage';
 import Homepage from '../pages/Homepage';
-import JobOfferingDetail from '../pages/Homepage/job-offering';
-import JobOffering from '../pages/JobOffering';
-import PostCreation from '../pages/JobOffering/CreatePages';
-import PostDetail from '../pages/JobOffering/Detail';
-import FormDisabledDemo from '../pages/Profile/Profile';
-import Login from '../pages/login';
+import usePersistedState from '../utils/LocalStorage/usePersistedState';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
-
-// public routes here
-const publicRoutes = [
-	{
-		path: routeKey.homepage,
-		Element: <Homepage />,
-	},
-	{
-		path: '/login',
-		Element: <Login />,
-	},
-	{
-		path: '/job-offering/detail/:id',
-		Element: <JobOfferingDetail />,
-	},
-];
-
-// private routes here
-const managerRoutes = [
-	{
-		path: routeKey.applicants,
-		Element: <Applicants />,
-	},
-	{
-		path: routeKey.dashBoard,
-		Element: <Home />,
-	},
-	{
-		path: routeKey.postsCreate,
-		Element: <PostCreation />,
-	},
-	{
-		path: routeKey.postsSpecific,
-		Element: <PostDetail />,
-	},
-	{
-		path: '/admin',
-		Element: <Home />,
-	},
-	{
-		path: routeKey.employeesAll,
-		Element: <Home />,
-	},
-
-	{
-		path: routeKey.posts,
-		Element: <JobOffering />,
-	},
-	{
-		path: '/feedback',
-		Element: <Feedback />,
-	},
-	{
-		path: '/profile',
-		Element: <FormDisabledDemo />,
-	},
-];
+import {
+	ceoRoutes,
+	employeeRoutes,
+	hrEmployeeRoutes,
+	hrManagerRoutes,
+	managerRoutes,
+	publicRoutes,
+	residentRoutes,
+} from './routersByRole';
 
 const AppRoutes = () => {
+	const [role, setRole] = usePersistedState('role');
+	const MainPage =
+		role && role !== '' ? <Navigate to='/dashboard' /> : <Navigate to='/homepage' />;
 	return (
-		<Routes>
-			<Route path={''} element={<PrivateRoute role='HR_MANAGER' />}>
-				{managerRoutes.map((route, index) => (
-					<Route key={index} element={route.Element} path={route.path} />
-				))}
-			</Route>
-			<Route path={''} element={<PublicRoute />}>
-				{publicRoutes.map((route, index) => (
-					<Route key={index} element={route.Element} path={route.path} />
-				))}
-			</Route>
-			<Route path={'/error/:statusCode'} element={<ErrorPage />} />
-			<Route path={'*'} element={<Navigate to='/error/404' />} />
-		</Routes>
+		<BrowserRouter>
+			<Routes>
+				{/* <Route exact path='/' element={<Navigate to={'/dashboard'} />} /> */}
+
+				<Route exact path='/' element={MainPage} />
+				<Route path={''} element={<PrivateRoute />}>
+					<Route element={<LayoutManager />}>
+						{role === roles.CEO &&
+							ceoRoutes.map((route, index) => (
+								<Route
+									key={index + route.path + 'ceo'}
+									element={route.Element}
+									path={route.path}
+								/>
+							))}
+					</Route>
+				</Route>
+				<Route path={''} element={<PrivateRoute />}>
+					<Route element={<LayoutManager />}>
+						{role === roles.HR_MANAGER &&
+							hrManagerRoutes.map((route, index) => (
+								<Route
+									key={index + route.path + 'manager'}
+									element={route.Element}
+									path={route.path}
+								/>
+							))}
+					</Route>
+				</Route>
+				<Route path={''} element={<PrivateRoute />}>
+					<Route element={<LayoutManager />}>
+						{role === roles.HR_EMPLOYEE &&
+							hrEmployeeRoutes.map((route, index) => (
+								<Route key={index} element={route.Element} path={route.path} />
+							))}
+					</Route>
+				</Route>
+				<Route path={''} element={<PrivateRoute />}>
+					<Route element={<LayoutManager />}>
+						{[roles.EMPLOYEE, roles.MANAGER].includes(role) &&
+							managerRoutes.map((route, index) => (
+								<Route key={index} element={route.Element} path={route.path} />
+							))}
+					</Route>
+				</Route>
+				<Route path={''} element={<PrivateRoute />}>
+					<Route element={<LayoutManager />}>
+						{role === roles.RESIDENT &&
+							residentRoutes.map((route, index) => (
+								<Route key={index} element={route.Element} path={route.path} />
+							))}
+					</Route>
+				</Route>
+				<Route path={''} element={<PublicRoute />}>
+					<Route element={<LayoutEveryone />}>
+						{publicRoutes.map((route, index) => (
+							<Route
+								key={index + route.path + 'public'}
+								element={route.Element}
+								path={route.path}
+							/>
+						))}
+					</Route>
+				</Route>
+				<Route path={'*'} element={<LayoutEveryone />}>
+					<Route path='*' key='error' element={<ErrorPage />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
 	);
 };
 

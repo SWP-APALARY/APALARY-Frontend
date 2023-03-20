@@ -7,7 +7,7 @@ const LocalStorageUtils = {
 
 	getItem: (key) => {
 		if (localStorage === undefined) return null;
-		const item = localStorage.get(key);
+		const item = localStorage.getItem(key);
 		if (!item) return null;
 		return JSON.parse(item);
 	},
@@ -15,6 +15,11 @@ const LocalStorageUtils = {
 	removeItem: (key) => {
 		if (localStorage === undefined) return false;
 		localStorage.removeItem(key);
+		return true;
+	},
+	clear: () => {
+		if (localStorage === undefined) return false;
+		localStorage.clear();
 		return true;
 	},
 };

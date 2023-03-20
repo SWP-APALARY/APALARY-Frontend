@@ -1,8 +1,16 @@
-import { Space } from 'antd';
+import { Image, Typography } from 'antd';
+import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 
+import DefaultImage from '../../assets/default-avatar.jpg';
 import { routeKey } from '../../components/Layout/ManagerItems';
+import { gender } from '../../pages/Applicant/Detail/config';
+import { getValueFromBlock } from '../../utils/DraftjsHelper';
 
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+const { Text } = Typography;
+dayjs.extend(customParseFormat);
 export const applicantColumns = [
 	{
 		title: 'Name',
@@ -21,23 +29,20 @@ export const applicantColumns = [
 		sorter: true,
 	},
 	{
-		title: 'status',
-		dataIndex: 'status',
+		title: 'Interview Date',
+		dataIndex: 'interviewDate',
 		sorter: true,
-	},
-	{
-		title: 'Department',
-		dataIndex: 'department',
-		sorter: true,
-	},
-	{
-		title: 'Action',
-		render: (_, record) => (
-			<Space size='middle'>
-				<Link to={`${routeKey.applicants}/${record.id}`}>Approve</Link>
-				<Link to={`${routeKey.applicants}/${record.id}/edit`}>Delete</Link>
-			</Space>
+		render: (value) => (
+			<Text>
+				{value ? dayjs(dayjs(value), 'DD/MM/YYYY').format('DD-MM-YYYY') : 'Not set'}
+			</Text>
 		),
+	},
+	{
+		title: 'Gender',
+		dataIndex: 'gender',
+		sorter: true,
+		render: (value, record) => <Text>{gender[value]}</Text>,
 	},
 ];
 
@@ -53,6 +58,7 @@ export const postColumns = [
 		title: 'Description',
 		dataIndex: 'description',
 		ellipsis: true,
+		render: (value) => <Text>{getValueFromBlock(JSON.parse(value))}</Text>,
 	},
 	{
 		title: 'Salary',
@@ -62,11 +68,78 @@ export const postColumns = [
 		title: 'Max Employee',
 		dataIndex: 'maxEmployee',
 	},
+];
+export const contractColumns = [
 	{
-		title: 'Status',
-		dataIndex: 'status',
+		title: 'Name',
+		dataIndex: 'employeeName',
+		sorter: true,
+		width: '20%',
+	},
+	{
+		title: 'SignedDate',
+		dataIndex: 'signedDate',
+		sorter: true,
+		width: '20%',
+	},
+	{
+		title: 'StartDate',
+		dataIndex: 'startDate',
+		sorter: true,
+		width: '20%',
+	},
+	{
+		title: 'EndDate',
+		dataIndex: 'endDate',
+		sorter: true,
+		width: '20%',
 	},
 ];
+
+const Gender = ['Male', 'Female', 'Other'];
+export const employeeColumns = [
+	{
+		title: 'Name',
+		dataIndex: 'name',
+		sorter: true,
+		render: (value, record) => <Link to={`/employees/${record.id}`}>{value}</Link>,
+		width: '18%',
+	},
+	{
+		title: 'Avatar',
+		dataIndex: 'avatar',
+		render: (value) => <Image src={value ? value : DefaultImage} width={50} />,
+		width: 'auto',
+	},
+	{
+		title: 'Gender',
+		dataIndex: 'gender',
+		ellipsis: true,
+		render: (value) => <Text>{Gender[value]}</Text>,
+		width: 'auto',
+	},
+	{
+		title: 'Date of birth',
+		dataIndex: 'dateOfBirth',
+		width: '12%',
+	},
+	{
+		title: 'Phone',
+		dataIndex: 'phone',
+		width: '14%',
+	},
+	{
+		title: 'Email',
+		dataIndex: 'email',
+		width: '18%',
+	},
+	{
+		title: 'Role',
+		dataIndex: 'role',
+		width: '15%',
+	},
+];
+
 export const paginationConfig = {
 	showSizeChanger: true,
 	showQuickJumper: true,

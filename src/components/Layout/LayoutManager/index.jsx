@@ -1,35 +1,47 @@
 import { useEffect, useState } from 'react';
 
-import { Card, Carousel, Layout, Menu } from 'antd';
+import { Button, Card, Carousel, Layout, Menu } from 'antd';
 import { Content, Header } from 'antd/es/layout/layout';
-import { useNavigate } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import Logo from '../../../assets';
+import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
+import Box from '../../Box';
 import StyledHeader from '../Header';
-import { managerItems } from '../ManagerItems';
+import { managerHrItems } from '../ManagerItems';
 import { layoutContent, layoutHeader, menuLogo } from '../style';
 
 import Sider from 'antd/es/layout/Sider';
 
-const LayoutManager = (props) => {
-	const { children } = props;
-	const [link, setLink] = useState('/dashboard');
+const LayoutManager = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
+	const [link, setLink] = useState();
+	const [role, setRole] = usePersistedState('role');
+	const [key, setKey] = useState();
+	const menuItems = managerHrItems.filter((item) => item.roles.includes(role));
 	useEffect(() => {
 		navigate(link);
 	}, [link]);
+	useEffect(() => {
+		setLink(location.pathname);
+	}, [location]);
 	return (
 		<Layout>
 			<Sider>
-				<div style={menuLogo}>
+				<Box style={menuLogo} onClick={() => navigate('/')}>
 					<img src={Logo} alt='logo' />
-				</div>
+				</Box>
 				<Menu
 					theme='dark'
-					defaultSelectedKeys={['/dashboard']}
-					onClick={(item) => setLink(item.key)}
+					onClick={(item) => {
+						setLink(item.key);
+						setKey(item.key);
+					}}
 					mode='inline'
-					items={managerItems}
+					selectedKeys={[link]}
+					forceSubMenuRender
+					items={menuItems}
 				></Menu>
 			</Sider>
 			<Layout
@@ -39,7 +51,9 @@ const LayoutManager = (props) => {
 				}}
 			>
 				<StyledHeader hasLogo={false} style={layoutHeader}></StyledHeader>
-				<Content style={layoutContent}>{children}</Content>
+				<Content style={layoutContent}>
+					<Outlet />
+				</Content>
 			</Layout>
 		</Layout>
 	);

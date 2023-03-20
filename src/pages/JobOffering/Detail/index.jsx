@@ -6,44 +6,49 @@ import { useParams } from 'react-router-dom';
 
 import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
+import apiHandler from '../../../utils/Apis/handler';
 import jobOfferingApi from '../../../utils/Apis/jobOffering';
+import { convertToEditor } from '../../../utils/DraftjsHelper';
 import { initData } from './initData';
 
 const { Title, Text } = Typography;
 const PostDetail = () => {
 	const params = useParams();
+	const [loading, setLoading] = useState(true);
 	const [data, setData] = useState(initData);
 	const id = params.id;
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
 	useEffect(() => {
 		const fetch = async () => {
-			const response = await jobOfferingApi.getOne(id).then((res) => res.data);
+			const response = await apiHandler(jobOfferingApi, 'getOne', '', setLoading, id);
 			// if (response.status === 403) {
 			// 	return;
 			// }
 			setData(response);
 			setEditorState(
 				//TODO: change to convertFromRaw when api ready
-				EditorState.createWithContent(ContentState.createFromText(response.description))
+				convertToEditor(JSON.parse(response.description))
 			);
 		};
 		fetch();
 	}, []);
 	return (
 		<Box>
-			<CustomCard bordered>
+			<CustomCard bordered loading={loading} width={'700px'}>
 				<Box direction='vertical'>
 					<Box direction='vertical' align='center'>
 						<Title>{data.title}</Title>
 					</Box>
 					<Box direction='vertical'>
 						<Title level={5} type='danger'>
-							Lương Tới: {data.baseSalary}
+							Up to: {data.baseSalary}
 						</Title>
-						<Text level={5} type='success'>
-							Số lượng tuyển tối đa: {data.maxEmployee}
-						</Text>
+						<Text type='success'>Max Employees: {data.maxEmployee}</Text>
+						<Text>Department: {data.departmentName}</Text>
+						<Title level={4} strong>
+							Detail:
+						</Title>
 						<Editor readOnly editorState={editorState}></Editor>
 					</Box>
 				</Box>

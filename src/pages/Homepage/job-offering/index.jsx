@@ -10,13 +10,11 @@ import jobOfferingApi from '../../../utils/Apis/jobOffering';
 import { convertToEditor } from '../../../utils/DraftjsHelper';
 import ApplyJob from '../../ApplyJob/index';
 
-import { StepBackwardOutlined } from '@ant-design/icons';
-
 const { Title, Text } = Typography;
-export default function JobOfferingDetail() {
+const JobOfferingDetail = () => {
 	const params = useParams();
 	const navigate = useNavigate();
-	const [data, setData] = useState();
+	const [data, setData] = useState([]);
 	const id = params.id;
 	const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
@@ -54,23 +52,22 @@ export default function JobOfferingDetail() {
 		>
 			<CustomCard bordered>
 				<Button onClick={() => navigate(-1)} style={{ position: 'absolute' }}>
-					<StepBackwardOutlined />
-					Back
+					Home
 				</Button>
 				{data && (
-					<Box direction='vertical'>
+					<Box direction='vertical' style={{ minWidth: '50rem' }}>
 						<Box direction='vertical' align='center' style={{ width: '100%' }}>
 							<Title>{data.title}</Title>
 						</Box>
 						<Box direction='vertical'>
 							<Text level={5} type='danger'>
-								<b>Lương Tới:</b> {data.baseSalary} $
+								<b>Upto:</b> {data.baseSalary} VND
 							</Text>
 							<Text level={5} type='success'>
-								<b>Số lượng tuyển tối đa:</b> {data.maxEmployee}
+								<b>Max Employees:</b> {data.maxEmployee}
 							</Text>
 							<Text level={5}>
-								<b>Vị trí làm việc:</b> {data.departmentName}
+								<b>Department:</b> {data.departmentName}
 							</Text>
 							<Editor readOnly editorState={editorState}></Editor>
 						</Box>
@@ -87,4 +84,6 @@ export default function JobOfferingDetail() {
 			</Modal>
 		</Box>
 	);
-}
+};
+
+export default JobOfferingDetail;
