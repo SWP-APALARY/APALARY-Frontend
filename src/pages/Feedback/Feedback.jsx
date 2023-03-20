@@ -18,7 +18,6 @@ const Review = () => {
 	const date = new Date();
 	const [month, setMoth] = useState(date.getMonth() + 1);
 	const [index, setIndex] = useState(0);
-	console.log(month);
 	const [text, setText] = useState([
 		{
 			id: 0,
@@ -75,40 +74,49 @@ const Review = () => {
 
 	return (
 		<Box direction='vertical' width='100%'>
-			<Row justify={'space-between'} gutter={20}>
-				<Col>
-					{month !== 1 && (
-						<a type='primary' onClick={prevMonth}>
-							Older
-						</a>
-					)}
-				</Col>
-				<Col>
-					{month !== date.getMonth() + 1 && (
-						<a type='primary' onClick={nextMonth}>
-							Newer
-						</a>
-					)}
-				</Col>
-			</Row>
-			<Row justify={'center'}>
-				<Card size='large' title='FeedBack'>
-					<p>{text[index].title}</p>
-					<p>{text[index].description}</p>
-					<p>
-						<Rate disabled value={text[index].star} />
-					</p>
-					<Space>
-						<Button type='primary' onClick={prevPerson}>
-							<ArrowLeftOutlined />
-						</Button>
+			<Card>
+				<Row justify={'space-between'} gutter={20}>
+					<Col>
+						{month !== 1 && (
+							<a type='primary' onClick={prevMonth}>
+								Older
+							</a>
+						)}
+					</Col>
+					<Col>
+						{month !== date.getMonth() + 1 && (
+							<a type='primary' onClick={nextMonth}>
+								Newer
+							</a>
+						)}
+					</Col>
+				</Row>
+				<Row justify={'center'}>
+					<Card
+						size='large'
+						title='FeedBack'
+						extra={text[index].createdDate}
+						style={{
+							width: 300,
+						}}
+					>
+						<p>{text[index].title}</p>
+						<p>{text[index].description}</p>
+						<p>
+							<Rate disabled value={text[index].star} />
+						</p>
+						<Space>
+							<Button type='primary' onClick={prevPerson}>
+								<ArrowLeftOutlined />
+							</Button>
 
-						<Button type='primary' onClick={nextPerson}>
-							<ArrowRightOutlined />
-						</Button>
-					</Space>
-				</Card>
-			</Row>
+							<Button type='primary' onClick={nextPerson}>
+								<ArrowRightOutlined />
+							</Button>
+						</Space>
+					</Card>
+				</Row>
+			</Card>
 		</Box>
 	);
 };

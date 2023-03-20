@@ -12,8 +12,6 @@ const apiHandler = async (api, action, successMessage, setLoading, ...rest) => {
 	if (setLoading) {
 		setLoading(true);
 	}
-	// const [token, setToken] = usePersistedState('token');
-	// const [role, setRole] = usePersistedState('role');
 	const result = await api[action](...rest)
 		.then((response) => {
 			if (response.status === 404) {
@@ -34,7 +32,7 @@ const apiHandler = async (api, action, successMessage, setLoading, ...rest) => {
 			const status = error.response.status;
 			if (status === 401 || status === 403 || status === 500) {
 				LocalStorageUtils.clear();
-				return <Navigate to='/login' />;
+				return window.reload();
 			}
 			toast(error.message, 'error');
 			return null;
