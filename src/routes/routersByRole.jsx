@@ -27,6 +27,8 @@ import PostDetail from '../pages/JobOffering/Detail';
 import ListEmployee from '../pages/ListEmployee';
 import EmployeeDetail from '../pages/ListEmployee/Detail';
 import FormDisabledDemo from '../pages/Profile/Profile';
+import FormDisabled from '../pages/ReProfile';
+import ResidentDashboard from '../pages/ResidentDashboard';
 import SalaryList from '../pages/SalaryList';
 import SalaryListDetail from '../pages/SalaryList/Detail';
 import Login from '../pages/login';
@@ -49,7 +51,7 @@ export const publicRoutes = [
 
 export const generalRoutes = [
 	{
-		path: '/dashboard',
+		path: routeKey.dashBoard,
 		Element: <EmDashboard />,
 	},
 	{
@@ -221,7 +223,15 @@ export const managerRoutes = [
 ];
 
 export const residentRoutes = [
-	...generalRoutes,
+	{
+		path: routeKey.dashBoard,
+		Element: <ResidentDashboard />,
+	},
+	{
+		path: routeKey.profile,
+		Element: <FormDisabled />,
+	},
+
 	{
 		path: routeKey.feedBack,
 		Element: <CreateFeedback />,
