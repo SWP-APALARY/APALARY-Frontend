@@ -78,49 +78,6 @@ const EmDashboard = () => {
 									</Card>
 								</NavLink>
 							</Col>
-							<Col span={8}>
-								<NavLink to='/contract'>
-									<Card
-										hoverable
-										bordered={true}
-										style={{
-											background: '#F0F0F0',
-											width: '99%',
-											height: 120,
-										}}
-									>
-										<div style={{ marginLeft: 10 }}>
-											<FileTextFilled
-												style={{ fontSize: 50, marginLeft: 4 }}
-											/>
-											Contract
-										</div>
-									</Card>
-								</NavLink>
-							</Col>
-							<Col span={8}>
-								<NavLink to='/salary'>
-									<Card
-										hoverable
-										style={{
-											background: '#F0F0F0',
-											width: '99%',
-											height: 120,
-										}}
-									>
-										<div style={{ marginLeft: 20 }}>
-											<FaMoneyBillWave
-												style={{
-													fontSize: 50,
-													marginLeft: -7,
-													marginBottom: -5,
-												}}
-											/>
-											Salary
-										</div>
-									</Card>
-								</NavLink>
-							</Col>
 						</Row>
 					</Col>
 					<Col span={12}>

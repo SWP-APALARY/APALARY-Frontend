@@ -93,7 +93,7 @@ const Contracts = () => {
 						key='action-contractColumn'
 						render={(text, record) => (
 							<Space size='middle'>
-								<Link to={`/employees/contracts/${record.id}`}>View</Link>
+								<Link to={`/contracts/${record.id}`}>View</Link>
 								{record.status !== 'INACTIVE' && (
 									<Link onClick={() => handleDelete(record.id)}>Delete</Link>
 								)}

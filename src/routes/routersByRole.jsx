@@ -178,7 +178,12 @@ export const managerRoutes = [
 	},
 ];
 
-export const residentRoutes = [...generalRoutes];
+export const residentRoutes = [
+	{
+		path: '/dashboard',
+		Element: <ResidentDashboard />,
+	},
+];
 export const ceoRoutes = [
 	{
 		path: routeKey.dashBoard,
