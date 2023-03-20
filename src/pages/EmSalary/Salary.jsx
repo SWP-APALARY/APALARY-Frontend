@@ -76,7 +76,14 @@ const emSalary = () => {
 				loading={loading}
 			>
 				{SalaryColumnConfig.map((item) => {
-					return <Column key={item.key + '-salary-list'} {...item} />;
+					return (
+						<Column
+							key={item.key + '-salary-list'}
+							title={item.title}
+							dataIndex={item.dataIndex}
+							render={item.render}
+						/>
+					);
 				})}
 			</CustomSTable>
 		</CustomCard>

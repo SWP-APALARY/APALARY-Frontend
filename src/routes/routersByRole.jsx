@@ -16,6 +16,7 @@ import ContractDetails from '../pages/Contracts/detail';
 import EmDashboard from '../pages/EmDashboard';
 import Salary from '../pages/EmSalary/Salary';
 import Feedback from '../pages/Feedback/Feedback.jsx';
+import CreateFeedback from '../pages/Feedback/create';
 import Home from '../pages/Home';
 import Homepage from '../pages/Homepage';
 import Dashboard from '../pages/Homepage/dashboard';
@@ -221,6 +222,11 @@ export const residentRoutes = [
 	{
 		path: routeKey.profile,
 		Element: <FormDisabled />,
+	},
+
+	{
+		path: routeKey.feedBack,
+		Element: <CreateFeedback />,
 	},
 ];
 export const ceoRoutes = [
