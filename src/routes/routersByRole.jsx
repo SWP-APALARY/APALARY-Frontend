@@ -185,6 +185,10 @@ export const employeeRoutes = [
 export const managerRoutes = [
 	...generalRoutes,
 	{
+		path: routeKey.employeesSpecific,
+		Element: <EmployeeDetail />,
+	},
+	{
 		path: routeKey.applicationCreating,
 		Element: <CreateApplication />,
 	},
