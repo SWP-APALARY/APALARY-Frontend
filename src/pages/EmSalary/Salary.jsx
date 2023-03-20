@@ -71,6 +71,7 @@ const emSalary = () => {
 	return (
 		<CustomCard>
 			<CustomSTable
+				dataSource={textSalary}
 				rowKey={(record) => record.id + '-salary-list'}
 				style={{ minWidth: ' 700px' }}
 				loading={loading}

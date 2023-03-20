@@ -7,14 +7,6 @@ export const SalaryColumnConfig = [
 		dataIndex: 'month',
 		key: 'month',
 	},
-	{
-		title: 'Base',
-		dataIndex: 'base',
-		key: 'base',
-		render: (text, record) => {
-			return <span>{moneyConverter(text)} VNĐ</span>;
-		},
-	},
 	{},
 	{
 		title: 'Total Amount',
