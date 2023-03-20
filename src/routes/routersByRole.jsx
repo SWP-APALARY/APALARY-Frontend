@@ -58,6 +58,14 @@ export const generalRoutes = [
 		path: routeKey.profile,
 		Element: <FormDisabledDemo />,
 	},
+	{
+		path: routeKey.salaryDetail,
+		Element: <SalaryListDetail />,
+	},
+	{
+		path: routeKey.salary,
+		Element: <Salary />,
+	},
 ];
 // private routes here
 export const hrManagerRoutes = [
