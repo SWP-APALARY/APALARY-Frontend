@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 
 import Footer from './Footer';
-import Career from './career/indes';
+import Career from './career/index';
 import Contact from './contact';
 import Dashboard from './dashboard';
 import Environment from './environment';

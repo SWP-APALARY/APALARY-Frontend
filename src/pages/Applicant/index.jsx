@@ -18,9 +18,9 @@ import { fakeData } from './dummy.data';
 const { Column } = Table;
 const Applicants = () => {
 	const [loading, setLoading] = useState(false);
-	const [filteredData, setFilteredData] = useState(fakeData);
+	const [filteredData, setFilteredData] = useState([]);
 	const navigate = useNavigate();
-	const [data, setData] = useState(fakeData);
+	const [data, setData] = useState([]);
 	const [search, searchRef, onSearchChange] = useSearch();
 	const [activeKey, setActiveKey] = useState(tabStatusConfig[0].key);
 	const [token] = usePersistedState('token');
