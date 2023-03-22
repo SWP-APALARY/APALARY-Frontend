@@ -27,7 +27,7 @@ export default function ApplyJob({ onOk, id }) {
 	const [fileError, setFileError] = React.useState();
 
 	const onFinish = async (value) => {
-		if (fileError) return;
+		if (fileError || isLoad) return;
 		if (fileBase64 === '') {
 			setFileError('Please upload your CV!');
 		} else if (!fileBase64.includes('data:application/pdf')) {
