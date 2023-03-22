@@ -34,7 +34,7 @@ const PDFReader = (props) => {
 	return (
 		<Box direction='vertical'>
 			<Document file={file} onLoadSuccess={onDocumentLoadSuccess} renderMode={<Spin />}>
-				<Page pageNumber={pageNumber} />
+				<Page pageNumber={pageNumber} width={600} />
 			</Document>
 			<Text style={{ marginBottom: '10px' }}>
 				Page {pageNumber || (numPages ? 1 : '--')} of {numPages || '--'}
