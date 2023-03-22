@@ -15,7 +15,9 @@ import { HomeOutlined, StepBackwardOutlined } from '@ant-design/icons';
 
 const StyledHeader = (props) => {
 	const navigate = useNavigate();
-	const token = null;
+
+	const [token, setToken] = usePersistedState('token');
+	const [role, setRole] = usePersistedState('role');
 	const { style, isDashBoard } = props;
 	const logout = () => {
 		// setToken('');
@@ -36,17 +38,18 @@ const StyledHeader = (props) => {
 				)}
 			</div>
 			<div>
-				{token ? (
+				{token && token !== '' ? (
 					<Dropdown
 						menu={{
 							items: dropDownItem.filter(
 								(item) => (token && !item.isLogin) || (!token && item.isLogin)
 								//(!A  & !B) | (A & B)
 							),
+							onClick: logout,
 						}}
 						placement='bottomLeft'
 					>
-						<Avatar />
+						<Avatar src={LocalStorageUtils.getItem('avatar')} />
 					</Dropdown>
 				) : (
 					<Button onClick={() => navigate('/login')}>Login</Button>
