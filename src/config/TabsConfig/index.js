@@ -24,7 +24,67 @@ export const tabContractStatusConfig = [
 	},
 	{
 		key: 'Accepted',
-		label: 'UnActive',
+		label: 'InActive',
+	},
+];
+export const tabSalaryYearConfig = [
+	{
+		key: 2022,
+		label: '2022',
+	},
+	{
+		key: 2023,
+		label: '2023',
+	},
+];
+export const tabSalaryMonthConfig = [
+	{
+		key: 1,
+		label: 'Jan',
+	},
+	{
+		key: 2,
+		label: 'Feb',
+	},
+	{
+		key: 3,
+		label: 'March',
+	},
+	{
+		key: 4,
+		label: 'April',
+	},
+	{
+		key: 5,
+		label: 'May',
+	},
+	{
+		key: 6,
+		label: 'June',
+	},
+	{
+		key: 7,
+		label: 'July',
+	},
+	{
+		key: 8,
+		label: 'August',
+	},
+	{
+		key: 9,
+		label: 'September',
+	},
+	{
+		key: 10,
+		label: 'October',
+	},
+	{
+		key: 11,
+		label: 'November',
+	},
+	{
+		key: 12,
+		label: 'December',
 	},
 ];
 export const tabConfigWithAPIStatus = [
@@ -34,7 +94,7 @@ export const tabConfigWithAPIStatus = [
 	},
 	{
 		key: 'processing-r2',
-		label: 'Waiting for CEO',
+		label: 'Waiting for Head Manager',
 	},
 	{
 		key: 'active',

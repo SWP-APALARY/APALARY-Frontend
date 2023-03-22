@@ -14,12 +14,14 @@ import usePersistedState from '../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../utils/hooks/useSearch';
 import CustomCTable from './Table';
 
+import { DeleteTwoTone } from '@ant-design/icons';
+
 const { Column } = Table;
 const Contracts = () => {
 	const [loading, setLoading] = useState(false);
-	const [filteredData, setFilteredData] = useState();
+	const [filteredData, setFilteredData] = useState([]);
 	const navigate = useNavigate();
-	const [data, setData] = useState();
+	const [data, setData] = useState([]);
 	const [search, searchRef, onSearchChange] = useSearch();
 	const [activeKey, setActiveKey] = useState(tabContractStatusConfig[0].key);
 	const [token] = usePersistedState('token');
@@ -54,12 +56,13 @@ const Contracts = () => {
 		};
 		fetch();
 	}, []);
-	// useEffect(() => {
-	// 	const tmp = data.filter((item) =>
-	// 		item.employeeName.toLowerCase().includes(search.toLowerCase())
-	// 	);
-	// 	setFilteredData(tmp);
-	// }, [search]);
+	useEffect(() => {
+		const tmp = data.filter((item) =>
+			item.nameEmp.toLowerCase().includes(search.toLowerCase())
+		);
+		setFilteredData(tmp);
+	}, [search]);
+
 	return (
 		<CustomCard>
 			<Box direction='vertical'>
@@ -92,8 +95,12 @@ const Contracts = () => {
 						key='action-contractColumn'
 						render={(text, record) => (
 							<Space size='middle'>
-								<Link to={`/employees/contracts/${record.id}`}>View</Link>
-								<Link onClick={() => handleDelete(record.id)}>Delete</Link>
+								<Link to={`/contracts/${record.id}`}>View</Link>
+								{record.status !== 'INACTIVE' && (
+									<Link onClick={() => handleDelete(record.id)}>
+										<DeleteTwoTone twoToneColor='red' />
+									</Link>
+								)}
 							</Space>
 						)}
 					/>

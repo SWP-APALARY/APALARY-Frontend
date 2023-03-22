@@ -19,7 +19,7 @@ export default function Career() {
 			const realData = jobOffering.data.map((todo, index) => ({
 				...todo,
 				key: index,
-				baseSalary: todo.baseSalary + ' VND',
+				baseSalary: todo.baseSalary + ' VNĐ',
 				description: getValueFromBlock(JSON.parse(todo.description)),
 			}));
 			setList(realData);
@@ -58,7 +58,7 @@ export default function Career() {
 						title='Base Salary'
 						dataIndex='baseSalary'
 						key='baseSalary'
-						width={140}
+						width={150}
 						style={{ textAlign: 'center' }}
 					/>
 					<Column

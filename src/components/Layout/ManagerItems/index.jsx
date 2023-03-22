@@ -26,11 +26,12 @@ export const routeKey = {
 	employees: '/employees',
 	employeesSpecific: '/employees/:id',
 	employeesAll: '/employees/all',
-	employeesContracts: '/employees/contracts',
-	contractsSpecific: '/employees/contracts/:id',
+	employeesContracts: '/contracts',
+	contractsSpecific: '/contracts/:id',
 	contractsCreate: '/contracts/create',
 	contract: '/contract',
 	salary: '/salary',
+	salaryDetail: '/salary/:id',
 	employeesSalaries: '/employees/salaries',
 	employeesSalariesDetail: '/employees/salaries/:id',
 	applications: '/application',
@@ -95,6 +96,7 @@ export const managerHrItems = [
 		],
 		roleMangerCEO
 	),
+	getMenuItem('Employees', routeKey.employees, <UserOutlined />, null, [roles.MANAGER]),
 	getMenuItem('Applications', routeKey.applicationSalaryIncreasing, <MenuFoldOutlined />, null, [
 		roles.CEO,
 	]),

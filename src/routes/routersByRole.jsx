@@ -27,6 +27,8 @@ import PostDetail from '../pages/JobOffering/Detail';
 import ListEmployee from '../pages/ListEmployee';
 import EmployeeDetail from '../pages/ListEmployee/Detail';
 import FormDisabledDemo from '../pages/Profile/Profile';
+import FormDisabled from '../pages/ReProfile';
+import ResidentDashboard from '../pages/ResidentDashboard';
 import SalaryList from '../pages/SalaryList';
 import SalaryListDetail from '../pages/SalaryList/Detail';
 import Login from '../pages/login';
@@ -49,12 +51,20 @@ export const publicRoutes = [
 
 export const generalRoutes = [
 	{
-		path: '/dashboard',
+		path: routeKey.dashBoard,
 		Element: <EmDashboard />,
 	},
 	{
 		path: routeKey.profile,
 		Element: <FormDisabledDemo />,
+	},
+	{
+		path: routeKey.salaryDetail,
+		Element: <SalaryListDetail />,
+	},
+	{
+		path: routeKey.salary,
+		Element: <Salary />,
 	},
 ];
 // private routes here
@@ -183,12 +193,20 @@ export const employeeRoutes = [
 export const managerRoutes = [
 	...generalRoutes,
 	{
+		path: routeKey.employeesSpecific,
+		Element: <EmployeeDetail />,
+	},
+	{
 		path: routeKey.applicationCreating,
 		Element: <CreateApplication />,
 	},
 	{
 		path: routeKey.posts,
 		Element: <JobOffering />,
+	},
+	{
+		path: routeKey.employees,
+		Element: <ListEmployee />,
 	},
 	{
 		path: routeKey.postsSpecific,
@@ -213,7 +231,15 @@ export const managerRoutes = [
 ];
 
 export const residentRoutes = [
-	...generalRoutes,
+	{
+		path: routeKey.dashBoard,
+		Element: <ResidentDashboard />,
+	},
+	{
+		path: routeKey.profile,
+		Element: <FormDisabled />,
+	},
+
 	{
 		path: routeKey.feedBack,
 		Element: <CreateFeedback />,
@@ -287,6 +313,10 @@ export const ceoRoutes = [
 	{
 		path: routeKey.employeesContracts,
 		Element: <Contracts />,
+	},
+	{
+		path: routeKey.reports,
+		Element: <Reports />,
 	},
 	{
 		path: routeKey.contractsSpecific,

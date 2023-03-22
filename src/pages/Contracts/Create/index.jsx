@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 
-import { Button, DatePicker, Form, Input, InputNumber, Skeleton, Typography, Upload } from 'antd';
+import {
+	Button,
+	DatePicker,
+	Form,
+	Input,
+	InputNumber,
+	Select,
+	Skeleton,
+	Typography,
+	Upload,
+} from 'antd';
 import { convertToRaw, EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -10,6 +20,7 @@ import CustomCard from '../../../components/Card';
 import CustomEditor from '../../../components/Editor';
 import toast from '../../../components/Toast';
 import contractsAPI from '../../../utils/Apis/contractsAPI';
+import { departmentAPI } from '../../../utils/Apis/departmentAPI';
 import apiHandler from '../../../utils/Apis/handler';
 import { convertToEditor } from '../../../utils/DraftjsHelper';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
@@ -21,45 +32,78 @@ import Meta from 'antd/es/card/Meta';
 import TextArea from 'antd/es/input/TextArea';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
+const { Option } = Select;
 const { Title, Text } = Typography;
 const ContractCreation = () => {
-	const { RangePicker } = DatePicker;
-	const params = useParams();
 	const [data, setData] = useState();
 	const [token] = usePersistedState('token');
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const [form] = Form.useForm();
-	const [editorState, setEditorState] = useState(EditorState.createEmpty());
+	const [fileBase64, setFileBase64] = React.useState('');
+	const [fileError, setFileError] = React.useState();
+	const [dateSigned, setDateSigned] = React.useState();
+	const [startDate, setStartDate] = React.useState();
+	const [endDate, setEndDate] = React.useState();
+	const [contractType, setContractType] = React.useState([]);
+	const [listDepartment, setListDepartment] = useState([]);
 	const onSubmit = async () => {
-		const formData = form.getFieldsValue();
-		const raw = convertToRaw(editorState.getCurrentContent());
-		const completedForm = {
-			id: params.id,
-			...formData,
-			createdTime: data.createdTime,
-			description: JSON.stringify(raw),
-			// TODO: change to user id when login is done
-		};
-		console.log(completedForm);
+		if (fileError) return;
+		if (fileBase64 === '') {
+			setFileError('Please upload contract file!');
+		} else {
+			const formData = form.getFieldsValue();
+			// console.log({ ...formData, contractImage: fileBase64 });
+			// console.log('date signed', dateSigned, startDate, endDate);
+			// formData = {a: 1, b: 2}
+			// { ...formData, contractImage: fileBase64 }  === {a: 1, b: 2, contractImage: fileBase64}
+			// fileBase64 đây là file value
+			await apiHandler(contractsAPI, 'post', 'success', setLoading, {
+				...formData,
+				contractImage: fileBase64,
+			}).then(() => {
+				form.resetFields();
+			});
+			navigate(-1);
+		}
 	};
-	// TODO: fix that the input fields don't receive data from fetch
-	useEffect(() => {
-		const fetch = async () => {
-			if (params.id) {
-				if (params.id) {
-					const res = await apiHandler(contractsAPI, 'getOne', '', setLoading, params.id);
-					form.setFieldsValue(res);
-					setData(res);
-					setEditorState(convertToEditor(JSON.parse(res.description)));
-				}
-			}
-		};
-		fetch();
-	}, []);
+
 	const onFinishFailed = (errorInfo) => {
 		toast(errorInfo, 'error');
 	};
+
+	const convertToBase64 = (file) => {
+		if (file) {
+			if (file.size < 3000000) {
+				const reader = new FileReader();
+
+				reader.onloadend = async () => {
+					if (reader.result.toString().startsWith('data:application/pdf')) {
+						await setFileBase64(reader.result.toString());
+						setFileError();
+					} else {
+						setFileBase64('');
+						setFileError('File upload must be pdf file!');
+					}
+				};
+
+				reader.readAsDataURL(file);
+			} else {
+				setFileBase64('');
+				setFileError('File size too large, should be less than 3gb!');
+			}
+		} else {
+			setFileBase64('');
+			setFileError('Please upload contract file!');
+		}
+	};
+	useEffect(() => {
+		const fetch = async () => {
+			const resCon = await apiHandler(contractsAPI, 'getContractType', '', setLoading, null);
+			setContractType(resCon || []);
+		};
+		fetch();
+	}, []);
 	return (
 		<Box>
 			<CustomCard bordered width='800px' loading={loading}>
@@ -77,7 +121,7 @@ const ContractCreation = () => {
 							{formConfig.map((item) => {
 								return (
 									<Form.Item
-										key={item.name + '-post-form'}
+										key={item.label + '-contract-form'}
 										label={item.label}
 										name={item.name}
 										rules={[...item.rules]}
@@ -95,25 +139,63 @@ const ContractCreation = () => {
 											) : item.type === 'textarea' ? (
 												<TextArea style={{ width: '100%' }} />
 											) : item.type === 'date' ? (
-												<DatePicker style={{ width: '100%' }} />
+												<DatePicker
+													style={{ width: '100%' }}
+													onChange={(date, dateString) =>
+														setDateSigned(dateString)
+													}
+												/>
 											) : item.type === 'date1' ? (
-												<RangePicker style={{ width: '100%' }} />
+												<DatePicker
+													style={{ width: '100%' }}
+													onChange={(date, dateString) =>
+														setStartDate(dateString)
+													}
+												/>
+											) : item.type === 'date2' ? (
+												<DatePicker
+													style={{ width: '100%' }}
+													onChange={(date, dateString) =>
+														setEndDate(dateString)
+													}
+												/>
+											) : item.type === 'type' ? (
+												<Select placeholder='Select'>
+													{contractType.map((todo) => (
+														<Option value={todo.id} key={todo.id}>
+															{todo.type}
+														</Option>
+													))}
+												</Select>
 											) : null
 											// <Input />
 										}
 									</Form.Item>
 								);
 							})}
-							<Form.Item label='Description' valuePropName='fileList'>
-								<Upload listType='picture-card'>
-									<div>
-										<PlusOutlined />
-										<div style={{ marginTop: 8 }}>Upload</div>
-									</div>
-								</Upload>
+
+							<Form.Item
+								label='Contract'
+								name='contractImage'
+								getValueFromEvent={(e) => convertToBase64(e.target.files[0])}
+								style={fileError ? { marginBottom: 0 } : {}}
+							>
+								<Input type='file' accept='application/pdf' />
 							</Form.Item>
+							{fileError && (
+								<span
+									style={{
+										display: 'inline-block',
+										color: 'red',
+										marginBottom: '1rem',
+									}}
+								>
+									{fileError}
+								</span>
+							)}
+
 							<Form.Item>
-								<Button type='primary' htmlType='submit'>
+								<Button type='primary' htmlType='submit' loading={loading}>
 									Create
 								</Button>
 							</Form.Item>
@@ -121,11 +203,6 @@ const ContractCreation = () => {
 					</Box>
 				</Box>
 			</CustomCard>
-			{/* <CustomCard bordered>
-				<Box>
-					<Text></Text>
-				</Box>
-			</CustomCard> */}
 		</Box>
 	);
 };
