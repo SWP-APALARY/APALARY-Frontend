@@ -31,11 +31,3 @@ export const employeeColumns = [
 		width: '22%',
 	},
 ];
-<<<<<<< HEAD
-
-export const paginationConfig = {
-	showSizeChanger: true,
-	showQuickJumper: true,
-};
-=======
->>>>>>> 902b454bf844134584bc5ab59049b7cf1cfc8961
