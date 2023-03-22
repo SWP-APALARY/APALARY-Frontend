@@ -11,12 +11,15 @@ import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
 import { applicantFormConfig, gender } from './config';
 
 const { Title } = Typography;
+const { TextArea } = Input;
 const ApplicantDetails = () => {
 	const params = useParams();
 	const [token] = usePersistedState('token');
 	const navigate = useNavigate();
 	const [applicant, setApplicant] = React.useState({});
 	const [loading, setLoading] = React.useState(false);
+	const [confirmReject, setConfirmReject] = React.useState(null);
+	const [reason, setReason] = React.useState();
 	const statusSend = applicant.status === 'PROCESSING' ? 'approve' : 'accept';
 	useEffect(() => {
 		const fetch = async () => {
@@ -31,8 +34,10 @@ const ApplicantDetails = () => {
 		navigate('/applicants');
 	};
 	const onReject = async () => {
-		await apiHandler(applicantAPI, statusSend, 'Success', setLoading, params.id, false, token);
-		navigate('/applicants');
+		console.log(reason);
+		setConfirmReject(null);
+		// await apiHandler(applicantAPI, statusSend, 'Success', setLoading, params.id, false, token);
+		// navigate('/applicants');
 	};
 	return (
 		<CustomCard>
@@ -63,13 +68,28 @@ const ApplicantDetails = () => {
 						file={applicant.cv}
 						id={applicant.id}
 						onAccept={onAccept}
-						onReject={onReject}
+						onReject={() => setConfirmReject(applicant.id)}
 						isWaiting={
 							applicant.status === 'PROCESSING' || applicant.status === 'PROCESSING_2'
 						}
 					/>
 				</Form>
 			)}
+			<Modal
+				open={confirmReject !== null}
+				onOk={onReject}
+				onCancel={() => setConfirmReject(null)}
+				title='Reason to reject this applicant'
+				centered
+			>
+				<TextArea
+					rows={4}
+					placeholder='Reason ...'
+					maxLength={6}
+					value={reason}
+					onChange={(e) => setReason(e.target.value)}
+				/>
+			</Modal>
 		</CustomCard>
 	);
 };

@@ -82,7 +82,7 @@ export default function CreateEmployee({ onFinish }) {
 
 	return (
 		<div>
-			<h3 style={{ textAlign: 'center', fontSize: '25px' }}>Create employee</h3>
+			<h3 style={{ textAlign: 'center', fontSize: '25px' }}>Create employee information</h3>
 			{loading ? (
 				<Skeleton active />
 			) : (
