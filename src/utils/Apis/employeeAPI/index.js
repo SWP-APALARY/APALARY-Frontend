@@ -35,6 +35,10 @@ const employeeAPI = {
 		const endpoint = `/employee/${id}`;
 		return await del(endpoint, {}, { Authorization: token }, {});
 	},
+	recoverById: async (id) => {
+		const endpoint = `/employee/recover/${id}`;
+		return await put(endpoint, {}, { Authorization: token }, {});
+	},
 	createOne: async (body) => {
 		const endpoint = '/auth/create/employee';
 		return await post(endpoint, body, { Authorization: token }, {});
