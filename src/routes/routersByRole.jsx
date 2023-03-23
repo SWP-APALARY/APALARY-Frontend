@@ -9,6 +9,7 @@ import ApplicationSalary from '../pages/Application/SalaryIncreasing';
 import ApplicationSent from '../pages/Application/Sent';
 import ApplyJob from '../pages/ApplyJob';
 import CEODashboard from '../pages/CEODashboard';
+import ChangePassword from '../pages/ChangePassword';
 import Contract from '../pages/Contract/Contract';
 import Contracts from '../pages/Contracts';
 import ContractCreation from '../pages/Contracts/Create';
@@ -65,6 +66,10 @@ export const generalRoutes = [
 	{
 		path: routeKey.salary,
 		Element: <Salary />,
+	},
+	{
+		path: routeKey.changePassword,
+		Element: <ChangePassword />,
 	},
 ];
 // private routes here

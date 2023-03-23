@@ -42,6 +42,7 @@ export const routeKey = {
 	applicationSent: '/application/sent',
 	reports: '/reports',
 	posts: '/posts',
+	changePassword: '/change-password',
 	postsCreate: '/posts/create',
 	postsEdit: '/posts/:id/edit',
 	postsSpecific: '/posts/:id',
