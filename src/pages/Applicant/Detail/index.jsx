@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Button, Col, Form, Input, Modal, Row, Skeleton, Typography } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { applicantFormConfig, gender } from './config';
 const { Title } = Typography;
 const { TextArea } = Input;
 const ApplicantDetails = () => {
+	const ref = useRef(null);
 	const params = useParams();
 	const [token] = usePersistedState('token');
 	const navigate = useNavigate();
@@ -34,10 +35,12 @@ const ApplicantDetails = () => {
 		navigate('/applicants');
 	};
 	const onReject = async () => {
-		console.log(reason);
-		setConfirmReject(null);
-		// await apiHandler(applicantAPI, statusSend, 'Success', setLoading, params.id, false, token);
-		// navigate('/applicants');
+		await apiHandler(applicantAPI, 'reject', 'Success', setLoading, params.id, reason).then(
+			() => {
+				setConfirmReject(null);
+			}
+		);
+		navigate('/applicants');
 	};
 	return (
 		<CustomCard>
@@ -81,13 +84,17 @@ const ApplicantDetails = () => {
 				onCancel={() => setConfirmReject(null)}
 				title='Reason to reject this applicant'
 				centered
+				okButtonProps={{
+					disabled: reason === undefined || reason === '' || loading,
+					loading: loading,
+				}}
 			>
 				<TextArea
 					rows={4}
-					placeholder='Reason ...'
-					maxLength={6}
+					ref={ref}
 					value={reason}
 					onChange={(e) => setReason(e.target.value)}
+					placeholder='Reason ...'
 				/>
 			</Modal>
 		</CustomCard>
