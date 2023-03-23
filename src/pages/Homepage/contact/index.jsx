@@ -4,6 +4,8 @@ import { Button, Col, Form, Input, notification, Row, Tag } from 'antd';
 
 import FacebookIcon from '../../../assets/homepage/facebook-logo.png';
 import GmailIcon from '../../../assets/homepage/gmail-logo.png';
+import toast from '../../../components/Toast';
+import contactAPI from '../../../utils/Apis/contactAPI';
 import themeConfig from '../../../utils/Theme';
 import InstagramIcon from './../../../assets/homepage/instagram-logo.png';
 import TwitterIcon from './../../../assets/homepage/twitter-logo.png';
@@ -41,8 +43,13 @@ export default function Contact() {
 		});
 	};
 	const handleSubmit = (values) => {
-		openNotificationWithIcon(values.name);
-		form.resetFields();
+		contactAPI
+			.send(values)
+			.then(() => {
+				form.resetFields();
+				openNotificationWithIcon(values.name);
+			})
+			.catch(() => toast('Something error please try again!', 'error'));
 	};
 
 	return (
