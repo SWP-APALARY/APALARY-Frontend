@@ -15,7 +15,12 @@ import useSearch from '../../utils/hooks/useSearch';
 import CreateEmployee from './Create';
 import CustomTable from './Detail/customTable';
 
-import { DeleteTwoTone, ExclamationCircleTwoTone } from '@ant-design/icons';
+import {
+	DeleteTwoTone,
+	ExclamationCircleTwoTone,
+	InfoCircleTwoTone,
+	PlusCircleTwoTone,
+} from '@ant-design/icons';
 
 const { Column } = Table;
 const { confirm } = Modal;
@@ -27,6 +32,7 @@ export default function ListEmployee() {
 	const [searchText, searchRef, onSearchChange] = useSearch();
 	const [loading, setLoading] = useState(false);
 	const [isCreate, setIsCreate] = useState(false);
+	const [isActive, setIsActive] = useState(true);
 	const [tableParams, setTableParams] = useState({
 		pagination: {
 			current: 1,
@@ -56,6 +62,18 @@ export default function ListEmployee() {
 			})
 			.catch(() => toast('Something wrong please try again!', 'error'));
 	};
+	const handleRecover = async (id) => {
+		employeeAPI
+			.recoverById(id)
+			.then(() => {
+				const tmpData = data.filter((item) => item.id !== id);
+				setData(tmpData);
+				setFilteredData(tmpData);
+				toast('Re-add employee successfully!', 'success');
+			})
+			.catch(() => toast('Something wrong please try again!', 'error'));
+	};
+
 	const showDeleteConfirm = (id) => {
 		confirm({
 			title: 'Are you sure this employee has quit?',
@@ -72,11 +90,29 @@ export default function ListEmployee() {
 			onOk() {
 				handleDelete(id);
 			},
-			onCancel() {
-				setIsCreate(false);
-			},
+			onCancel() {},
 		});
 	};
+	const showRecoverConfirm = (id) => {
+		confirm({
+			title: 'Are you sure to re-add this employee?',
+			icon: <InfoCircleTwoTone twoToneColor='#9DC08B' />,
+			content: 'This action make sure that this employee change status to active!',
+			okText: 'OK',
+			okType: 'primary',
+			cancelText: 'Cancel',
+			closable: true,
+			centered: true,
+			bodyStyle: {
+				marginTop: '15px',
+			},
+			onOk() {
+				handleRecover(id);
+			},
+			onCancel() {},
+		});
+	};
+
 	const handleAdd = () => {
 		setIsCreate(true);
 	};
@@ -96,6 +132,7 @@ export default function ListEmployee() {
 	};
 
 	const getData = async (status) => {
+		setIsActive(status);
 		await setLoading(true);
 		if (status) {
 			await employeeAPI
@@ -167,9 +204,21 @@ export default function ListEmployee() {
 									>
 										Detail
 									</Link>
-									<Link onClick={() => showDeleteConfirm(record.id)}>
-										<DeleteTwoTone twoToneColor='red' />
-									</Link>
+									{isActive ? (
+										<Link onClick={() => showDeleteConfirm(record.id)}>
+											<DeleteTwoTone
+												twoToneColor='red'
+												style={{ fontSize: '18px' }}
+											/>
+										</Link>
+									) : (
+										<Link onClick={() => showRecoverConfirm(record.id)}>
+											<PlusCircleTwoTone
+												twoToneColor='#9DC08B'
+												style={{ fontSize: '18px' }}
+											/>
+										</Link>
+									)}
 								</Space>
 							)}
 						/>
