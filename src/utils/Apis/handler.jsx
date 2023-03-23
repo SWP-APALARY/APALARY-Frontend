@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 import { notification } from 'antd';
+import { HttpStatusCode } from 'axios';
 import { Navigate, redirect, useNavigate } from 'react-router-dom';
 
 import toast from '../../components/Toast';
@@ -33,6 +34,9 @@ const apiHandler = async (api, action, successMessage, setLoading, ...rest) => {
 			if (status === 401 || status === 403 || status === 500) {
 				LocalStorageUtils.clear();
 				return window.reload();
+			}
+			if (status === 400) {
+				throw new Error('400');
 			}
 			toast(error.message, 'error');
 			return null;

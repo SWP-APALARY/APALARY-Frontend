@@ -41,11 +41,12 @@ const StyledHeader = (props) => {
 				{token && token !== '' ? (
 					<Dropdown
 						menu={{
-							items: dropDownItem.filter(
-								(item) => (token && !item.isLogin) || (!token && item.isLogin)
-								//(!A  & !B) | (A & B)
-							),
-							onClick: logout,
+							items: dropDownItem.map((item) => {
+								if (item.key.includes('logout')) {
+									item.onClick = logout;
+								}
+								return item;
+							}),
 						}}
 						placement='bottomLeft'
 					>

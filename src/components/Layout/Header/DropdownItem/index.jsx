@@ -1,10 +1,22 @@
 import { Space, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 
+import { routeKey } from '../../ManagerItems';
+
 const { Text } = Typography;
 
 const items = [
-	// todo: Create logout function here
+	{
+		key: '/change-password',
+		isLogin: false,
+		label: (
+			<Link to={routeKey.changePassword}>
+				<Space style={{ width: '120px' }}>
+					<Text>Change Password</Text>
+				</Space>
+			</Link>
+		),
+	},
 	{
 		key: '/logout',
 		isLogin: false,
@@ -13,6 +25,7 @@ const items = [
 				<Text>Logout</Text>
 			</Space>
 		),
+		onClick: () => {},
 	},
 ];
 
