@@ -23,6 +23,14 @@ const employeeAPI = {
 		const endpoint = '/employee/all';
 		return await get(endpoint, {}, { Authorization: token }, {});
 	},
+	getAllActive: async () => {
+		const endpoint = '/employee/all/active';
+		return await get(endpoint, {}, { Authorization: token }, {});
+	},
+	getAllInactive: async () => {
+		const endpoint = '/employee/all/inactive';
+		return await get(endpoint, {}, { Authorization: token }, {});
+	},
 	deleteById: async (id) => {
 		const endpoint = `/employee/${id}`;
 		return await del(endpoint, {}, { Authorization: token }, {});
