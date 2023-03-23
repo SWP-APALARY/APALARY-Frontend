@@ -1,4 +1,4 @@
-import { Table, Row, Col, Button, Tabs, Space } from 'antd';
+import { Table, Row, Col, Button, Tabs, Space, Switch } from 'antd';
 import { Link } from 'react-router-dom';
 
 import Box from '../../../components/Box';
@@ -14,6 +14,7 @@ export const CustomTable = ({
 	onSearch,
 	activeKey,
 	onTabChange,
+	onStatusChange,
 	children,
 	...rest
 }) => {
@@ -30,6 +31,18 @@ export const CustomTable = ({
 									onChange={onTabChange}
 									items={tabStatusConfig.map((item) => item)}
 								/>
+							)}
+						</Col>
+						<Col>
+							{onStatusChange && (
+								<Space direction='vertical' style={{ marginRight: '1rem' }}>
+									<Switch
+										checkedChildren='ACTIVE'
+										unCheckedChildren='INACTIVE'
+										defaultChecked
+										onChange={onStatusChange}
+									/>
+								</Space>
 							)}
 						</Col>
 						<Col>
