@@ -94,7 +94,7 @@ export const tabConfigWithAPIStatus = [
 	},
 	{
 		key: 'processing-r2',
-		label: 'Waiting for CEO',
+		label: 'Waiting for Head Manager',
 	},
 	{
 		key: 'active',

@@ -58,7 +58,7 @@ export default function Career() {
 						title='Base Salary'
 						dataIndex='baseSalary'
 						key='baseSalary'
-						width={80}
+						width={150}
 						style={{ textAlign: 'center' }}
 					/>
 					<Column

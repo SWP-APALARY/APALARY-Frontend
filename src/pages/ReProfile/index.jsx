@@ -31,7 +31,7 @@ const FormDisabledDemo = () => {
 		setComponentDisabled(disabled);
 	};
 	const onFinish = (values) => {
-		toast('Success:', values);
+		toast(values, 'success');
 	};
 	const onFinishFailed = (errorInfo) => {
 		toast(errorInfo, 'error');
@@ -47,8 +47,8 @@ const FormDisabledDemo = () => {
 				identifyNumber: text.identifyNumber,
 				email: text.email,
 			})
-			.then(() => toast('success'))
-			.catch((e) => toast('error', e));
+			.then(() => toast('Sucess', 'success'))
+			.catch((e) => toast('Fail to update data', 'error'));
 	};
 
 	useEffect(() => {

@@ -18,7 +18,6 @@ const Review = () => {
 	const date = new Date();
 	const [month, setMoth] = useState(date.getMonth() + 1);
 	const [index, setIndex] = useState(0);
-	console.log(month);
 	const [text, setText] = useState([
 		{
 			id: 0,

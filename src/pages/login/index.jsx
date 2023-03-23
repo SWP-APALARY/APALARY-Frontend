@@ -39,6 +39,7 @@ export default function Login() {
 				setLoginError(false);
 				LocalStorageUtils.setItem('token', response.data.token);
 				LocalStorageUtils.setItem('role', response.data.role);
+				LocalStorageUtils.setItem('avatar', response.data.avatar);
 				// to reload page, using navigate(0)
 				navigate(0);
 			})

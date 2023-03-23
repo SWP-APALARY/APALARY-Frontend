@@ -14,6 +14,8 @@ import usePersistedState from '../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../utils/hooks/useSearch';
 import CustomCTable from './Table';
 
+import { DeleteTwoTone } from '@ant-design/icons';
+
 const { Column } = Table;
 const Contracts = () => {
 	const [loading, setLoading] = useState(false);
@@ -95,7 +97,9 @@ const Contracts = () => {
 							<Space size='middle'>
 								<Link to={`/contracts/${record.id}`}>View</Link>
 								{record.status !== 'INACTIVE' && (
-									<Link onClick={() => handleDelete(record.id)}>Delete</Link>
+									<Link onClick={() => handleDelete(record.id)}>
+										<DeleteTwoTone twoToneColor='red' />
+									</Link>
 								)}
 							</Space>
 						)}

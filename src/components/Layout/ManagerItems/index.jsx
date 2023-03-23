@@ -31,6 +31,7 @@ export const routeKey = {
 	contractsCreate: '/contracts/create',
 	contract: '/contract',
 	salary: '/salary',
+	salaryDetail: '/salary/:id',
 	employeesSalaries: '/employees/salaries',
 	employeesSalariesDetail: '/employees/salaries/:id',
 	applications: '/application',

@@ -72,8 +72,8 @@ export default function ListEmployee() {
 			onOk() {
 				handleDelete(id);
 			},
-			onCancel(err) {
-				console.log(err);
+			onCancel() {
+				setIsCreate(false);
 			},
 		});
 	};

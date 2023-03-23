@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 import { Card, Col, Row, Layout } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import Box from '../../components/Box/index.jsx';
 import CustomCard from '../../components/Card/index.jsx';
+import { routeKey } from '../../components/Layout/ManagerItems/index.jsx';
 import contractAPI from '../../utils/Apis/contractAPI/index.js';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
 import apiHandler from '../../utils/Apis/handler.jsx';
@@ -23,7 +24,6 @@ const emSalary = () => {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const date = new Date();
-	const month = date.getMonth();
 	const [tableParams, setTableParams] = useState({
 		pagination: {
 			current: 1,
@@ -63,7 +63,6 @@ const emSalary = () => {
 
 			const resSa = await apiHandler(salaryAPI, 'get', '', setLoading, null);
 			setTextSalary(resSa || []);
-			console.log(resSa);
 		};
 		fetch();
 	}, []);
@@ -86,6 +85,11 @@ const emSalary = () => {
 						/>
 					);
 				})}
+				<Column
+					render={(text, record) => (
+						<Link to={`${routeKey.salary}/${record.id}`}>Detail</Link>
+					)}
+				></Column>
 			</CustomSTable>
 		</CustomCard>
 	);
