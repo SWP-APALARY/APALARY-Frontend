@@ -58,9 +58,9 @@ export default function ListEmployee() {
 	};
 	const showDeleteConfirm = (id) => {
 		confirm({
-			title: 'Are you sure delete this employee?',
+			title: 'Are you sure this employee has quit?',
 			icon: <ExclamationCircleTwoTone twoToneColor='red' />,
-			content: 'This action make sure that this employee will be remove!',
+			content: 'This action make sure that this employee change status to inactive!',
 			okText: 'OK',
 			okType: 'danger',
 			cancelText: 'Cancel',
@@ -95,20 +95,31 @@ export default function ListEmployee() {
 			});
 	};
 
-	// Fetching data from employeeApi
-	useEffect(() => {
-		const getData = async () => {
-			await setLoading(true);
+	const getData = async (status) => {
+		await setLoading(true);
+		if (status) {
 			await employeeAPI
-				.getAll()
+				.getAllActive()
 				.then((res) => {
 					setData(res.data);
 					setFilteredData(res.data);
 				})
 				.catch((err) => console.log(err));
-			setLoading(false);
-		};
-		getData();
+		} else {
+			await employeeAPI
+				.getAllInactive()
+				.then((res) => {
+					setData(res.data);
+					setFilteredData(res.data);
+				})
+				.catch((err) => console.log(err));
+		}
+		setLoading(false);
+	};
+
+	// Fetching data from employeeApi
+	useEffect(() => {
+		getData(true);
 	}, []);
 	useEffect(() => {
 		const tmp = data.filter((item) =>
@@ -124,6 +135,7 @@ export default function ListEmployee() {
 					rowKey={(record) => record.id + 'employee'}
 					dataSource={filteredData}
 					loading={loading}
+					onStatusChange={getData}
 					pagination={{
 						...paginationConfig,
 					}}
