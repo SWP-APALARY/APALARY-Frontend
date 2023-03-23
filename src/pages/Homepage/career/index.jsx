@@ -6,6 +6,7 @@ import { Col, Row, Space, Table, Modal } from 'antd';
 import careerImg from '../../../assets/homepage/hiring.png';
 import jobOfferingApi from '../../../utils/Apis/jobOffering';
 import { getValueFromBlock } from '../../../utils/DraftjsHelper';
+import moneyConverter from '../../../utils/moneyConverter';
 import ApplyJob from '../../ApplyJob/index';
 import { buttonStyle, componentStyle, imgStyle, titleStyle } from './styles';
 
@@ -19,7 +20,7 @@ export default function Career() {
 			const realData = jobOffering.data.map((todo, index) => ({
 				...todo,
 				key: index,
-				baseSalary: todo.baseSalary + ' VNĐ',
+				baseSalary: todo.baseSalary,
 				description: getValueFromBlock(JSON.parse(todo.description)),
 			}));
 			setList(realData);
@@ -60,6 +61,9 @@ export default function Career() {
 						key='baseSalary'
 						width={150}
 						style={{ textAlign: 'center' }}
+						render={(text) => (
+							<span style={{ color: 'green' }}>{moneyConverter(text)} VNĐ</span>
+						)}
 					/>
 					<Column
 						title='Action'
