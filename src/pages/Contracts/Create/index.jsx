@@ -4,6 +4,7 @@ import {
 	Button,
 	DatePicker,
 	Form,
+	Image,
 	Input,
 	InputNumber,
 	Select,
@@ -46,7 +47,7 @@ const ContractCreation = () => {
 	const [startDate, setStartDate] = React.useState();
 	const [endDate, setEndDate] = React.useState();
 	const [contractType, setContractType] = React.useState([]);
-	const [listDepartment, setListDepartment] = useState([]);
+	const [message, setMessage] = useState();
 	const onSubmit = async () => {
 		if (fileError) return;
 		if (fileBase64 === '') {
