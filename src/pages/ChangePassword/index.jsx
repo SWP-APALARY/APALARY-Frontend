@@ -5,7 +5,7 @@ import { Button, Form, Input, Typography } from 'antd';
 import Box from '../../components/Box';
 import CustomCard from '../../components/Card';
 import toast from '../../components/Toast';
-import { authAPI } from '../../utils/Apis/authAPI';
+import authApi from '../../utils/Apis/auth';
 import apiHandler from '../../utils/Apis/handler';
 import usePersistedState from '../../utils/LocalStorage/usePersistedState';
 
@@ -15,17 +15,21 @@ const ChangePassword = () => {
 	const [token, setToken] = usePersistedState('token');
 	const onFinish = async (value) => {
 		await apiHandler(
-			authAPI,
+			authApi,
 			'changePassword',
 			'Change password success',
 			setLoading,
-			value.oldPassword,
+			value.currentPassword,
 			value.newPassword
 		)
 			.then((res) => {
 				setToken(res.token);
 			})
-			.catch(() => {
+			.catch((err) => {
+				if (err.message === '400') {
+					toast('Wrong password', 'error');
+					return;
+				}
 				toast('Change password failed', 'error');
 			});
 	};
