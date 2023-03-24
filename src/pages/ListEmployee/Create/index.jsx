@@ -33,6 +33,7 @@ export default function CreateEmployee({ onFinish }) {
 
 	const fetch = async () => {
 		setLoading(true);
+		setFileBase64('');
 		await departmentAPI
 			.getAll()
 			.then(async (res) => await setListDepartment(res.data))

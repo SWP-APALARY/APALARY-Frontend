@@ -124,6 +124,7 @@ export default function ListEmployee() {
 				toast('Create successfully', 'success');
 				form.resetFields();
 				fetch();
+				getData(true);
 			})
 			.catch((err) => {
 				setMessage(err.response.data);
