@@ -8,6 +8,7 @@ import Box from '../../../components/Box';
 import CustomCard from '../../../components/Card';
 import jobOfferingApi from '../../../utils/Apis/jobOffering';
 import { convertToEditor } from '../../../utils/DraftjsHelper';
+import moneyConverter from '../../../utils/moneyConverter';
 import ApplyJob from '../../ApplyJob/index';
 
 const { Title, Text } = Typography;
@@ -60,10 +61,10 @@ const JobOfferingDetail = () => {
 							<Title>{data.title}</Title>
 						</Box>
 						<Box direction='vertical'>
-							<Text level={5} type='danger'>
-								<b>Upto:</b> {data.baseSalary} VNĐ
-							</Text>
 							<Text level={5} type='success'>
+								<b>Upto:</b> {moneyConverter(data.baseSalary)} VNĐ
+							</Text>
+							<Text level={5}>
 								<b>Max Employees:</b> {data.maxEmployee}
 							</Text>
 							<Text level={5}>

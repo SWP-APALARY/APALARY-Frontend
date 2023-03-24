@@ -9,6 +9,7 @@ import CustomCard from '../../../components/Card';
 import apiHandler from '../../../utils/Apis/handler';
 import jobOfferingApi from '../../../utils/Apis/jobOffering';
 import { convertToEditor } from '../../../utils/DraftjsHelper';
+import moneyConverter from '../../../utils/moneyConverter';
 import { initData } from './initData';
 
 const { Title, Text } = Typography;
@@ -41,10 +42,10 @@ const PostDetail = () => {
 						<Title>{data.title}</Title>
 					</Box>
 					<Box direction='vertical'>
-						<Title level={5} type='danger'>
-							Up to: {data.baseSalary}
+						<Title level={5} type='success'>
+							Up to: {moneyConverter(data.baseSalary)} VNĐ
 						</Title>
-						<Text type='success'>Max Employees: {data.maxEmployee}</Text>
+						<Text>Max Employees: {data.maxEmployee}</Text>
 						<Text>Department: {data.departmentName}</Text>
 						<Title level={4} strong>
 							Detail:
