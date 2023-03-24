@@ -58,7 +58,7 @@ export default function ListEmployee() {
 				const tmpData = data.filter((item) => item.id !== id);
 				setData(tmpData);
 				setFilteredData(tmpData);
-				toast('Delete employee successfully!', 'success');
+				toast('Change status employee successfully!', 'success');
 			})
 			.catch(() => toast('Something wrong please try again!', 'error'));
 	};
