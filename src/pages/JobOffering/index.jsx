@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 
-import { Space, Table } from 'antd';
+import { Modal, Space, Table } from 'antd';
 import { Link } from 'react-router-dom';
 
 import Box from '../../components/Box';
@@ -15,7 +15,10 @@ import jobOfferingApi from '../../utils/Apis/jobOffering';
 import usePersistedState from '../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../utils/hooks/useSearch';
 
+import { DeleteTwoTone, ExclamationCircleTwoTone } from '@ant-design/icons';
+
 const { Column } = Table;
+const { confirm } = Modal;
 const JobOffering = () => {
 	const [data, setData] = useState([]);
 	const [filteredData, setFilteredData] = useState([]);
@@ -81,6 +84,25 @@ const JobOffering = () => {
 		};
 		fetch();
 	}, []);
+	const showDeleteConfirm = (id) => {
+		confirm({
+			title: 'Are you sure want to delete post?',
+			icon: <ExclamationCircleTwoTone twoToneColor='red' />,
+			content: 'This action make sure that this post will be deleted!',
+			okText: 'OK',
+			okType: 'danger',
+			cancelText: 'Cancel',
+			closable: true,
+			centered: true,
+			bodyStyle: {
+				marginTop: '15px',
+			},
+			onOk() {
+				handleDelete(id);
+			},
+			onCancel() {},
+		});
+	};
 	useEffect(() => {
 		const tmp = data.filter((item) =>
 			item.title.toLowerCase().includes(searchText.toLowerCase())
@@ -118,7 +140,12 @@ const JobOffering = () => {
 							render={(text, record) => (
 								<Space size='middle'>
 									<Link to={`${routeKey.posts}/${record.id}/edit`}>Edit</Link>
-									<Link onClick={() => handleDelete(record.id)}>Delete</Link>
+									<Link onClick={() => showDeleteConfirm(record.id)}>
+										<DeleteTwoTone
+											style={{ fontSize: '18px' }}
+											twoToneColor='red'
+										/>
+									</Link>
 								</Space>
 							)}
 						/>
