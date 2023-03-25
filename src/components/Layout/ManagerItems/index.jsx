@@ -75,7 +75,6 @@ export const getMenuItem = (label, key, icon, children, roles) => {
 	};
 };
 const applicationItems = [
-	getMenuItem('Salary increasing', routeKey.applicationSalaryIncreasing),
 	getMenuItem('Day leave', routeKey.applicationDayLeave),
 	getMenuItem('Recruitment', routeKey.applicationRecruitment),
 	getMenuItem('Create', routeKey.applicationCreating),
