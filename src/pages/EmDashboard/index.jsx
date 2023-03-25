@@ -100,7 +100,7 @@ const EmDashboard = () => {
 	}, []);
 
 	return (
-		<Box direction='vertical'>
+		<Box direction='vertical' loading={loading}>
 			<Content
 				style={{
 					background: '#F0F0F0',
@@ -111,7 +111,8 @@ const EmDashboard = () => {
 					width={910}
 					height={250}
 					src='https://www.umassalumni.com/s/1640/images/gid2/editor/alumni_association/campus_partners/architecture/dbexterior.jpg'
-				></Image>
+					loading={loading}
+				/>
 			</Content>
 			<Footer
 				style={{
@@ -230,9 +231,9 @@ const EmDashboard = () => {
 					</Row>
 				)}
 				{role.includes('HR_MANAGER') && (
-					<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+					<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }} loading={loading}>
 						<Content>
-							<Card>
+							<Card loading={loading}>
 								<h3>Salary</h3>
 								<SalaryChart />
 							</Card>
