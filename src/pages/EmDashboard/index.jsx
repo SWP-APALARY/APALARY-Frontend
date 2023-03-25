@@ -62,13 +62,73 @@ const EmDashboard = () => {
 			totalBonus: '',
 		},
 	]);
-
-	const SalaryChart = () => {
+	const TotalChart = () => {
 		const config = {
 			data: textSalary,
 			padding: 'auto',
 			xField: 'month',
 			yField: 'total',
+			yAxis: {
+				label: {
+					formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+				},
+			},
+		};
+		return <Line {...config} />;
+	};
+	const TaxChart = () => {
+		const config = {
+			data: textSalary,
+			padding: 'auto',
+			xField: 'month',
+			yField: 'totalTax',
+			yAxis: {
+				label: {
+					formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+				},
+			},
+		};
+		return <Line {...config} />;
+	};
+	const AssuranceChart = () => {
+		const config = {
+			data: textSalary,
+			padding: 'auto',
+			xField: 'month',
+			yField: 'totalAssurance',
+			yAxis: {
+				label: {
+					formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+				},
+			},
+		};
+		return <Line {...config} />;
+	};
+	const BonusChart = () => {
+		const config = {
+			data: textSalary,
+			padding: 'auto',
+			xField: 'month',
+			yField: 'totalBonus',
+			yAxis: {
+				label: {
+					formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+				},
+			},
+		};
+		return <Line {...config} />;
+	};
+	const PenChart = () => {
+		const config = {
+			data: textSalary,
+			padding: 'auto',
+			xField: 'month',
+			yField: 'totalPenalty',
+			yAxis: {
+				label: {
+					formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+				},
+			},
 		};
 		return <Line {...config} />;
 	};
@@ -86,8 +146,10 @@ const EmDashboard = () => {
 			const newData = resSa.map((todo) => {
 				return { ...todo, month: '2023-' + todo.month };
 			});
+			// const newData = resSa.map((todo) => {
+			// 	return { ...todo, month: '2023-' + todo.month, total: moneyConverter(todo.total) };
+			// });
 			setTextSalary(newData);
-			console.log(newData);
 		};
 		fetch();
 		employeeAPI
@@ -102,6 +164,7 @@ const EmDashboard = () => {
 	return (
 		<Box direction='vertical' loading={loading}>
 			<Content
+				loading={loading}
 				style={{
 					background: '#F0F0F0',
 					maxWidth: 1200,
@@ -115,6 +178,7 @@ const EmDashboard = () => {
 				/>
 			</Content>
 			<Footer
+				loading={loading}
 				style={{
 					background: '#F0F0F0',
 					width: '100%',
@@ -231,14 +295,64 @@ const EmDashboard = () => {
 					</Row>
 				)}
 				{role.includes('HR_MANAGER') && (
-					<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }} loading={loading}>
-						<Content>
-							<Card loading={loading}>
-								<h3>Salary</h3>
-								<SalaryChart />
-							</Card>
-						</Content>
-					</Layout>
+					<Col>
+						<Row gutter={20}>
+							<Col span={12}>
+								<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+									<Content loading={loading}>
+										<Card loading={loading}>
+											<h3>Total expenditure</h3>
+											<TotalChart />
+										</Card>
+									</Content>
+								</Layout>
+							</Col>
+							<Col span={12}>
+								<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+									<Content loading={loading}>
+										<Card loading={loading}>
+											<h3>Total Tax</h3>
+											<TaxChart />
+										</Card>
+									</Content>
+								</Layout>
+							</Col>
+						</Row>
+						{
+							// <Row gutter={20}>
+							// 	<Col span={8}>
+							// 		<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+							// 			<Content loading={loading}>
+							// 				<Card loading={loading}>
+							// 					<h3>Total Assurance</h3>
+							// 					<AssuranceChart />
+							// 				</Card>
+							// 			</Content>
+							// 		</Layout>
+							// 	</Col>
+							// 	<Col span={8}>
+							// 		<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+							// 			<Content loading={loading}>
+							// 				<Card loading={loading}>
+							// 					<h3>Total Bonus</h3>
+							// 					<BonusChart />
+							// 				</Card>
+							// 			</Content>
+							// 		</Layout>
+							// 	</Col>
+							// 	<Col span={8}>
+							// 		<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+							// 			<Content loading={loading}>
+							// 				<Card loading={loading}>
+							// 					<h3>Total Penalty</h3>
+							// 					<PenChart />
+							// 				</Card>
+							// 			</Content>
+							// 		</Layout>
+							// 	</Col>
+							// </Row>
+						}
+					</Col>
 				)}
 			</Footer>
 		</Box>
