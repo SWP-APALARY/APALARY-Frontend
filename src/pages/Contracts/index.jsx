@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 
-import { Space, Table } from 'antd';
+import { Modal, Space, Table } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Box from '../../components/Box';
 import CustomCard from '../../components/Card';
+import toast from '../../components/Toast';
 import { paginationConfig, contractColumns } from '../../config/ColumnConfig';
 import { tabContractStatusConfig } from '../../config/TabsConfig';
 import contractsAPI from '../../utils/Apis/contractsAPI';
@@ -14,34 +15,63 @@ import usePersistedState from '../../utils/LocalStorage/usePersistedState';
 import useSearch from '../../utils/hooks/useSearch';
 import CustomCTable from './Table';
 
-import { DeleteTwoTone } from '@ant-design/icons';
+import { DeleteTwoTone, ExclamationCircleTwoTone } from '@ant-design/icons';
 
 const { Column } = Table;
+const { confirm } = Modal;
 const Contracts = () => {
 	const [loading, setLoading] = useState(false);
 	const [filteredData, setFilteredData] = useState([]);
 	const navigate = useNavigate();
+	const [role] = usePersistedState('role');
 	const [data, setData] = useState([]);
 	const [search, searchRef, onSearchChange] = useSearch();
 	const [activeKey, setActiveKey] = useState(tabContractStatusConfig[0].key);
+	const [isCreate, setIsCreate] = useState(false);
 	const [token] = usePersistedState('token');
 	const onTabChange = async (key) => {
 		setActiveKey(key);
 		const res = await apiHandler(contractsAPI, 'get' + key, '', setLoading, token);
 		setFilteredData(res || []);
 	};
+	// const handleDelete = async (id) => {
+	// 	const tmpData = data.filter((item) => item.id !== id);
+	// 	await apiHandler(contractsAPI, 'delete', 'Success Deleted Contract', setLoading, id, token)
+	// 		.then(() => {
+	// 			setData(tmpData);
+	// 			setFilteredData(tmpData);
+	// 		})
+	// };
 	const handleDelete = async (id) => {
-		const tmpData = data.filter((item) => item.id !== id);
-		await apiHandler(
-			contractsAPI,
-			'delete',
-			'Success Deleted Post',
-			setLoading,
-			id,
-			token
-		).then(() => {
-			setData(tmpData);
-			setFilteredData(tmpData);
+		contractsAPI
+			.delete(id)
+			.then(() => {
+				const tmpData = data.filter((item) => item.id !== id);
+				setData(tmpData);
+				setFilteredData(tmpData);
+				toast('Delete employee successfully!', 'success');
+			})
+			.catch(() => toast('Something wrong please try again!', 'error'));
+	};
+	const showDeleteConfirm = (id) => {
+		confirm({
+			title: 'Are you sure delete this contract?',
+			icon: <ExclamationCircleTwoTone twoToneColor='red' />,
+			content: 'This action make sure that this contract will be remove!',
+			okText: 'OK',
+			okType: 'danger',
+			cancelText: 'Cancel',
+			closable: true,
+			centered: true,
+			bodyStyle: {
+				marginTop: '15px',
+			},
+			onOk() {
+				handleDelete(id);
+			},
+			onCancel() {
+				setIsCreate(false);
+			},
 		});
 	};
 
@@ -72,7 +102,7 @@ const Contracts = () => {
 					activeKey={activeKey}
 					rowKey={(record) => record.id + 'contracts'}
 					onSearch={onSearchChange}
-					addNewButton={true}
+					addNewButton={role.includes('HR_EMPLOYEE')}
 					loading={loading}
 					pagination={{
 						...paginationConfig,
@@ -96,8 +126,9 @@ const Contracts = () => {
 						render={(text, record) => (
 							<Space size='middle'>
 								<Link to={`/contracts/${record.id}`}>View</Link>
-								{record.status !== 'INACTIVE' && (
-									<Link onClick={() => handleDelete(record.id)}>
+
+								{record.status !== 'INACTIVE' && role.includes('HR_EMPLOYEE') && (
+									<Link onClick={() => showDeleteConfirm(record.id)}>
 										<DeleteTwoTone twoToneColor='red' />
 									</Link>
 								)}

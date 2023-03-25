@@ -20,5 +20,9 @@ const salaryAPI = {
 		const endpoint = '/salary/self';
 		return await get(endpoint, {}, { Authorization: token }, {});
 	},
+	getTotal: async () => {
+		const endpoint = `/salary/detail?year=2023`;
+		return await get(endpoint, {}, { Authorization: token }, {});
+	},
 };
 export default salaryAPI;

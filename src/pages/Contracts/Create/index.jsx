@@ -4,6 +4,7 @@ import {
 	Button,
 	DatePicker,
 	Form,
+	Image,
 	Input,
 	InputNumber,
 	Select,
@@ -21,6 +22,7 @@ import CustomEditor from '../../../components/Editor';
 import toast from '../../../components/Toast';
 import contractsAPI from '../../../utils/Apis/contractsAPI';
 import { departmentAPI } from '../../../utils/Apis/departmentAPI';
+import employeeAPI from '../../../utils/Apis/employeeAPI';
 import apiHandler from '../../../utils/Apis/handler';
 import { convertToEditor } from '../../../utils/DraftjsHelper';
 import usePersistedState from '../../../utils/LocalStorage/usePersistedState';
@@ -46,25 +48,31 @@ const ContractCreation = () => {
 	const [startDate, setStartDate] = React.useState();
 	const [endDate, setEndDate] = React.useState();
 	const [contractType, setContractType] = React.useState([]);
-	const [listDepartment, setListDepartment] = useState([]);
+	const [contractList, setContractList] = React.useState([]);
+	const [message, setMessage] = useState();
 	const onSubmit = async () => {
 		if (fileError) return;
 		if (fileBase64 === '') {
 			setFileError('Please upload contract file!');
 		} else {
 			const formData = form.getFieldsValue();
-			// console.log({ ...formData, contractImage: fileBase64 });
-			// console.log('date signed', dateSigned, startDate, endDate);
-			// formData = {a: 1, b: 2}
-			// { ...formData, contractImage: fileBase64 }  === {a: 1, b: 2, contractImage: fileBase64}
-			// fileBase64 đây là file value
-			await apiHandler(contractsAPI, 'post', 'success', setLoading, {
-				...formData,
-				contractImage: fileBase64,
-			}).then(() => {
-				form.resetFields();
-			});
-			navigate(-1);
+			if (formData.employeeId == 'undefined') {
+				await apiHandler(contractsAPI, 'post', 'success', setLoading, {
+					...formData,
+					contractImage: fileBase64,
+				}).then(() => {
+					form.resetFields();
+				});
+				navigate(-1);
+			} else {
+				await apiHandler(contractsAPI, 'resign', 'success', setLoading, {
+					...formData,
+					contractImage: fileBase64,
+				}).then(() => {
+					form.resetFields();
+				});
+				navigate(-1);
+			}
 		}
 	};
 
@@ -101,6 +109,8 @@ const ContractCreation = () => {
 		const fetch = async () => {
 			const resCon = await apiHandler(contractsAPI, 'getContractType', '', setLoading, null);
 			setContractType(resCon || []);
+			const res = await apiHandler(employeeAPI, 'getAllActive', '', setLoading, null);
+			setContractList(res || []);
 		};
 		fetch();
 	}, []);
@@ -173,7 +183,23 @@ const ContractCreation = () => {
 									</Form.Item>
 								);
 							})}
-
+							<Form.Item
+								label='Employee Name'
+								name='employeeId'
+								style={{
+									display: 'inline-block',
+									width: 'calc(50% - 8px)',
+									marginLeft: 5,
+								}}
+							>
+								<Select placeholder='Select'>
+									{contractList.map((todo) => (
+										<Option value={todo.id} key={todo.id}>
+											{todo.name}
+										</Option>
+									))}
+								</Select>
+							</Form.Item>
 							<Form.Item
 								label='Contract'
 								name='contractImage'

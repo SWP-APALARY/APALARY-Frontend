@@ -52,5 +52,9 @@ const contractsAPI = {
 			}
 		);
 	},
+	resign: async ({ employeeId, ...body }) => {
+		const endpoint = `/contract/resign?employeeId=${employeeId}`;
+		return await post(endpoint, body, { Authorization: token }, {});
+	},
 };
 export default contractsAPI;

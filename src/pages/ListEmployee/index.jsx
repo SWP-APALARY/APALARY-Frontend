@@ -31,6 +31,7 @@ export default function ListEmployee() {
 	const [role] = usePersistedState('role');
 	const [searchText, searchRef, onSearchChange] = useSearch();
 	const [loading, setLoading] = useState(false);
+	const [modal, setModal] = useState('0');
 	const [isCreate, setIsCreate] = useState(false);
 	const [isActive, setIsActive] = useState(true);
 	const [tableParams, setTableParams] = useState({
@@ -176,7 +177,7 @@ export default function ListEmployee() {
 					pagination={{
 						...paginationConfig,
 					}}
-					addNewButton={role.includes('HR') ? handleAdd : null}
+					addNewButton={role.includes('HR_EMPLOYEE') ? handleAdd : null}
 					onSearch={onSearchChange}
 					onChange={handleTableChange}
 				>
