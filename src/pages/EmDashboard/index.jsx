@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { Layout, Card, Image, Row, Col, Rate, Form, Button, Space, Typography } from 'antd';
 import { FaMoneyBillWave } from 'react-icons/fa';
-import { VscFeedback } from 'react-icons/vsc';
 import { NavLink, Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,11 +12,8 @@ import apiHandler from '../../utils/Apis/handler';
 import salaryAPI from '../../utils/Apis/salaryAPI/index.js';
 import usePersistedState from '../../utils/LocalStorage/usePersistedState.jsx';
 import LocalStorageUtils from '../../utils/LocalStorage/utils.js';
-import { DataTest } from './data.js';
 
-// import data from './data.js';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
-// import ProData from '../Profile/data.js';
 import { FileTextFilled, IdcardFilled, ProfileFilled, MailFilled } from '@ant-design/icons';
 import { Line } from '@ant-design/plots';
 import { Column } from '@ant-design/plots';
