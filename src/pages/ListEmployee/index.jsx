@@ -140,7 +140,7 @@ export default function ListEmployee() {
 					pagination={{
 						...paginationConfig,
 					}}
-					addNewButton={role.includes('HR') ? handleAdd : null}
+					addNewButton={role.includes('HR_EMPLOYEE') ? handleAdd : null}
 					onSearch={onSearchChange}
 					onChange={handleTableChange}
 				>

@@ -13,10 +13,9 @@ import apiHandler from '../../utils/Apis/handler';
 import salaryAPI from '../../utils/Apis/salaryAPI/index.js';
 import usePersistedState from '../../utils/LocalStorage/usePersistedState.jsx';
 import LocalStorageUtils from '../../utils/LocalStorage/utils.js';
-import EmSalary from '../EmSalary/Salary';
-import data from '../EmSalary/data.js';
-import FeedBacks from '../Feedback/data.js';
+import { DataTest } from './data.js';
 
+// import data from './data.js';
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 // import ProData from '../Profile/data.js';
 import { FileTextFilled, IdcardFilled, ProfileFilled, MailFilled } from '@ant-design/icons';
@@ -29,7 +28,7 @@ const EmDashboard = () => {
 	const date = new Date();
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
-	const [month, setMoth] = useState(date.getMonth() + 1);
+	const [monthF, setMothF] = useState(date.getMonth() + 1);
 	const [index, setIndex] = useState(0);
 	const [text, setText] = useState([
 		{
@@ -61,58 +60,38 @@ const EmDashboard = () => {
 		{
 			month: '',
 			total: '',
+			totalAssurance: '',
+			totalTax: '',
+			totalPenalty: '',
+			totalBonus: '',
 		},
 	]);
-
-	const sumStar = () => {
-		let sum = 0;
-		textFeedback.forEach((todo) => (sum = sum + todo.star));
-		return sum / textFeedback.length;
-	};
 
 	const SalaryChart = () => {
 		const config = {
 			data: textSalary,
+			padding: 'auto',
 			xField: 'month',
 			yField: 'total',
-			label: {
-				position: 'middle',
-
-				style: {
-					fill: '#FFFFFF',
-					opacity: 0.6,
-				},
-			},
-			xAxis: {
-				label: {
-					autoHide: true,
-					autoRotate: false,
-				},
-			},
-			meta: {
-				type: {
-					alias: 'Month',
-				},
-				total: {
-					alias: 'Total',
-				},
-			},
 		};
-		return <Column {...config} />;
+		return <Line {...config} />;
 	};
 	// const { name, phone, number, username, password, gender, date } = ProData[0];
 
 	useEffect(() => {
 		const fetch = async () => {
-			const res = await apiHandler(feedbackApi, 'get', '', setLoading, month, null);
+			const res = await apiHandler(feedbackApi, 'get', '', setLoading, monthF, null);
 			setTextFeedback(res || []);
 
 			const resEm = await apiHandler(employeeAPI, 'get', '', setLoading, null);
 			setTextEmployee(resEm || []);
 
-			const resSa = await apiHandler(salaryAPI, 'get', '', setLoading, null);
-			setTextSalary(resSa || []);
-			// console.log(textSalary);
+			const resSa = await apiHandler(salaryAPI, 'getTotal', '', setLoading, null);
+			const newData = resSa.map((todo) => {
+				return { ...todo, month: '2023-' + todo.month };
+			});
+			setTextSalary(newData);
+			console.log(newData);
 		};
 		fetch();
 		employeeAPI
@@ -254,17 +233,16 @@ const EmDashboard = () => {
 						</Col>
 					</Row>
 				)}
-				<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
-					<Content>
-						<Card>
-							<h3>Salary</h3>
-							<SalaryChart />
-							<Button style={{ margin: '10px 0px' }}>
-								<NavLink to='/salary'>More</NavLink>
-							</Button>
-						</Card>
-					</Content>
-				</Layout>
+				{role.includes('HR_MANAGER') && (
+					<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+						<Content>
+							<Card>
+								<h3>Salary</h3>
+								<SalaryChart />
+							</Card>
+						</Content>
+					</Layout>
+				)}
 			</Footer>
 		</Box>
 	);

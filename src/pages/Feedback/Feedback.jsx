@@ -102,9 +102,6 @@ const Review = () => {
 					>
 						<p>{text[index].title}</p>
 						<p>{text[index].description}</p>
-						<p>
-							<Rate disabled value={text[index].star} />
-						</p>
 						<Space>
 							<Button type='primary' onClick={prevPerson}>
 								<ArrowLeftOutlined />
