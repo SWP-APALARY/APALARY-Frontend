@@ -114,24 +114,6 @@ export default function ListEmployee() {
 		});
 	};
 
-	const handleAdd = () => {
-		setIsCreate(true);
-	};
-	const onFinishForm = (values, form, fetch, setMessage) => {
-		employeeAPI
-			.createOne(values)
-			.then(() => {
-				setIsCreate(false);
-				toast('Create successfully', 'success');
-				form.resetFields();
-				fetch();
-			})
-			.catch((err) => {
-				setMessage(err.response.data);
-				toast(err.response.data, 'error');
-			});
-	};
-
 	const getData = async (status) => {
 		setIsActive(status);
 		await setLoading(true);
@@ -153,6 +135,25 @@ export default function ListEmployee() {
 				.catch((err) => console.log(err));
 		}
 		setLoading(false);
+	};
+
+	const handleAdd = () => {
+		setIsCreate(true);
+	};
+	const onFinishForm = (values, form, fetch, setMessage) => {
+		employeeAPI
+			.createOne(values)
+			.then(() => {
+				setIsCreate(false);
+				toast('Create successfully', 'success');
+				form.resetFields();
+				fetch();
+				getData(true);
+			})
+			.catch((err) => {
+				setMessage(err.response.data);
+				toast(err.response.data, 'error');
+			});
 	};
 
 	// Fetching data from employeeApi
