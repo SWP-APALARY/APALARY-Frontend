@@ -11,7 +11,7 @@ const LayoutEveryone = () => {
 			<Layout
 				className='site-layout'
 				style={{
-					height: '100vh',
+					minHeight: '100vh',
 				}}
 			>
 				<StyledHeader style={layoutHeader} isDashBoard />
