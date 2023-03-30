@@ -187,7 +187,7 @@ const EmDashboard = () => {
 			const newData = resSa.map((todo) => {
 				return {
 					...todo,
-					month: '2023-' + todo.month,
+					month: todo.month,
 				};
 			});
 			// const newData = resSa.map((todo) => {
@@ -401,7 +401,7 @@ const EmDashboard = () => {
 												}}
 											>
 												<Typography>
-													{textFeedback.description
+													{!textFeedback.description
 														? `No feedback`
 														: `${textFeedback[index]?.description}...`}
 												</Typography>
