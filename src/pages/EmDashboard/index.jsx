@@ -1,17 +1,33 @@
 import { useEffect, useState } from 'react';
 
-import { Layout, Card, Image, Row, Col, Rate, Form, Button, Space, Typography } from 'antd';
+import {
+	Layout,
+	Card,
+	Image,
+	Row,
+	Col,
+	Rate,
+	Form,
+	Button,
+	Space,
+	Typography,
+	Statistic,
+} from 'antd';
 import { FaMoneyBillWave } from 'react-icons/fa';
 import { NavLink, Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
+import AnimatedCountUp from '../../components/AnimatedCountup/index.jsx';
 import Box from '../../components/Box/index.jsx';
+import CustomCard from '../../components/Card/index.jsx';
 import employeeAPI from '../../utils/Apis/employeeAPI/index.js';
 import feedbackApi from '../../utils/Apis/feedbackAPI/index.js';
 import apiHandler from '../../utils/Apis/handler';
 import salaryAPI from '../../utils/Apis/salaryAPI/index.js';
 import usePersistedState from '../../utils/LocalStorage/usePersistedState.jsx';
 import LocalStorageUtils from '../../utils/LocalStorage/utils.js';
+import themeConfig from '../../utils/Theme/index.js';
+import moneyConverter from '../../utils/moneyConverter/index.js';
 
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { FileTextFilled, IdcardFilled, ProfileFilled, MailFilled } from '@ant-design/icons';
@@ -25,6 +41,9 @@ const EmDashboard = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [monthF, setMothF] = useState(date.getMonth() + 1);
+	const monthS = date.getMonth() + 5;
+	const yearS = date.getFullYear();
+
 	const [index, setIndex] = useState(0);
 	const [text, setText] = useState([
 		{
@@ -62,6 +81,15 @@ const EmDashboard = () => {
 			totalBonus: '',
 		},
 	]);
+	const [textISalary, setTextISalary] = useState({
+		total: '',
+		month: '',
+		bonus: '',
+		tax: '',
+		penalty: '',
+		net: '',
+	});
+
 	const TotalChart = () => {
 		const config = {
 			data: textSalary,
@@ -142,9 +170,24 @@ const EmDashboard = () => {
 			const resEm = await apiHandler(employeeAPI, 'get', '', setLoading, null);
 			setTextEmployee(resEm || []);
 
+			const resSalary = await apiHandler(
+				salaryAPI,
+				'getMonth',
+				'',
+				setLoading,
+				monthS,
+				yearS,
+				null
+			);
+			setTextISalary(resSalary || []);
+
 			const resSa = await apiHandler(salaryAPI, 'getTotal', '', setLoading, null);
 			const newData = resSa.map((todo) => {
-				return { ...todo, month: '2023-' + todo.month };
+				return {
+					...todo,
+					month: '2023-' + todo.month,
+					totalFix: moneyConverter(todo.total),
+				};
 			});
 			// const newData = resSa.map((todo) => {
 			// 	return { ...todo, month: '2023-' + todo.month, total: moneyConverter(todo.total) };
@@ -184,6 +227,100 @@ const EmDashboard = () => {
 					width: '100%',
 				}}
 			>
+				{role.includes('MANAGER') && (
+					<Col>
+						<Row gutter={20}>
+							<Col span={12}>
+								<NavLink to='/contract'>
+									<CustomCard width='100%' clickable>
+										<Statistic
+											title='Salary'
+											valueStyle={{
+												color: themeConfig.token.colorPrimary,
+											}}
+											formatter={AnimatedCountUp}
+											value={textISalary.total}
+											suffix={'VNĐ'}
+										/>
+									</CustomCard>
+								</NavLink>
+							</Col>
+
+							<Col span={12}>
+								<NavLink to='/salary'>
+									<CustomCard width='100%' clickable>
+										<Statistic
+											title='Tax'
+											valueStyle={{
+												color: themeConfig.token.colorPrimary,
+											}}
+											formatter={AnimatedCountUp}
+											value={textISalary.net}
+											suffix={'VNĐ'}
+										/>
+									</CustomCard>
+								</NavLink>
+							</Col>
+						</Row>
+						<Row gutter={20}>
+							<Col span={12}>
+								<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+									<Content loading={loading}>
+										<Card loading={loading}>
+											<h3>Total expenditure</h3>
+											<TotalChart />
+										</Card>
+									</Content>
+								</Layout>
+							</Col>
+							<Col span={12}>
+								<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+									<Content loading={loading}>
+										<Card loading={loading}>
+											<h3>Total Tax</h3>
+											<TaxChart />
+										</Card>
+									</Content>
+								</Layout>
+							</Col>
+						</Row>
+						{
+							// <Row gutter={20}>
+							// 	<Col span={8}>
+							// 		<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+							// 			<Content loading={loading}>
+							// 				<Card loading={loading}>
+							// 					<h3>Total Assurance</h3>
+							// 					<AssuranceChart />
+							// 				</Card>
+							// 			</Content>
+							// 		</Layout>
+							// 	</Col>
+							// 	<Col span={8}>
+							// 		<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+							// 			<Content loading={loading}>
+							// 				<Card loading={loading}>
+							// 					<h3>Total Bonus</h3>
+							// 					<BonusChart />
+							// 				</Card>
+							// 			</Content>
+							// 		</Layout>
+							// 	</Col>
+							// 	<Col span={8}>
+							// 		<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
+							// 			<Content loading={loading}>
+							// 				<Card loading={loading}>
+							// 					<h3>Total Penalty</h3>
+							// 					<PenChart />
+							// 				</Card>
+							// 			</Content>
+							// 		</Layout>
+							// 	</Col>
+							// </Row>
+						}
+					</Col>
+				)}
+
 				{role.includes('EMPLOYEE') && (
 					<Row gutter={18}>
 						<Col span={12}>
@@ -248,6 +385,7 @@ const EmDashboard = () => {
 									</NavLink>
 								</Col>
 							</Row>
+
 							<Row style={{ width: 396 }}>
 								<Box direction='vertical' style={{ width: 396 }}>
 									<Card>
@@ -293,66 +431,6 @@ const EmDashboard = () => {
 							</Card>
 						</Col>
 					</Row>
-				)}
-				{role.includes('HR_MANAGER') && (
-					<Col>
-						<Row gutter={20}>
-							<Col span={12}>
-								<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
-									<Content loading={loading}>
-										<Card loading={loading}>
-											<h3>Total expenditure</h3>
-											<TotalChart />
-										</Card>
-									</Content>
-								</Layout>
-							</Col>
-							<Col span={12}>
-								<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
-									<Content loading={loading}>
-										<Card loading={loading}>
-											<h3>Total Tax</h3>
-											<TaxChart />
-										</Card>
-									</Content>
-								</Layout>
-							</Col>
-						</Row>
-						{
-							// <Row gutter={20}>
-							// 	<Col span={8}>
-							// 		<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
-							// 			<Content loading={loading}>
-							// 				<Card loading={loading}>
-							// 					<h3>Total Assurance</h3>
-							// 					<AssuranceChart />
-							// 				</Card>
-							// 			</Content>
-							// 		</Layout>
-							// 	</Col>
-							// 	<Col span={8}>
-							// 		<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
-							// 			<Content loading={loading}>
-							// 				<Card loading={loading}>
-							// 					<h3>Total Bonus</h3>
-							// 					<BonusChart />
-							// 				</Card>
-							// 			</Content>
-							// 		</Layout>
-							// 	</Col>
-							// 	<Col span={8}>
-							// 		<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
-							// 			<Content loading={loading}>
-							// 				<Card loading={loading}>
-							// 					<h3>Total Penalty</h3>
-							// 					<PenChart />
-							// 				</Card>
-							// 			</Content>
-							// 		</Layout>
-							// 	</Col>
-							// </Row>
-						}
-					</Col>
 				)}
 			</Footer>
 		</Box>
