@@ -420,9 +420,30 @@ const EmDashboard = () => {
 										textAlign: 'center',
 									}}
 								>
-									<Form.Item label='Full Name'>{textEmployee.name}</Form.Item>
-									<Form.Item label='I.N'>{textEmployee.identifyNumber}</Form.Item>
-									<Form.Item label='UserName'>{textEmployee.username}</Form.Item>
+									<Form.Item
+										labelAlign='right'
+										labelCol={{ span: 6 }}
+										wrapperCol={{ span: 8 }}
+										label='Full Name'
+									>
+										{textEmployee.name}
+									</Form.Item>
+									<Form.Item
+										labelAlign='right'
+										labelCol={{ span: 6 }}
+										wrapperCol={{ span: 6 }}
+										label='I.N'
+									>
+										{textEmployee.identifyNumber}
+									</Form.Item>
+									<Form.Item
+										labelAlign='right'
+										labelCol={{ span: 6 }}
+										wrapperCol={{ span: 6 }}
+										label='Username'
+									>
+										{textEmployee.username}
+									</Form.Item>
 
 									<Button>
 										<NavLink to='/profile'>More</NavLink>
