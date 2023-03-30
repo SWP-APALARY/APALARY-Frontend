@@ -393,7 +393,7 @@ const EmDashboard = () => {
 										<Row justify={'center'}>
 											<Card
 												size='large'
-												title='FeedBack'
+												title='Feedback'
 												extra={textFeedback[index]?.createdDate}
 												style={{
 													width: 300,
@@ -401,7 +401,9 @@ const EmDashboard = () => {
 												}}
 											>
 												<Typography>
-													{`${textFeedback[index]?.description}...`}
+													{textFeedback.description
+														? `No feedback`
+														: `${textFeedback[index]?.description}...`}
 												</Typography>
 											</Card>
 										</Row>
