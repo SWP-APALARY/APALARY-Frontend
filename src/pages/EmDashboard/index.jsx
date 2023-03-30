@@ -152,11 +152,11 @@ const EmDashboard = () => {
 			padding: 'auto',
 			xField: 'month',
 			yField: 'totalPenalty',
-			yAxis: {
-				label: {
-					formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
-				},
-			},
+			// yAxis: {
+			// 	label: {
+			// 		formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
+			// 	},
+			// },
 		};
 		return <Line {...config} />;
 	};
@@ -186,7 +186,7 @@ const EmDashboard = () => {
 				return {
 					...todo,
 					month: '2023-' + todo.month,
-					totalFix: moneyConverter(todo.total),
+					total: moneyConverter(todo.total),
 				};
 			});
 			// const newData = resSa.map((todo) => {
