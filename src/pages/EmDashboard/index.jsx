@@ -394,14 +394,14 @@ const EmDashboard = () => {
 											<Card
 												size='large'
 												title='FeedBack'
-												extra={textFeedback[index].createdDate}
+												extra={textFeedback[index]?.createdDate}
 												style={{
 													width: 300,
 													height: 183,
 												}}
 											>
 												<Typography>
-													{`${textFeedback[index].description}...`}
+													{`${textFeedback[index]?.description}...`}
 												</Typography>
 											</Card>
 										</Row>
