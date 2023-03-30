@@ -242,7 +242,7 @@ export default function CreateEmployee({ onFinish }) {
 						]}
 						style={styleItem}
 					>
-						<Input type='email' placeholder='Ex: employee1' />
+						<Input type='email' placeholder='Ex: employee1@gmail.com' />
 					</Form.Item>
 					<Form.Item
 						name='dateOfBirth'

@@ -96,8 +96,9 @@ const EmDashboard = () => {
 			padding: 'auto',
 			xField: 'month',
 			yField: 'total',
-			yAxis: {
-				label: {
+			meta: {
+				total: {
+					alias: 'Total',
 					formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
 				},
 			},
@@ -110,8 +111,9 @@ const EmDashboard = () => {
 			padding: 'auto',
 			xField: 'month',
 			yField: 'totalTax',
-			yAxis: {
-				label: {
+			meta: {
+				totalTax: {
+					alias: 'TotalTax',
 					formatter: (v) => `${v}`.replace(/\d{1,3}(?=(\d{3})+$)/g, (s) => `${s},`),
 				},
 			},
@@ -186,7 +188,6 @@ const EmDashboard = () => {
 				return {
 					...todo,
 					month: '2023-' + todo.month,
-					total: moneyConverter(todo.total),
 				};
 			});
 			// const newData = resSa.map((todo) => {
@@ -267,7 +268,7 @@ const EmDashboard = () => {
 								<Layout style={{ background: '#F0F0F0', margin: '10px 0px' }}>
 									<Content loading={loading}>
 										<Card loading={loading}>
-											<h3>Total expenditure</h3>
+											<h3>Total Expenditure</h3>
 											<TotalChart />
 										</Card>
 									</Content>

@@ -94,7 +94,7 @@ const Review = () => {
 				<Row justify={'center'}>
 					<Card
 						size='large'
-						title='FeedBack'
+						title='Feedback'
 						extra={text[index].createdDate}
 						style={{
 							width: 300,
