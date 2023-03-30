@@ -41,7 +41,7 @@ const EmDashboard = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [monthF, setMothF] = useState(date.getMonth() + 1);
-	const monthS = date.getMonth() + 1;
+	const monthS = date.getMonth();
 	const yearS = date.getFullYear();
 
 	const [index, setIndex] = useState(0);
