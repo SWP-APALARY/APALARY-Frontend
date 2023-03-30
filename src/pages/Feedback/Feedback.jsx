@@ -95,13 +95,13 @@ const Review = () => {
 					<Card
 						size='large'
 						title='Feedback'
-						extra={text[index].createdDate}
+						extra={text[index]?.createdDate}
 						style={{
 							width: 300,
 						}}
 					>
-						<p>{text[index].title}</p>
-						<p>{text[index].description}</p>
+						<p>{text[index]?.title}</p>
+						<p>{text[index]?.description}</p>
 						<Space>
 							<Button type='primary' onClick={prevPerson}>
 								<ArrowLeftOutlined />

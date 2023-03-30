@@ -56,7 +56,7 @@ const ContractCreation = () => {
 			setFileError('Please upload contract file!');
 		} else {
 			const formData = form.getFieldsValue();
-			if (formData.employeeId == 'undefined') {
+			if (formData.employeeId === undefined) {
 				await apiHandler(contractsAPI, 'post', 'success', setLoading, {
 					...formData,
 					contractImage: fileBase64,
@@ -192,7 +192,11 @@ const ContractCreation = () => {
 									marginLeft: 5,
 								}}
 							>
-								<Select placeholder='Select'>
+								<Select
+									placeholder='Select'
+									allowClear
+									onClear={() => form.setFieldValue('employeeId', undefined)}
+								>
 									{contractList.map((todo) => (
 										<Option value={todo.id} key={todo.id}>
 											{todo.name}
