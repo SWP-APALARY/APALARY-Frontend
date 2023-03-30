@@ -1,4 +1,4 @@
-import { Table, Row, Col, Button, Tabs, Space } from 'antd';
+import { Table, Row, Col, Button, Tabs, Space, Switch } from 'antd';
 import { Link } from 'react-router-dom';
 
 import Box from '../../../components/Box';
@@ -14,6 +14,7 @@ export const CustomCTable = ({
 	onSearch,
 	activeKey,
 	onTabChange,
+	onStatusChange,
 	children,
 	...rest
 }) => {
@@ -22,6 +23,18 @@ export const CustomCTable = ({
 			<Row justify={'space-between'} gutter={20}>
 				<Col>
 					<Row justify={'center'} align='middle'>
+						<Col>
+							{onStatusChange && (
+								<Space direction='vertical' style={{ marginRight: '1rem' }}>
+									<Switch
+										checkedChildren='ACTIVE'
+										unCheckedChildren='INACTIVE'
+										defaultChecked
+										onChange={onStatusChange}
+									/>
+								</Space>
+							)}
+						</Col>
 						<Col style={{ marginRight: 20, marginBottom: 14 }}>
 							{addNewButton && (
 								<Link to={routeKey.contractsCreate}>
@@ -31,7 +44,7 @@ export const CustomCTable = ({
 								</Link>
 							)}
 						</Col>
-						<Col>
+						{/* <Col>
 							{onTabChange && (
 								<Tabs
 									defaultActiveKey='PROCESSING'
@@ -40,7 +53,7 @@ export const CustomCTable = ({
 									items={tabContractStatusConfig.map((item) => item)}
 								/>
 							)}
-						</Col>
+						</Col> */}
 					</Row>
 				</Col>
 				<Col>
