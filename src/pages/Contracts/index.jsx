@@ -27,6 +27,7 @@ const Contracts = () => {
 	const [data, setData] = useState([]);
 	const [search, searchRef, onSearchChange] = useSearch();
 	const [activeKey, setActiveKey] = useState(tabContractStatusConfig[0].key);
+	const [status, setStatus] = useState('ACTIVE');
 	const [isCreate, setIsCreate] = useState(false);
 	const [token] = usePersistedState('token');
 	const onTabChange = async (key) => {
@@ -77,15 +78,16 @@ const Contracts = () => {
 
 	useEffect(() => {
 		const fetch = async () => {
-			const res = await apiHandler(contractsAPI, 'get' + activeKey, '', setLoading, token);
+			const tmpStatus = status ? 'Active' : 'Inactive';
+			const res = await apiHandler(contractsAPI, 'get' + tmpStatus, '', setLoading, token);
 			if (res instanceof Error) {
 				navigate('/');
 			}
-			setData(res);
-			setFilteredData(res);
+			setData(res || []);
+			setFilteredData(res || []);
 		};
 		fetch();
-	}, []);
+	}, [status]);
 	useEffect(() => {
 		const tmp = data.filter((item) =>
 			item.nameEmp.toLowerCase().includes(search.toLowerCase())
@@ -108,6 +110,7 @@ const Contracts = () => {
 						...paginationConfig,
 					}}
 					dataSource={filteredData}
+					onStatusChange={(status) => setStatus(status)}
 				>
 					{contractColumns.map((item) => {
 						return (

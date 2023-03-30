@@ -160,12 +160,12 @@ const EmployeeDetail = () => {
 										title={
 											<Row>
 												<Col span={12}>
-													<Rate
+													{/* <Rate
 														disabled
 														allowHalf
 														defaultValue={item.star}
 														style={{ fontSize: '15px' }}
-													/>
+													/> */}
 												</Col>
 												<Col span={12} style={{ textAlign: 'end' }}>
 													{item.createdDate}

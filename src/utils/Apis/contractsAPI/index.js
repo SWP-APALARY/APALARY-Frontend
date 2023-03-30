@@ -3,11 +3,11 @@ import { get, post, put, del } from '../caller';
 
 const token = 'Bearer ' + LocalStorageUtils.getItem('token');
 const contractsAPI = {
-	getProcessing: async () => {
+	getActive: async () => {
 		const endpoint = '/contract/all';
 		return await get(endpoint, {}, { Authorization: token });
 	},
-	getAccepted: async () => {
+	getInactive: async () => {
 		const endpoint = '/contract/all/inactive';
 		return await get(endpoint, {}, { Authorization: token });
 	},
