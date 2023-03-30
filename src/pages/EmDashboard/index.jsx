@@ -41,7 +41,7 @@ const EmDashboard = () => {
 	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
 	const [monthF, setMothF] = useState(date.getMonth() + 1);
-	const monthS = date.getMonth() + 1;
+	const monthS = date.getMonth() - 1;
 	const yearS = date.getFullYear();
 
 	const [index, setIndex] = useState(0);
@@ -184,10 +184,11 @@ const EmDashboard = () => {
 			setTextISalary(resSalary || []);
 
 			const resSa = await apiHandler(salaryAPI, 'getTotal', '', setLoading, null);
+			console.log(resSa);
 			const newData = resSa.map((todo) => {
 				return {
 					...todo,
-					month: todo.month,
+					month: '2023-' + todo.month,
 				};
 			});
 			// const newData = resSa.map((todo) => {
