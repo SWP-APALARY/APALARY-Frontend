@@ -35,7 +35,7 @@ export const CustomCTable = ({
 								</Space>
 							)}
 						</Col>
-						<Col style={{ marginRight: 20, marginBottom: 14 }}>
+						<Col>
 							{addNewButton && (
 								<Link to={routeKey.contractsCreate}>
 									<Button icon={<PlusOutlined />} type='primary'>
