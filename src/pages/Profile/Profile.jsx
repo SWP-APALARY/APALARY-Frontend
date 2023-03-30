@@ -9,6 +9,7 @@ import PDFReader from '../../components/PDFReder';
 import toast from '../../components/Toast';
 import contractAPI from '../../utils/Apis/contractAPI';
 import employeeAPI from '../../utils/Apis/employeeAPI';
+import moneyConverter from '../../utils/moneyConverter';
 
 import { PlusOutlined } from '@ant-design/icons';
 
@@ -169,7 +170,7 @@ const FormDisabledDemo = () => {
 					/>
 				</Form.Item>
 				<Form.Item
-					label='IdentifyNumber'
+					label='Identify number'
 					rules={[
 						{
 							pattern: new RegExp(/^[0-9]*$/),
@@ -199,7 +200,7 @@ const FormDisabledDemo = () => {
 						onChange={(e) => setText({ ...text, email: e.target.value })}
 					/>
 				</Form.Item>
-				<Form.Item label='UserName' style={{ marginTop: 10 }}>
+				<Form.Item label='Username' style={{ marginTop: 10 }}>
 					<Input value={text.username} disabled />
 				</Form.Item>
 				<Form.Item label='Type Of Work' style={{ width: 600 }}>
@@ -208,7 +209,7 @@ const FormDisabledDemo = () => {
 						<Radio value={1}> Part Time </Radio>
 					</Radio.Group>
 				</Form.Item>
-				<Form.Item label='SignDate'>
+				<Form.Item label='Sign Date'>
 					<DatePicker value={dayjs(text.signedDate, 'YYYY-MM-DD')} disabled />
 				</Form.Item>
 				<Form.Item label='Term'>
@@ -221,8 +222,8 @@ const FormDisabledDemo = () => {
 						disabled
 					/>
 				</Form.Item>
-				<Form.Item label='Salary'>
-					<Input value={text.base} disabled />
+				<Form.Item label='Base Salary'>
+					<Input value={moneyConverter(text.base) + ' VNĐ'} disabled />
 				</Form.Item>
 				{
 					// <Form.Item label='Manager Name' style={{ marginTop: 10 }}>
