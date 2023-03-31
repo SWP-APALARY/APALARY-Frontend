@@ -82,6 +82,7 @@ const emSalary = () => {
 							title={item.title}
 							dataIndex={item.dataIndex}
 							render={item.render}
+							sorter={item.sorter}
 						/>
 					);
 				})}

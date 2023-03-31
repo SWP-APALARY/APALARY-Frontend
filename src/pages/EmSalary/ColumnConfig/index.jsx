@@ -6,15 +6,25 @@ export const SalaryColumnConfig = [
 		title: 'Month',
 		dataIndex: 'month',
 		key: 'month',
+		sorter: (a, b) => a.month - b.month,
+		sortDirections: ['descend', 'ascend'],
 	},
-	{ title: 'Year', dataIndex: 'year', key: 'year' },
 	{
-		title: 'Total Amount',
+		title: 'Year',
+		dataIndex: 'year',
+		key: 'year',
+		sorter: (a, b) => a.year - b.year,
+		sortDirections: ['descend', 'ascend'],
+	},
+	{
+		title: 'Net Receive',
 		dataIndex: 'net',
 		key: 'net',
 		render: (text, record) => {
 			return <span>{moneyConverter(text)} VNĐ</span>;
 		},
+		sorter: (a, b) => a.net - b.net,
+		sortDirections: ['descend', 'ascend'],
 	},
 	{
 		title: 'Bonus',
@@ -23,6 +33,8 @@ export const SalaryColumnConfig = [
 		render: (text, record) => {
 			return <span>{moneyConverter(text)} VNĐ</span>;
 		},
+		sorter: (a, b) => a.bonus - b.bonus,
+		sortDirections: ['descend', 'ascend'],
 	},
 	{
 		title: 'Penalty',
@@ -31,6 +43,8 @@ export const SalaryColumnConfig = [
 		render: (text, record) => {
 			return <span>{moneyConverter(text)} VNĐ</span>;
 		},
+		sorter: (a, b) => a.penalty - b.penalty,
+		sortDirections: ['descend', 'ascend'],
 	},
 	{
 		title: 'Tax',
@@ -39,6 +53,8 @@ export const SalaryColumnConfig = [
 		render: (text, record) => {
 			return <span>{moneyConverter(text)} VNĐ</span>;
 		},
+		sorter: (a, b) => a.tax - b.tax,
+		sortDirections: ['descend', 'ascend'],
 	},
 	{
 		title: 'Total',
@@ -47,5 +63,7 @@ export const SalaryColumnConfig = [
 		render: (text, record) => {
 			return <span>{moneyConverter(text)} VNĐ</span>;
 		},
+		sorter: (a, b) => a.total - b.total,
+		sortDirections: ['descend', 'ascend'],
 	},
 ];
