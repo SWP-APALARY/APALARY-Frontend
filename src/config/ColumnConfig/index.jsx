@@ -30,6 +30,13 @@ export const applicantColumns = [
 		sorter: true,
 	},
 	{
+		title: 'Department',
+		dataIndex: 'jobOfferingDepartmentName',
+		sorter: (a, b) => a.title.localeCompare(b.title),
+		sortDirections: ['descend', 'ascend'],
+		width: '20%',
+	},
+	{
 		title: 'Interview Date',
 		dataIndex: 'interviewDate',
 		sorter: true,
