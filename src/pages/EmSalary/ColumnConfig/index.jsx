@@ -7,7 +7,7 @@ export const SalaryColumnConfig = [
 		dataIndex: 'month',
 		key: 'month',
 	},
-	{},
+	{ title: 'Year', dataIndex: 'year', key: 'year' },
 	{
 		title: 'Total Amount',
 		dataIndex: 'net',

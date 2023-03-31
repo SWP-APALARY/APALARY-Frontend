@@ -86,6 +86,9 @@ const emSalary = () => {
 					);
 				})}
 				<Column
+					title='Action'
+					dataIndex='action'
+					key='action-salaryColumn'
 					render={(text, record) => (
 						<Link to={`${routeKey.salary}/${record.id}`}>Detail</Link>
 					)}
