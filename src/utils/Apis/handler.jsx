@@ -31,6 +31,7 @@ const apiHandler = async (api, action, successMessage, setLoading, ...rest) => {
 		})
 		.catch((error) => {
 			const status = error.response.status;
+			toast(error.message, 'error');
 			if (status === 401 || status === 403 || status === 500) {
 				LocalStorageUtils.clear();
 				return window.reload();
@@ -38,7 +39,6 @@ const apiHandler = async (api, action, successMessage, setLoading, ...rest) => {
 			if (status === 400) {
 				throw new Error('400');
 			}
-			toast(error.message, 'error');
 			return null;
 		})
 		.finally(() => {
