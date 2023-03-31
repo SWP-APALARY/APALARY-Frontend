@@ -133,14 +133,14 @@ export default function CreateFeedback() {
 						<span style={{ color: 'red' }}>*</span>
 						Star
 					</span>
-					<Form.Item name='star' style={isRateError ? { margin: 0 } : {}}>
+					{/* <Form.Item name='star' style={isRateError ? { margin: 0 } : {}}>
 						<Rate
 							allowHalf
 							defaultValue={1}
 							onFocus={() => setIsRateError(null)}
 							onChange={(e) => setRateNum(e)}
 						/>
-					</Form.Item>
+					</Form.Item> */}
 					{isRateError && (
 						<p style={{ color: 'red', padding: 0, marginTop: 0 }}>{isRateError}</p>
 					)}
