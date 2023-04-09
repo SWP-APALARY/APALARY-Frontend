@@ -32,7 +32,6 @@ export default function CreateFeedback() {
 		if (rateNum < 1) {
 			setIsRateError('Rate star must be >= 1');
 		} else {
-			console.log({ ...values, star: rateNum });
 			feedbackApi
 				.createOne({ ...values, star: rateNum, employeeId: isCreate })
 				.then(() => {

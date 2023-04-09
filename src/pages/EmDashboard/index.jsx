@@ -184,7 +184,6 @@ const EmDashboard = () => {
 			setTextISalary(resSalary || []);
 
 			const resSa = await apiHandler(salaryAPI, 'getTotal', '', setLoading, null);
-			console.log(resSa);
 			const newData = resSa.map((todo) => {
 				return {
 					...todo,

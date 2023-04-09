@@ -55,5 +55,3 @@ const spam_word = [
 	'dyluacvray',
 	'Gwnpnzijd',
 ];
-
-console.log(getSpamEmails(subjects, spam_word));
