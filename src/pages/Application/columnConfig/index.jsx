@@ -1,4 +1,5 @@
 import { Typography } from 'antd';
+import dayjs from 'dayjs';
 
 import { getValueFromBlock } from '../../../utils/DraftjsHelper';
 
@@ -29,8 +30,11 @@ export const salaryColumnConfig = [
 		title: 'Created at',
 		dataIndex: 'createdTime',
 		key: 'createdTime',
-		render: (text) => <Text>{new Date(text).toLocaleDateString()}</Text>,
-		sorter: (a, b) => a.createdTime < b.createdTime,
+		render: (text) => (
+			<Text>{dayjs(new Date(text).toLocaleDateString()).format('MM/DD/YYYY')}</Text>
+		),
+		sorter: (a, b) =>
+			dayjs(new Date(a.createdTime)).diff(dayjs(new Date(b.createdTime)), 'day'),
 	},
 ];
 export const sentColumnConfig = [
