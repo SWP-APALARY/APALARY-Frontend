@@ -58,6 +58,7 @@ const ApplicationModal = (props) => {
 	};
 
 	useEffect(() => {
+		if (!open) return;
 		const fetch = async () => {
 			const res = await apiHandler(applicationAPI, 'getOne', '', setLoading, id, token);
 			setData(res || initData);
